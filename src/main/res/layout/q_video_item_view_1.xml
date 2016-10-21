@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.quseit.view.VideoItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   	xmlns:greendroid="http://schemas.android.com/apk/res/com.zuowuxuxi.android"
+   	style="?attr/gdThumbnailItemViewStyle"
+    android:layout_width="fill_parent"
+    android:orientation="vertical">
+	<LinearLayout 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+		
+		<include
+        layout="@layout/gd_separator_item_view" />
+		
+		<com.quseit.widget.AsyncImageView
+		android:id="@+id/item_thumbnail"
+		android:layout_gravity="fill_vertical"
+		android:layout_width="140.0dip"
+		android:layout_height="110.0dip"
+		android:scaleType="centerInside" 
+		android:paddingTop="10dp"
+		android:paddingBottom="10dp"
+		
+		/>
+		<FrameLayout 
+			android:layout_width="0.0dip" 
+			android:layout_height="fill_parent" 
+			android:layout_weight="1">
+			
+			<TextView
+			android:id="@+id/gd_text"
+			android:paddingTop="10.0dip"	
+			android:textColor="@color/cmain1"		
+			android:textSize="11sp"		
+			android:layout_alignParentRight="true"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_gravity="top"
+			android:maxLines="2" 
+			android:ellipsize="end"
+			
+			/>
+			<TextView
+			android:id="@+id/gd_text_desc"
+			android:layout_below="@id/gd_text"
+			android:layout_gravity="bottom"		
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:maxLines="4" 
+			android:ellipsize="end"
+			android:textSize="12sp"		
+			android:textColor="@color/cwhite"		
+			android:paddingBottom="13dp"
+			
+			android:text="" />
+		</FrameLayout>
+		
+    	<LinearLayout 			
+    		android:paddingTop="10.0dip"    
+    	 	android:layout_width="0dp" 
+    	 	android:layout_height="fill_parent" 
+    	 	android:orientation="vertical">
+    	 	
+    	 	<ImageView 
+			android:id="@+id/gd_stat_image"
+			android:layout_gravity="bottom"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:src="@null"
+			android:paddingRight="10.0dip"
+			android:paddingBottom="10dp"
+			android:background="#00FFFFFF" />
+			
+			<TextView
+			android:id="@+id/gd_text_other"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"			
+			android:text=""
+			android:layout_gravity="right"
+			android:layout_alignParentRight="true"
+			android:paddingRight="10.0dip"
+			
+			/>
+
+		</LinearLayout>
+	</LinearLayout>
+	
+</com.quseit.view.VideoItemView>

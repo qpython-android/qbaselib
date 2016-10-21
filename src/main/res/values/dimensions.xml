@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<dimen name="v_grid_width">120dp</dimen>
+	<dimen name="v_grid_height">100dp</dimen>
+
+	<dimen name="v_grid_width2">200dp</dimen>
+	<dimen name="v_grid_height2">160dp</dimen>	
+</resources>

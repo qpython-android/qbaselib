@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="topbar">#1f1f1f</color>
+  <color name="contentbg">#05a494</color>
+  <color name="text">#888</color>  
+  <color name="link">#FF0066CC</color>  
+  <color name="hint">#535252</color>
+  <color name="divider">#fef8ec</color>
+  <color name="transparent">#9000</color>
+
+  <color name="cmain1">#ff960f</color>
+  <color name="cmain11">#fab98a</color>
+  <color name="cmain12">#f0ff960f</color>
+  
+  <color name="cmain2">#009696</color>
+  
+  <color name="cmain21">#01675d</color>
+  <color name="cmain22">#3bcfbf</color>
+  
+  <color name="cmain3">#c8c800</color>
+  <color name="cmain4">#d2d00b</color>
+  <color name="cmain5">#c6312b</color>
+  <color name="cmain6">#33b5e5</color>
+  
+  <color name="cmain7">#c80000</color>
+  <color name="cmain8">#2eb3e4</color>
+  <color name="cmain9">#90af27</color>
+  <color name="cmain10">#ed567c</color>
+  
+  <color name="cwhite">#ffffff</color>
+  <color name="cwhite1">#fcf5e5</color>
+  <color name="cwhite2">#fef8ec</color>
+  <color name="cwhite3">#fbfbfb</color>
+  
+  <color name="cblack">#000000</color>
+  <color name="cblack1">#171717</color>
+  <color name="cblack2">#2d2d2d</color>
+  
+  <color name="cgrey1">#434343</color>
+  <color name="cgrey2">#333333</color>
+  <color name="cgrey3">#535252</color>
+  <color name="cgrey31">#bf535252</color>
+
+  <color name="cgrey4">#3e3e3e</color>
+  <color name="cgrey5">#f5f5f5</color>
+  <color name="cgrey6">#e8e8e8</color>
+  <color name="cgrey7">#eeeeee</color>
+  <color name="cgrey8">#434343</color>
+  <color name="cgrey9">#6a6a6a</color>
+  <color name="cgrey10">#505050</color>
+  <color name="cgrey11">#f0d9d9d9</color>
+  <color name="cgrey12">#f0b9b9b9</color>
+  <color name="cgrey13">#f0c9c9c9</color>
+
+  <color name="title_bar_shadow">#bb000000</color>
+  <color name="header_text">#ffde6920</color>
+
+  <color name="white">#ffffff</color>
+  <color name="black">#000000</color>
+  <color name="green">#23cf34</color>
+  <color name="orange">#E47833</color>
+  <color name="lite_blue">#4E78A0</color>
+  <color name="blue">#0000FF</color>
+  <color name="grey">#FF909090</color>
+</resources>

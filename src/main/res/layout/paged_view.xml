@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:greendroid="http://schemas.android.com/apk/res/com.hipipal.android"
+	android:background="@color/cwhite"
+	android:id="@+id/page_main"
+	
+	>
+
+	<greendroid.widget.PagedView
+		android:id="@+id/paged_view"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/cwhite" />
+
+	<greendroid.widget.PageIndicator
+		android:id="@+id/page_indicator_prev"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|left"
+		android:paddingBottom="10dp"
+		android:paddingRight="15dp"
+		android:paddingTop="25dp"
+		android:paddingLeft="15dp"
+		 />
+
+	<greendroid.widget.PageIndicator
+		android:id="@+id/page_indicator_next"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|right"
+		android:paddingBottom="10dp"
+		android:paddingRight="15dp"
+		android:paddingTop="25dp"
+		android:paddingLeft="15dp"
+		 />
+
+	<greendroid.widget.PageIndicator
+		android:id="@+id/page_indicator_other"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top|center_horizontal"
+		android:paddingTop="10dp" />
+
+
+	
+</merge>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <string-array name="md_titles">
+        <item>正在下載</item>   
+        <item>已完成</item>
+    </string-array> 
+    <string-array name="select_cat_opt">
+        <item>today</item>   
+        <item>this_week</item>
+                     
+        <item>this_month</item>    
+        <item>all_time</item>
+    </string-array> 
+    <string-array name="time_labels">
+        <item>days ago</item>   
+        <item>hours ago</item>
+        <item>minutes ago</item>    
+        <item>just now</item>
+    </string-array> 
+    <string-array name="select_cat_val">
+        <item>Today</item>   
+        <item>This Week</item>
+        <item>This Month</item>    
+        <!--item>All Time</item-->
+    </string-array>    
+    <string-array name="select_nav_opt">
+        <item>Recent Featured</item>   
+        <item>Most Recent</item>
+                     
+        <item>Top Favorites</item>    
+        <item>Most Viewed</item>
+        <item>Most Responded</item>                
+        <item>Most Discussed</item>                
+    
+        <item>Top Rated</item>        
+        <item>Most Popular</item>                
+
+    </string-array>
+      
+</resources>

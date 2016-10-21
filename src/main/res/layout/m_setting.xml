@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cwhite3"
+    >
+	<FrameLayout
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"> 
+		   
+	<ScrollView
+		android:scrollbars="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		>
+		
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			>
+			
+			<TextView
+				style="@style/gridBox_desc"
+				android:text="@string/m_title_recommended"
+				android:textSize="17sp" 
+				android:visibility="gone"
+				android:id="@+id/adTitle"
+				/>
+			
+			<View
+				style="@style/p_line"
+				android:visibility="gone"
+				android:id="@+id/adLine"
+				
+			/>
+			<com.quseit.view.AdSlidShowView
+        		android:id="@+id/adSlid2"
+        		android:layout_width="fill_parent"
+       	 		android:layout_height="120dp"
+       	 		android:layout_marginLeft="10dip"
+       	 		android:layout_marginRight="10dip"
+
+        		android:visibility="gone" >
+    		</com.quseit.view.AdSlidShowView>
+    
+			<!--script-->
+			<TextView
+				style="@style/gridBox_desc"
+				android:text="@string/m_title_aboutus"
+				android:textSize="17sp" />
+			
+			<View
+				style="@style/p_line" />
+				
+			<!-- ABOUT US -->
+			<RelativeLayout
+				style="@style/gridBox"
+				android:onClick="onAbout"
+				>		
+				<TextView
+					android:id="@+id/plugin_aboutus"
+					android:text="@string/about_about"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:layout_toRightOf="@id/plugin_aboutus"
+					android:layout_alignTop="@id/plugin_aboutus"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onAbout"
+				/>
+			</RelativeLayout>
+
+
+			<!-- NoAD -->
+			<RelativeLayout
+				android:id="@+id/plugin_pro_box"
+				style="@style/gridBox"
+				android:onClick="onNoAD"
+				android:visibility="gone"
+				>		
+				<TextView
+					android:id="@+id/plugin_noadd"
+					android:text="@string/plugin_noadd"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_noadd_value"
+					android:layout_toRightOf="@id/plugin_noadd"
+					android:layout_alignTop="@id/plugin_noadd"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onNoAD"
+				/>
+			</RelativeLayout>
+
+
+			<!-- CHECK FOR UPDATE -->
+			<RelativeLayout
+				style="@style/gridBox"
+				android:onClick="onCheckUpdate"
+				>		
+				<TextView
+					android:id="@+id/plugin_checkupdate"
+					android:text="@string/omenu_update"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:layout_toRightOf="@id/plugin_checkupdate"
+					android:layout_alignTop="@id/plugin_checkupdate"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onCheckUpdate"
+				/>
+			</RelativeLayout>
+
+			<!-- RATE US -->
+			<RelativeLayout
+				style="@style/gridBox"
+				android:onClick="onRate"
+				>		
+				<TextView
+					android:id="@+id/plugin_rate"
+					android:text="@string/rate_btn"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:layout_toRightOf="@id/plugin_rate"
+					android:layout_alignTop="@id/plugin_rate"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onRate"
+				/>
+			</RelativeLayout>
+						
+			
+			<!-- FEEDBACK -->
+			<RelativeLayout
+				style="@style/gridBox"
+				android:onClick="onFeedback"
+				>		
+				<TextView
+					android:id="@+id/plugin_feedback"
+					android:text="@string/feedback"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:layout_toRightOf="@id/plugin_feedback"
+					android:layout_alignTop="@id/plugin_feedback"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onFeedback"
+				/>
+			</RelativeLayout>
+			
+
+			<!-- ADFREE -->
+			<RelativeLayout
+				style="@style/gridBox"
+				android:onClick="onADFree"
+				android:visibility="gone"
+				android:id="@+id/plugin_pro_box"
+				>		
+				<TextView
+					android:id="@+id/plugin_adfree"
+					android:text="@string/ad_free"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:layout_toRightOf="@id/plugin_adfree"
+					android:layout_alignTop="@id/plugin_adfree"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onADFree"
+				/>
+			</RelativeLayout>	
+					
+			<TextView
+				style="@style/gridBox_desc"
+				android:text="@string/about_other"
+				android:textSize="17sp"
+				android:id="@+id/plugin_setting_title"
+				
+				 />
+			
+			<View
+				style="@style/p_line"
+				android:id="@+id/plugin_setting_title_line"
+				
+				 />
+
+			<!-- pylib managerd -->
+			<RelativeLayout
+				android:id="@+id/plugin_pylib_box"
+				style="@style/gridBox"
+				android:onClick="onPyLib"
+				android:visibility="gone"
+				
+				>		
+				<TextView
+					android:id="@+id/plugin_pylib"
+					android:text="@string/plugin_pylib"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_pylib_value"
+					android:layout_toRightOf="@id/plugin_pylib"
+					android:layout_alignTop="@id/plugin_pylib"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onPyLib"
+				/>
+			</RelativeLayout>
+				
+			<!-- local managerd -->
+			<RelativeLayout
+				android:id="@+id/plugin_sl4a_box"
+				style="@style/gridBox"
+				android:onClick="onSL4ASetting"
+				android:visibility="gone"
+				
+				>		
+				<TextView
+					android:id="@+id/plugin_sl4a"
+					android:text="@string/plugin_sl4a"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_ftp_value"
+					android:layout_toRightOf="@id/plugin_sl4a"
+					android:layout_alignTop="@id/plugin_sl4a"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onSL4ASetting"
+				/>
+			</RelativeLayout>
+
+			
+			<RelativeLayout
+				android:id="@+id/plugin_defaultqpy_box"
+				style="@style/gridBox"
+				android:onClick="onDefaultQPySetting"
+				android:visibility="gone"
+				
+				>		
+				<TextView
+					android:id="@+id/plugin_defaultqpy"
+					android:text="@string/plugin_defaultqpy"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_defaultqpy_value"
+					android:layout_toRightOf="@id/plugin_defaultqpy"
+					android:layout_alignTop="@id/plugin_defaultqpy"
+					style="@style/gridBox_Value"
+					android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onDefaultQPySetting"
+				/>
+			</RelativeLayout>	
+			
+			<RelativeLayout
+				android:id="@+id/plugin_mediacenter_box"
+				style="@style/gridBox"
+				android:onClick="onMediaCenterSetting"
+				android:visibility="gone"
+				
+				>		
+				<TextView
+					android:id="@+id/plugin_mediacenter"
+					android:text="@string/plugin_mediacenter"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_mediacenter_value"
+					android:layout_toRightOf="@id/plugin_mediacenter"
+					android:layout_alignTop="@id/plugin_mediacenter"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onMediaCenterSetting"
+				/>
+			</RelativeLayout>			
+			
+							
+			<!-- script -->
+			<RelativeLayout
+				android:id="@+id/plugin_script_box"
+				style="@style/gridBox"
+				android:onClick="enableScript"
+				android:visibility="gone"
+				>		
+				<TextView
+					android:id="@+id/plugin_script"
+					android:text="@string/plugin_script_enable"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_script_value"
+					android:layout_toRightOf="@id/plugin_script"
+					android:layout_alignTop="@id/plugin_script"
+					style="@style/gridBox_Value"
+					android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="enableScript"
+				/>
+			</RelativeLayout>
+
+
+			<RelativeLayout
+				android:id="@+id/plugin_player_box"
+				style="@style/gridBox"
+				android:onClick="onPlayerSetting"
+				android:visibility="gone"
+				>		
+				<TextView
+					android:id="@+id/plugin_player"
+					android:text="@string/plugin_player"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_player_value"
+					android:layout_toRightOf="@id/plugin_player"
+					android:layout_alignTop="@id/plugin_player"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onPlayerSetting"
+				/>
+			</RelativeLayout>
+						
+
+			<RelativeLayout
+				android:id="@+id/plugin_resetprivate_box"
+				style="@style/gridBox"
+				android:onClick="onResetPrivate"
+				android:visibility="gone"
+				
+				>		
+				<TextView
+					android:id="@+id/plugin_resetprivate"
+					android:text="@string/plugin_resetprivate"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_resetprivate_value"
+					android:layout_toRightOf="@id/plugin_resetprivate"
+					android:layout_alignTop="@id/plugin_resetprivate"
+					style="@style/gridBox_Value"
+					android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onResetPrivate"
+				/>
+			</RelativeLayout>	
+
+
+			<!-- local managerd -->
+			<RelativeLayout
+				android:id="@+id/plugin_defaultroot_box"
+				style="@style/gridBox"
+				android:onClick="onDefaultRootSetting"
+				android:visibility="gone"
+				
+				>		
+				<TextView
+					android:id="@+id/plugin_defaultroot"
+					android:text="@string/plugin_defaultroot"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_defaultroot_value"
+					android:layout_toRightOf="@id/plugin_defaultroot"
+					android:layout_alignTop="@id/plugin_defaultroot"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onDefaultRootSetting"
+				/>
+			</RelativeLayout>
+									
+			<!-- ftp managerd -->
+			<RelativeLayout
+				android:id="@+id/plugin_ftp_box"
+				style="@style/gridBox"
+				android:onClick="onFtpSetting"
+				android:visibility="gone"
+				
+				>		
+				<TextView
+					android:id="@+id/plugin_ftp"
+					android:text="@string/plugin_ftp"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:id="@+id/plugin_ftp_value"
+					android:layout_toRightOf="@id/plugin_ftp"
+					android:layout_alignTop="@id/plugin_ftp"
+					style="@style/gridBox_Value"
+				android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onFtpSetting"
+				/>
+			</RelativeLayout>
+			
+			<!-- proxy -->
+			<RelativeLayout
+				android:id="@+id/proxy_box"
+				style="@style/gridBox"
+				android:onClick="onSetProxy"
+				>		
+				<TextView
+					android:id="@+id/proxy_setting"
+					android:text="@string/proxy_setting"
+					style="@style/gridBox_Title"
+					/>
+					
+				<TextView
+					android:id="@+id/proxy_value"
+					android:layout_toRightOf="@id/proxy_setting"
+					android:layout_alignTop="@id/proxy_setting"
+					style="@style/gridBox_Value"
+					android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onSetProxy"
+				/>
+			</RelativeLayout>
+			
+
+			<!-- pylib -->
+			<RelativeLayout
+				android:id="@+id/pylib_box"
+				style="@style/gridBox"
+				android:onClick="onPyLib"
+				android:visibility="gone"
+				
+				>		
+				<TextView
+					android:id="@+id/pylib_setting"
+					android:text="@string/pylib_setting"
+					style="@style/gridBox_Title"
+					/>
+					
+				<TextView
+					android:id="@+id/pylib_value"
+					android:layout_toRightOf="@id/pylib_setting"
+					android:layout_alignTop="@id/pylib_setting"
+					style="@style/gridBox_Value"
+					android:text=""
+				/>		
+				<ImageView 
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onPyLib"
+				/>
+			</RelativeLayout>
+		</LinearLayout>		
+	</ScrollView>
+	</FrameLayout>				
+				
+
+
+	<LinearLayout
+		android:id="@+id/return_bar_box"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/cgrey6"
+		android:visibility="gone"
+		>	
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:onClick="onBack"
+		android:paddingTop="10dip"
+		
+		android:layout_margin="10.0dip"
+		android:src="@drawable/ic_right_a" 
+		android:background="@null"
+		/>
+
+		
+		<ImageButton
+		android:gravity="center"
+		android:id="@+id/download_btn"
+		android:layout_weight="3"
+		
+		style="@style/gridBox_Title"
+    	android:text="@string/proxy_save"
+		android:background="@null"
+		android:padding="5.0dip"
+		android:layout_width="0dp"
+		android:scaleType="centerInside"
+		android:textColor="@color/cwhite"
+		android:textSize="18sp"
+		android:onClick="onBack"
+		android:src="@drawable/ic_undo" 
+		android:layout_height="wrap_content"
+		/>
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:onClick="onLeft"
+		android:layout_margin="10.0dip"
+		android:src="@drawable/ic_right_a" 
+		android:background="@null"
+		/>
+
+	</LinearLayout>
+	<include layout="@layout/hi_ad_mod" /> 
+	
+</LinearLayout>
