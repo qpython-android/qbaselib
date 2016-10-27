@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.quseit.android.R;
 import com.quseit.item.HeadedTextItem2;
+import com.quseit.widget.AsyncImageView;
 
-import greendroid.widget.AsyncImageView;
 import greendroid.widget.item.Item;
 import greendroid.widget.itemview.ItemView;
 
