@@ -81,7 +81,7 @@
 
 			<!-- NoAD -->
 			<RelativeLayout
-				android:id="@+id/plugin_pro_box"
+				android:id="@+id/plugin_pro_box2"
 				style="@style/gridBox"
 				android:onClick="onNoAD"
 				android:visibility="gone"
@@ -445,7 +445,7 @@
 					style="@style/gridBox_Title"
 					/>
 				<TextView
-					android:id="@+id/plugin_ftp_value"
+					android:id="@+id/plugin_ftp_value2"
 					android:layout_toRightOf="@id/plugin_ftp"
 					android:layout_alignTop="@id/plugin_ftp"
 					style="@style/gridBox_Value"
@@ -463,6 +463,8 @@
 				android:id="@+id/proxy_box"
 				style="@style/gridBox"
 				android:onClick="onSetProxy"
+				android:visibility="gone"
+
 				>		
 				<TextView
 					android:id="@+id/proxy_setting"
