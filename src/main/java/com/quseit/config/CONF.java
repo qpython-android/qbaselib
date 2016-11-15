@@ -1,8 +1,8 @@
 package com.quseit.config;
 
 public class CONF {
-	public static final String BA_SITE2 = "u.quseit.com";
-	public static final String FR_SITE = "play.quseit.com"; 
+	public static final String BA_SITE2 = "conf.quseit.com";
+	public static final String FR_SITE = "play.quseit.com";
     public static final int TRY_COUNT = 3;
     public static final long TRY_DELAY = 1000;
     
