@@ -59,6 +59,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,6 +67,16 @@ import java.util.regex.Pattern;
 
 public class NUtil {
 
+	// 返回a到b之間(包括a,b)的任意一個自然数,如果a > b || a < 0，返回-1
+	public static int getRandomInt(int min, int max) {
+		if (min > max || min < 0)
+			return -1;
+		// 下面两种形式等价
+		// return a + (int) (new Random().nextDouble() * (b - a + 1));
+		Random random = new Random();
+		int s = random.nextInt(max)%(max-min+1) + min;
+		return s;
+	}
 	public static Map<String, List<String>> getQueryParams(String url) {
 		try {
 			Map<String, List<String>> params = new HashMap<String, List<String>>();
