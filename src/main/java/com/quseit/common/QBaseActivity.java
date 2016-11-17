@@ -40,7 +40,7 @@ import android.widget.Toast;
 import com.quseit.android.R;
 import com.quseit.asihttp.JsonHttpResponseHandler;
 import com.quseit.asihttp.RequestParams;
-import com.quseit.base._WBase;
+import com.quseit.base.DialogBase;
 import com.quseit.config.CONF;
 import com.quseit.db.AppLog;
 import com.quseit.db.CacheLog;
@@ -78,10 +78,10 @@ import greendroid.widget.item.TextItem;
 
 //import greendroid.widget.QuickActionWidget;
 
-//public abstract class GDBase extends GDActivity  implements TapjoyFeaturedAppNotifier, TapjoyDisplayAdNotifier, TapjoyVideoNotifier {
+//public abstract class QBaseActivity extends GDActivity  implements TapjoyFeaturedAppNotifier, TapjoyDisplayAdNotifier, TapjoyVideoNotifier {
 
-public abstract class GDBase extends GDActivity {
-	protected static final String TAG = "GDBase";
+public abstract class QBaseActivity extends GDActivity {
+	protected static final String TAG = "QBaseActivity";
 
 	private static int NOTIFICATION_ID = 0x20001;// 通知栏消息id
 
@@ -98,7 +98,7 @@ public abstract class GDBase extends GDActivity {
 
 	protected ProgressDialog waitingWindow;
 
-	protected _WBase WBase;
+	protected DialogBase WBase;
 
 	protected int dialogIndex;
 
@@ -154,7 +154,7 @@ public abstract class GDBase extends GDActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		WBase = new _WBase(this, this);
+		WBase = new DialogBase(this, this);
 		dialogIndex = 1;
 	}
 
@@ -807,7 +807,7 @@ public abstract class GDBase extends GDActivity {
 
 									Intent updateIntent = new Intent();
 									updateIntent.setClassName(context.getPackageName(), context.getPackageName()
-											+ ".SrvUpdate");
+											+ ".QUpdateService");
 									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL1, R.string.app_name);
 									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL2, py_core_url);
 									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL3, FileHelper.getExt(py_core_url, ""));

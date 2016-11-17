@@ -1,15 +1,6 @@
 
 package com.quseit.common;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -30,10 +21,18 @@ import com.quseit.util.FileHelper;
 import com.quseit.util.NUtil;
 import com.quseit.util.Utils;
 
-public abstract class SrvUpdate extends Service {
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public abstract class QUpdateService extends Service {
 	private static int NOTIFICATION_ID = 0x20001;//通知栏消息id
 
-	private static final String TAG = "SrvUpdate";
+	private static final String TAG = "QUpdateService";
 	private int NotifyIndex;
 
 	private int titleId = 0;
@@ -145,10 +144,10 @@ public abstract class SrvUpdate extends Service {
 		                Intent installIntent = new Intent(Intent.ACTION_VIEW);
 		                
 		                installIntent.setDataAndType(uri, "application/vnd.android.package-archive");
-		                updatePendingIntent = PendingIntent.getActivity(SrvUpdate.this, 0, installIntent, 0);
+		                updatePendingIntent = PendingIntent.getActivity(QUpdateService.this, 0, installIntent, 0);
 		                
 		                //updateNotification.defaults = Notification.DEFAULT_VIBRATE;
-		                updateNotification.setLatestEventInfo(SrvUpdate.this, getString(R.string.app_name), getString(R.string.up_soft_done), updatePendingIntent);
+		                updateNotification.setLatestEventInfo(QUpdateService.this, getString(R.string.app_name), getString(R.string.up_soft_done), updatePendingIntent);
 		                updateNotificationManager.notify(NotifyIndex, updateNotification);*/
 	                //}
 	                //停止服务
@@ -160,7 +159,7 @@ public abstract class SrvUpdate extends Service {
 	            	//updateNotification2.defaults = Notification.DEFAULT_VIBRATE;// 振动提醒
 	            	updateNotification2.icon = R.drawable.ic_warning_nb;
 	            	updateNotification2.contentIntent = updatePendingIntent;
-	                updateNotification2.setLatestEventInfo(SrvUpdate.this, getString(R.string.app_name), getString(R.string.up_update_failed), updatePendingIntent);
+	                updateNotification2.setLatestEventInfo(QUpdateService.this, getString(R.string.app_name), getString(R.string.up_update_failed), updatePendingIntent);
 	                updateNotificationManager.notify(NotifyIndex, updateNotification2);
 	            default:
 	                stopService(intentS);
@@ -269,7 +268,7 @@ public abstract class SrvUpdate extends Service {
 			        	 Notification updateNotification = new Notification();
 			        	 updateNotification.icon = R.drawable.ic_download_nb;
 			             updateNotification.contentIntent = updatePendingIntent;
-			             updateNotification.setLatestEventInfo(SrvUpdate.this, getString(R.string.up_soft_downloading), (int)totalSize*100/updateTotalSize+"%", updatePendingIntent);
+			             updateNotification.setLatestEventInfo(QUpdateService.this, getString(R.string.up_soft_downloading), (int)totalSize*100/updateTotalSize+"%", updatePendingIntent);
 			             updateNotificationManager.notify(NotifyIndex, updateNotification);
 			         }                       
 			     }

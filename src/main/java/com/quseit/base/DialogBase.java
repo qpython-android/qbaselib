@@ -1,18 +1,5 @@
 package com.quseit.base;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-
-
-
-import com.quseit.android.R;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,7 +9,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-//import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Handler;
@@ -34,7 +20,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class _WBase  {
+import com.quseit.android.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+
+//import android.media.AudioManager;
+
+public class DialogBase {
 	//private static final String TAG = "_FBaseAct";
 
     /** Called when the activity is first created. */
@@ -91,7 +90,7 @@ public class _WBase  {
     DialogInterface.OnClickListener dialogCancelObj;
     DatePickerDialog.OnDateSetListener dateListener;
     
-    public _WBase(Context context, Activity activity) {
+    public DialogBase(Context context, Activity activity) {
     	mContext = context;
     	mActivity = activity;
     	
