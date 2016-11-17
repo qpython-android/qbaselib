@@ -9,7 +9,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,7 +120,7 @@ public class AdSlidShowView extends FrameLayout {
 
 		@Override
 		public Object instantiateItem(View container, final int position) {
-			Log.d("AdSlidShowView", "instantiateItem:"+adlistImage.size()+"-"+position);
+			//Log.d("AdSlidShowView", "instantiateItem:"+adlistImage.size()+"-"+position);
 			if (adlistImage.size()!=0) {
 				
 				try{
@@ -225,7 +224,7 @@ public class AdSlidShowView extends FrameLayout {
 	}
 
 	public void setImagesFromUrl(List<String> urls) {
-		Log.d("BS", "setImageFromUrl:" + urls.toString());
+		//Log.d("BS", "setImageFromUrl:" + urls.toString());
 		dotList.removeAllViews();
 		this.adlistImage = getAdListImage(urls);
 		setDotLists(this.adlistImage);
