@@ -41,7 +41,7 @@
 				android:paddingBottom="10.0dip"
 				android:text="" 
 				android:gravity="center"
-				android:textColor="@color/cblack"
+				android:textColor="@color/maintextcolor"
 				/>	
 				
 				
@@ -72,7 +72,7 @@
 				android:paddingRight="20.0dip"
 				android:text="" 
 				android:gravity="center"
-				android:textColor="@color/cblack"
+				android:textColor="@color/maintextcolor"
 				/>	
 				
 				

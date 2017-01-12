@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="topbar">#1f1f1f</color>
+  <color name="maintextcolor">#000000</color>
+
   <color name="contentbg">#05a494</color>
   <color name="text">#888</color>  
   <color name="link">#FF0066CC</color>  
@@ -32,7 +34,6 @@
   <color name="cwhite2">#fef8ec</color>
   <color name="cwhite3">#fbfbfb</color>
   
-  <color name="cblack">#000000</color>
   <color name="cblack1">#171717</color>
   <color name="cblack2">#2d2d2d</color>
   

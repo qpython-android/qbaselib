@@ -45,7 +45,7 @@
 				android:layout_height="wrap_content"
 				style="@style/LinkText_Mid"
 				android:text="@string/about_content" 
-				android:textColor="@color/cblack"
+				android:textColor="@color/maintextcolor"
 				android:paddingRight="10dp"
 				android:paddingLeft="10dp"
 				/>
@@ -76,7 +76,7 @@
 				android:paddingTop="10.0dip"
 				
 				android:text="@string/about_us" 
-				android:textColor="@color/cblack"
+				android:textColor="@color/maintextcolor"
 				android:visibility="gone"
 				/>			
 				
@@ -107,7 +107,7 @@
 				android:paddingRight="10.0dip"
 				android:paddingTop="10.0dip"
 				android:text="@string/check_update" 
-				android:textColor="@color/cblack"
+				android:textColor="@color/maintextcolor"
 				android:visibility="gone"
 				/>	
 				
@@ -158,7 +158,7 @@
 				android:paddingBottom="20dp"
 				
 				style="@style/LinkText_Mid"
-				android:textColor="@color/cblack"
+				android:textColor="@color/maintextcolor"
 				/>
 			</LinearLayout>
 			

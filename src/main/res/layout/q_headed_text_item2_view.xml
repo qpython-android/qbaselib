@@ -31,7 +31,7 @@
 			<TextView
 			android:id="@+id/gd_text"
 			android:paddingTop="10.0dip"	
-			android:textColor="@color/cblack"		
+			android:textColor="@color/maintextcolor"
 			android:textSize="17sp"		
 			
 			android:layout_alignParentRight="true"

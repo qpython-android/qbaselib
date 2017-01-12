@@ -23,11 +23,11 @@
 		<item name="android:textAppearance">?attr/gdTextAppearanceSmall</item>
 		<item name="android:layout_height">60dip</item>
 		<item name="android:layout_marginLeft">20dip</item>
-		<item name="android:textColor">@color/cblack</item>
+		<item name="android:textColor">@color/maintextcolor</item>
 	</style>
 	<style name="GreenDroid.Widget.ItemView.LongTextItemView.Text">
 		<item name="android:textSize">13sp</item>
-		<item name="android:textColor">@color/cblack</item>
+		<item name="android:textColor">@color/maintextcolor</item>
 	</style>
 	
 	<style name="GreenDroid.Widget.ItemView.DrawableItemView" />
@@ -40,13 +40,13 @@
 	</style>
 	<style name="GreenDroid.Widget.ItemView.DrawableItemView.Text">
 		<item name="android:textSize">18sp</item>
-		<item name="android:textColor">@color/cblack</item>
+		<item name="android:textColor">@color/maintextcolor</item>
 	</style>
 	<style name="GreenDroid.Widget.ItemView.ThumbnailItemView" />
 	<style name="GreenDroid.Widget.ItemView.ThumbnailItemView.Text">
 		<item name="android:layout_height">?attr/gdItemViewPreferredHalfHeight</item>
 		<item name="android:textSize">14dip</item>
-		<item name="android:textColor">@color/cblack</item>
+		<item name="android:textColor">@color/maintextcolor</item>
 	</style>
 	<style name="GreenDroid.Widget.ItemView.ThumbnailItemView.Subtitle">
 		<item name="android:layout_height">?attr/gdItemViewPreferredHalfHeight</item>
@@ -59,7 +59,7 @@
 	</style>
 	<style name="GreenDroid.Widget.ItemView.TextItemView">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/cblack</item>
+        <item name="android:textColor">@color/maintextcolor</item>
 	</style>	
     <style name="SeparatorItemView" parent="GreenDroid.Widget.ItemView.SeparatorItemView">
         <item name="android:background">@drawable/separator_bg</item>
@@ -68,7 +68,7 @@
 	<style name="GreenDroid.Widget.ItemView.SeparatorItemView">
 		<item name="android:background">@color/cgrey6</item>
 		<item name="android:textAppearance">?attr/gdTextAppearanceSeparator</item>
-		<item name="android:textColor">@color/cblack</item>
+		<item name="android:textColor">@color/maintextcolor</item>
 		
 		<item name="android:paddingLeft">40dp</item>
 		<item name="android:singleLine">true</item>
@@ -84,7 +84,7 @@
 	</style>
 	<style name="GreenDroid.Widget.ItemView.ProgressItemView.Text">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/cblack</item>
+        <item name="android:textColor">@color/maintextcolor</item>
     </style>
 
 	<style name="Transparent" parent="@style/Theme.GreenDroid.NoTitleBar">
@@ -96,7 +96,7 @@
 
     <style name="gdTextAppearanceLarge" parent="@style/TextAppearance.Large">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/cblack</item>
+        <item name="android:textColor">@color/maintextcolor</item>
     </style>
 	<style name="prompt_title">
 		<item name="android:layout_height">wrap_content</item>
