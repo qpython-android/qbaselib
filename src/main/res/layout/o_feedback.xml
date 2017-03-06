@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:greendroid="http://schemas.android.com/apk/res/com.hipipal.android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@color/cwhite3"
@@ -16,9 +15,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
-		
 
-						
 		<TextView
 		android:id="@+id/about"
 		android:layout_width="fill_parent"
@@ -27,9 +24,7 @@
 		android:padding="10.0dip"
 		android:textColor="@color/topbar"
 		android:text="@string/feedback_content" />
- 
 
-				       
         <EditText android:id="@+id/editText_email"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 

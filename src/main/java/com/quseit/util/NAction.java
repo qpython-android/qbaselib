@@ -17,6 +17,7 @@ import com.quseit.db.UserLog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -961,6 +962,40 @@ public class NAction {
   			NStorage.setIntSP(context, "thread_stat_"+i,0);
   		}
   	}
-	
+
+	// check rooted
+	private final static int kSystemRootStateUnknow=-1;
+	private final static int kSystemRootStateDisable=0;
+	private final static int kSystemRootStateEnable=1;
+	private static int systemRootState=kSystemRootStateUnknow;
+
+	public static boolean isRootEnable(Context context) {
+		boolean enabledRoot = NStorage.getSP(context, "app.root").equals("1");
+		return isRootSystem() && enabledRoot;
+	}
+	public static boolean isRootSystem() {
+		if(systemRootState==kSystemRootStateEnable) {
+			return true;
+		} else if(systemRootState==kSystemRootStateDisable) {
+
+			return false;
+		}
+		File f=null;
+		final String kSuSearchPaths[]={"/system/bin/","/system/xbin/","/system/sbin/","/sbin/","/vendor/bin/"};
+		try {
+			for(int i=0;i<kSuSearchPaths.length;i++)
+			{
+				f=new File(kSuSearchPaths[i]+"su");
+				if(f!=null&&f.exists())
+				{
+					systemRootState=kSystemRootStateEnable;
+					return true;
+				}
+			}
+		}catch(Exception e) {
+		}
+		systemRootState=kSystemRootStateDisable;
+		return false;
+	}
 	
 }

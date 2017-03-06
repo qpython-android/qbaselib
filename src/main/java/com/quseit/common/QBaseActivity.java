@@ -112,11 +112,10 @@ public abstract class QBaseActivity extends GDActivity {
 	private ProgressDialog pDialog;
 
 	// Banner Ads.
-	boolean update_display_ad = false;
-
-	protected String tapjoyErr = "";
-
-	protected View adView;
+//	boolean update_display_ad = false;
+//	protected String tapjoyErr = "";
+//
+//	protected View adView;
 
 	// MobclixMMABannerXLAdView mobClix = null;
 	// MobFoxView mobFox = null;
@@ -690,16 +689,17 @@ public abstract class QBaseActivity extends GDActivity {
 
 								String appAbout = info.getString("appAbout");
 								String appUrl = info.getString("appUrl");
-								String appFeedContent = info.getString("appFeedContent");
-								String appFeedUrl = info.getString("appFeedUrl");
-								// String appSelfCheck =
-								// info.getString("appSelfCheck");
-								// String appSelfTitle =
-								// info.getString("appSelfTitle");
-								// String appSelfLink =
-								// info.getString("appSelfLink");
+								String appPrivacyTitle = "";
+								if (info.has("privacyTitle")) {
+									appPrivacyTitle = info.getString("privacyTitle");
+								}
 
-								NAction.setAppConf(context, appAbout, appUrl, appFeedContent, appFeedUrl);
+								String appPrivacyUrl = "";
+								if (info.has("privacyUrl")) {
+									appPrivacyUrl = info.getString("privacyUrl");
+								}
+
+								NAction.setAppConf(context, appAbout, appUrl, appPrivacyTitle, appPrivacyUrl);
 								String updateQ = info.getString("updateQ");
 								NAction.setUpdateQ(getApplicationContext(), updateQ);
 
@@ -1583,6 +1583,18 @@ public abstract class QBaseActivity extends GDActivity {
     }
 
     public void onNotify(View v){}
+
+	public void onPrivacy(View v) {
+		String[] appConf = NAction.getAppConf(getApplicationContext());
+		String privacyUrl = appConf[3];
+		if (privacyUrl.equals("")) {
+			privacyUrl = getString(R.string.privacy_url);
+		}
+
+		Intent intent = NAction.openRemoteLink(getApplicationContext(), privacyUrl);
+		startActivity(intent);
+
+	}
 
 	/*
 	 * // Notifier for receiving the full screen ad data on a successful connect. public void

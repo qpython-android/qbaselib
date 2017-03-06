@@ -78,6 +78,29 @@
 				/>
 			</RelativeLayout>
 
+			<!-- Privacy -->
+			<RelativeLayout
+				style="@style/gridBox"
+				android:onClick="onPrivacy"
+				>
+				<TextView
+					android:id="@+id/plugin_privacy"
+					android:text="@string/privacy_title"
+					style="@style/gridBox_Title"
+					/>
+				<TextView
+					android:layout_toRightOf="@id/plugin_privacy"
+					android:layout_alignTop="@id/plugin_privacy"
+					style="@style/gridBox_Value"
+					android:text=""
+					/>
+				<ImageView
+					style="@style/gridBox_RTag"
+					android:src="@drawable/mini_right_tag"
+					android:onClick="onPrivacy"
+					/>
+			</RelativeLayout>
+
 
 			<!-- NoAD -->
 			<RelativeLayout
