@@ -16,8 +16,7 @@
 	<ImageButton 
 		android:layout_gravity="fill_vertical" 
 		android:layout_marginBottom="4.0dip" 
-		android:id="@+id/voiceim_button" 
-		android:background="@drawable/silver_button" 
+		android:background="@drawable/silver_button"
 		android:layout_width="wrap_content" 
 		android:layout_height="fill_parent" 
 		android:layout_marginRight="3.0dip" 

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <LinearLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android" 
-	xmlns:greendroid="http://schemas.android.com/apk/res/com.zuowuxuxi.android"
-	
+
 	android:id="@+id/return_bar"
 	android:orientation="vertical"
 	android:layout_height="@dimen/v_grid_height" 

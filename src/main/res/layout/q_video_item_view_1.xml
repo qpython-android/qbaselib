@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.quseit.view.VideoItemView
     xmlns:android="http://schemas.android.com/apk/res/android"
-   	xmlns:greendroid="http://schemas.android.com/apk/res/com.zuowuxuxi.android"
    	style="?attr/gdThumbnailItemViewStyle"
     android:layout_width="fill_parent"
     android:orientation="vertical">
