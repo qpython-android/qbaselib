@@ -170,18 +170,14 @@ public abstract class DownloaderBase extends Service {
 				}
 
 				this.downloadNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-				Notification downloadNotification = new Notification();
 
 				updateIntent = new Intent(this, getMan());
 				updatePendingIntent = PendingIntent.getActivity(this,
 						NOTIFICATION_ID, updateIntent, 0);
 
-				downloadNotification.icon = R.drawable.ic_download_nb;
+				Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "("+ mArtist + ")", "0%", updatePendingIntent,
+						R.drawable.ic_download_nb, null, Notification.FLAG_ONGOING_EVENT);
 
-				downloadNotification.tickerText = getString(R.string.up_soft_download);
-				downloadNotification.contentIntent = updatePendingIntent;
-				downloadNotification.setLatestEventInfo(this, mTitle + "("
-						+ mArtist + ")","", updatePendingIntent);
 
 				downloadNotificationManager.notify(NotifyIndex,
 						downloadNotification);
@@ -311,18 +307,14 @@ public abstract class DownloaderBase extends Service {
 						   						   
 						   
 						   if (mCompletedSize*100/fileLenght%2==0) {
-							   Notification downloadNotification = new Notification();
-	
+
 							   updatePendingIntent = PendingIntent.getActivity(DownloaderBase.this,
 										NOTIFICATION_ID, updateIntent, 0);
-	
-								downloadNotification.icon = R.drawable.ic_download_nb;
-	
-								downloadNotification.tickerText = getString(R.string.up_soft_download);
-								downloadNotification.contentIntent = updatePendingIntent;
-								downloadNotification.setLatestEventInfo(DownloaderBase.this, mTitle + "("
-										+ mArtist + ")",mCompletedSize*100/fileLenght+"%", updatePendingIntent);
-	
+
+							   Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "("+ mArtist + ")", mCompletedSize*100/fileLenght +"%", updatePendingIntent,
+									   R.drawable.ic_download_nb, null, Notification.FLAG_ONGOING_EVENT);
+
+
 								downloadNotificationManager.notify(NotifyIndex,
 										downloadNotification);
 						   }
@@ -395,13 +387,9 @@ public abstract class DownloaderBase extends Service {
 
 			case DOWNLOAD_COMPLETE:
 
-				Notification downloadNotification = new Notification();
-				downloadNotification.icon = R.drawable.ic_downloaded_nb;
-				// downloadNotification.defaults =
-				// Notification.DEFAULT_VIBRATE;// 振动提醒
-				downloadNotification.contentIntent = updatePendingIntent;
-				downloadNotification.setLatestEventInfo(getContext(), mTitle,
-						getString(R.string.up_soft_done), updatePendingIntent);
+
+				Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "("+ mArtist + ")", getString(R.string.up_soft_done), updatePendingIntent,
+						R.drawable.ic_download_nb, null, Notification.FLAG_AUTO_CANCEL);
 
 				downloadNotificationManager.notify(NotifyIndex,
 						downloadNotification);
@@ -450,12 +438,9 @@ public abstract class DownloaderBase extends Service {
 
 
 				} catch (IOException e) { // 改名失败
-					downloadNotification.icon = R.drawable.ic_error_nb;
-					downloadNotification.contentIntent = updatePendingIntent;
-					downloadNotification.setLatestEventInfo(getContext(),
-							mTitle + "(" + mArtist + ")",
-							getString(R.string.up_soft_failed),
-							updatePendingIntent);
+
+					downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "("+ mArtist + ")", getString(R.string.up_soft_failed), updatePendingIntent,
+							R.drawable.ic_error_nb, null, Notification.FLAG_AUTO_CANCEL);
 
 					downloadNotificationManager.notify(NotifyIndex,
 							downloadNotification);
@@ -466,16 +451,9 @@ public abstract class DownloaderBase extends Service {
 
 			case DOWNLOAD_FAIL:
 				// 下载失败
-				downloadNotification = new Notification();
-				// downloadNotification.defaults =
-				// Notification.DEFAULT_VIBRATE;// 振动提醒
-				downloadNotification.icon = R.drawable.ic_warning_nb;
-				downloadNotification.contentIntent = updatePendingIntent;
-				downloadNotification
-						.setLatestEventInfo(getContext(), mTitle + "("
-								+ mArtist + ")",
-								getString(R.string.up_soft_failed),
-								updatePendingIntent);
+				downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "("+ mArtist + ")", getString(R.string.up_soft_failed), updatePendingIntent,
+						R.drawable.ic_warning_nb, null, Notification.FLAG_AUTO_CANCEL);
+
 
 				downloadNotificationManager.notify(NotifyIndex,
 						downloadNotification);
@@ -498,13 +476,9 @@ public abstract class DownloaderBase extends Service {
 						getString(R.string.download_exception),
 						Toast.LENGTH_SHORT).show();
 
-				downloadNotification = new Notification();
-				downloadNotification.icon = R.drawable.ic_error_nb;
-				downloadNotification.contentIntent = updatePendingIntent;
-				downloadNotification.setLatestEventInfo(getContext(), mTitle
-						+ "(" + mArtist + ")",
-						getString(R.string.download_exception),
-						updatePendingIntent);
+				downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "("+ mArtist + ")", getString(R.string.download_exception), updatePendingIntent,
+						R.drawable.ic_error_nb, null, Notification.FLAG_AUTO_CANCEL);
+
 
 				downloadNotificationManager.notify(NotifyIndex,
 						downloadNotification);
@@ -519,15 +493,9 @@ public abstract class DownloaderBase extends Service {
 								getString(R.string.download_pause), mTitle),
 						Toast.LENGTH_SHORT).show();
 
-				downloadNotification = new Notification();
-				// downloadNotification.defaults =
-				// Notification.DEFAULT_VIBRATE;// 振动提醒
-				// downloadNotification.flags = Notification.FLAG_NO_CLEAR;
-				downloadNotification.icon = R.drawable.ic_pause;
-				downloadNotification.contentIntent = updatePendingIntent;
-				downloadNotification.setLatestEventInfo(getContext(), mTitle
-						+ "(" + mArtist + ")", getString(R.string.task_pause),
-						updatePendingIntent);
+
+				downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "("+ mArtist + ")", getString(R.string.task_pause), updatePendingIntent,
+						R.drawable.ic_pause, null, Notification.FLAG_AUTO_CANCEL);
 
 				downloadNotificationManager.notify(NotifyIndex,
 						downloadNotification);
@@ -729,18 +697,14 @@ public abstract class DownloaderBase extends Service {
 				}
 
 				this.downloadNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-				Notification downloadNotification = new Notification();
 
 				updateIntent = new Intent(this, getMan());
 				updatePendingIntent = PendingIntent.getActivity(this,
 						NOTIFICATION_ID, updateIntent, 0);
 
-				downloadNotification.icon = R.drawable.ic_download_nb;
+				Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "("+ mArtist + ")", getString(R.string.up_soft_download), updatePendingIntent,
+						R.drawable.ic_download_nb, null, Notification.FLAG_ONGOING_EVENT);
 
-				downloadNotification.tickerText = getString(R.string.up_soft_download);
-				downloadNotification.contentIntent = updatePendingIntent;
-				downloadNotification.setLatestEventInfo(this, mTitle + "("
-						+ mArtist + ")", "", updatePendingIntent);
 
 				downloadNotificationManager.notify(NotifyIndex,
 						downloadNotification);

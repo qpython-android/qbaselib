@@ -262,8 +262,10 @@
 <string name="game">Games</string>
 
 <!---->
-<string name="private_version">1347438510.05</string>
+<string name="private1_version">1347438520.05</string>
+<string name="private2_version">1347438543.05</string>
+<string name="private3_version">1347438520.05</string>
+<string name="private_version">1347438520.05</string>
 <string name="public_version">1347438500.05</string>
-<string name="private3_version">1347438510.05</string>
 <string name="public3_version">1347438500.05</string>
 </resources>

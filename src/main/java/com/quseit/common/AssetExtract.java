@@ -57,24 +57,37 @@ public class AssetExtract {
                 break;
             }
 
-            //Log.i("python", "extracting " + entry.getName());
+            Log.i("python", "extracting ["+entry.getName()+"]");
+
+//            if (entry.getName()!=null && entry.getName().trim().equals("")) {
+//                Log.i("python", "extracting none");
+//
+//                continue;
+//            }
             
             if (entry.isDirectory()) {
 
                 try {
                     new File(target +"/" + entry.getName()).mkdirs();
-                } catch ( SecurityException e ) { };
+                } catch ( SecurityException e ) {
+                    Log.e("python", "could not open SecurityException" + e);
+
+                };
 
                 continue;
             }
 
             OutputStream out = null;
-            String path = target + "/" + entry.getName();
+            String path = target + "/" + entry.getName().trim();
 
             try {
                 out = new BufferedOutputStream(new FileOutputStream(path), 8192);
             } catch ( FileNotFoundException e ) {
-            } catch ( SecurityException e ) { };
+                Log.e("python", "could not open FileNotFoundException:" + e);
+
+            } catch ( SecurityException e ) {
+                Log.e("python", "could not open SecurityException:" + e);
+            };
 
             if ( out == null ) {
                 Log.e("python", "could not open " + path);
@@ -95,7 +108,7 @@ public class AssetExtract {
                 out.flush();
                 out.close();
             } catch ( java.io.IOException e ) {
-                Log.e("python", "extracting zip", e);
+                Log.e("python", "extracting zip：", e);
                 return false;
             }
         }
@@ -104,6 +117,8 @@ public class AssetExtract {
             tis.close();
             assetStream.close();
         } catch (IOException e) {
+            Log.e("python", "extracting zip IOException：", e);
+
             // pass
         }
             

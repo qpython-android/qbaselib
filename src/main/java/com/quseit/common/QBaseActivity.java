@@ -307,7 +307,7 @@ public abstract class QBaseActivity extends GDActivity {
 					adSlid.setOnUrlBackCall(new urlBackcall() {
 						@Override
 						public void onUrlBackCall(int i) {
-							Intent intent = NAction.openRemoteLink(getApplicationContext(), ltImgLink.get(i));
+							Intent intent = NAction.getLinkAsIntent(getApplicationContext(), ltImgLink.get(i));
 							startActivity(intent);
 						}
 					});
@@ -323,7 +323,7 @@ public abstract class QBaseActivity extends GDActivity {
 						@Override
 						public void onClick(View v) {
 							NAction.recordAdLog(getApplicationContext(), "ad", adKey);
-							Intent intent = NAction.openRemoteLink(getApplicationContext(), adLink);
+							Intent intent = NAction.getLinkAsIntent(getApplicationContext(), adLink);
 							startActivity(intent);
 						}
 					});
@@ -750,7 +750,6 @@ public abstract class QBaseActivity extends GDActivity {
 									String msg_link = NAction.getExtP(context, "msg_link");
 									String msg_type = NAction.getExtP(context, "msg_type");
 
-									Notification updateNotification = new Notification();
 									NotificationManager updateNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 									Intent updateIntent;
 									if (msg_type.equals("activity")) {
@@ -771,12 +770,8 @@ public abstract class QBaseActivity extends GDActivity {
 									PendingIntent updatePendingIntent = PendingIntent.getActivity(context,
 											NOTIFICATION_ID, updateIntent, 0);
 
-									updateNotification.icon = R.drawable.icon_nb;
-									updateNotification.flags = Notification.FLAG_AUTO_CANCEL;
-									updateNotification.tickerText = msg_msg;
-									updateNotification.contentIntent = updatePendingIntent;
-									updateNotification.setLatestEventInfo(context, getString(R.string.app_name),
-											msg_msg, updatePendingIntent);
+									Notification updateNotification = NAction.getNotification(getApplicationContext(),getString(R.string.app_name), msg_msg, updatePendingIntent, R.drawable.icon_nb, null,Notification.FLAG_AUTO_CANCEL);
+
 									// 发出通知
 
 									updateNotificationManager.notify(NOTIFICATION_ID, updateNotification);
@@ -922,7 +917,7 @@ public abstract class QBaseActivity extends GDActivity {
 							NAction.recordAdLog(getApplicationContext(), "update", "");
 
 							if (type.equals("link")) {
-								Intent intent = NAction.openRemoteLink(getApplicationContext(), updatelink);
+								Intent intent = NAction.getLinkAsIntent(getApplicationContext(), updatelink);
 								startActivity(intent);
 
 							}
@@ -1591,7 +1586,7 @@ public abstract class QBaseActivity extends GDActivity {
 			privacyUrl = getString(R.string.privacy_url);
 		}
 
-		Intent intent = NAction.openRemoteLink(getApplicationContext(), privacyUrl);
+		Intent intent = NAction.getLinkAsIntent(getApplicationContext(), privacyUrl);
 		startActivity(intent);
 
 	}

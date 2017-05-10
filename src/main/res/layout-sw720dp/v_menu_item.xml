@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+
+	android:id="@+id/return_bar"
+	android:orientation="vertical"
+	android:layout_height="@dimen/v_grid_height3" 
+	android:layout_width="fill_parent"
+	android:gravity="center"
+	>
+	<RelativeLayout 
+		android:id="@+id/rlv2"
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"
+		android:background="@null"
+		android:gravity="center"
+		> 
+		
+		<ImageView  
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent" 
+		android:id="@+id/item_image" 
+		android:layout_centerHorizontal="true"
+		android:background="@null"
+		/> 
+		
+		<com.quseit.widget.AsyncImageView
+		android:paddingTop="10.0dip"
+		android:layout_width="wrap_content" 
+		android:id="@+id/ItemImage" 
+		android:layout_height="wrap_content" 
+		android:layout_centerHorizontal="true"
+		android:background="@null"
+		/> 
+		<TextView   
+		android:paddingTop="10.0dip"
+		android:paddingLeft="2.0dip"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:layout_marginLeft="12dip"
+		android:layout_marginRight="10dip"
+		android:layout_below="@+id/ItemImage" 
+		android:id="@+id/ItemText" 
+		android:textSize="17sp"
+		android:textColor="@color/topbar"
+		android:singleLine="true"
+		android:layout_centerHorizontal="true"		
+		android:background="@null"
+		/> 
+		<TextView   
+		android:paddingTop="40.0dip"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:layout_below="@+id/ItemImage" 
+		android:id="@+id/ItemDesc" 
+		android:singleLine="true"
+		
+		android:textSize="14sp"
+		android:textColor="@color/cwhite"
+		android:background="@null"
+		/> 
+	</RelativeLayout> 
+</LinearLayout>
