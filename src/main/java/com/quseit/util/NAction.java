@@ -1,10 +1,14 @@
 package com.quseit.util;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ConfigurationInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
@@ -29,6 +33,41 @@ import java.util.UUID;
 //import com.tapjoy.TapjoyConnect;
 
 public class NAction {
+
+	public static Notification getNotification(Context context, String contentTitle, String contentText, PendingIntent intent,
+										int smallIconId, Bitmap largeIconId, int flags) {
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+			Notification notification = new Notification.Builder(context) //new Notification(icon, tickerText, when);
+					.setTicker(contentTitle)
+					.setContentTitle(contentTitle)
+                    .setContentText(contentText)
+                    .setSmallIcon(smallIconId)
+					.setLargeIcon(largeIconId)
+					.setAutoCancel(true)
+					.setContentIntent(intent)
+                    .build();
+
+			return notification;
+		} else if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+			Notification notification = new Notification.Builder(context) //new Notification(icon, tickerText, when);
+					.setTicker(contentTitle)
+					.setContentTitle(contentTitle)
+					.setContentText(contentText)
+					.setSmallIcon(smallIconId)
+					.setSmallIcon(smallIconId)
+					.setLargeIcon(largeIconId)
+					.setAutoCancel(true)
+					.setContentIntent(intent)
+					.getNotification();
+			return notification;
+		} else {
+			Notification notification = new Notification(smallIconId, contentTitle, System.currentTimeMillis());
+			notification.tickerText = contentTitle;
+			notification.contentIntent = intent;
+			notification.flags |= flags;
+			return null;
+		}
+	}
 	
 	@SuppressLint("NewApi")
 	public static boolean isOpenGL2supported(Context context) {
@@ -40,10 +79,7 @@ public class NAction {
 			final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
 			return supportsEs2;
 	}
-	
-	public static void setDropBoxstoreKeys(Context context, String key, String sec) {
-		
-	}
+
 	
 	public static String getMediaCenter(Context context) {
 		return NStorage.getSP(context, "config.mediacenter");
@@ -140,15 +176,11 @@ public class NAction {
 		return NStorage.getSP(context, "service.contenthost");
 	}
 	public static void setUpdateHost(Context context, String host) {
-		//Log.d(TAG, "setUpdateHost:"+host);
-		//if (!host.equals("") && !host.equals("-")) {
 		NStorage.setSP(context, "service.updatehost", host);
-		//}
 	}
 	public static String getUpdateHost(Context context) {
 		String h = NStorage.getSP(context, "service.updatehost");
 
-		//Log.d(TAG, "getUpdateHost:"+h);
 		return h;
 	}
 	
@@ -203,7 +235,7 @@ public class NAction {
 	     try {
 	 		URL url = new URL(downloadUrl);
 			HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
-		    httpConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Linux; U; Android 2.3.7; en-us; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1");
+		    httpConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Linux; U; Android 4.0.1; en-us; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1");
 		    //httpConnection.setRequestProperty("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.7");
 		    //httpConnection.setRequestProperty("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		     httpConnection.setRequestProperty("RANGE", "bytes=" + startPos + "-");
@@ -276,7 +308,7 @@ public class NAction {
 	    return installIntent;
 	}*/
 	
-	public static Intent openRemoteLink(Context context, String link) {
+	public static Intent getLinkAsIntent(Context context, String link) {
 		//Log.d(TAG, "openRemoteLink:"+link);
 		String vlowerFileName = link.toLowerCase();
 		if (vlowerFileName.startsWith("lgmarket:")) {
@@ -305,8 +337,6 @@ public class NAction {
 			 
 			return intent;
 		}
-	}
-	public static void openLocalLink(Context context) {
 	}
 	public static String getUserNoId(Context context) {
 		String usernoid = NStorage.getSP(context, "user.usernoid");
@@ -685,28 +715,6 @@ public class NAction {
 		NStorage.setSP(context, "hi_opt.hiact", val);
 	}
 
-	/*public static void initUserStoFromJSO(Context context, JSONObject htp_user) {
-		String username;
-		try {
-			username = (String)htp_user.getString("username");
-			String name = (String)htp_user.getString("name");
-			String token = (String)htp_user.getString("token");
-			String uid = (String)htp_user.getString("uid");
-			String type = (String)htp_user.getString("type");
-	    	
-	    	NStorage.setSP(context, "user.username", username);
-	    	NStorage.setSP(context, "user.name", name);
-	    	NStorage.setSP(context, "user.uid", uid);
-	    	NStorage.setSP(context, "user.token", token);
-	    	NStorage.setSP(context, "user.type", type);		
-	    	if (CONF.DEBUG)  Log.d(TAG, "initUserStoFromJSO ok");
-
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.e(TAG, "initUserStoFromJSO:"+e.getMessage());
-		}
-	}*/
 	public static void setReloadFlag(Context context) {
     	NStorage.setSP(context, "tmp.reload_mp", "1");	// reload flag
 	}
@@ -807,36 +815,7 @@ public class NAction {
 		return "uid="+NAction.getUID(context)+"&token="+NAction.getToken(context)+"&userno="+NAction.getUserNoId(context)+"&lang="+NUtil.getLang()+
 				"&ver="+NUtil.getVersinoCode(context)+"&code="+NAction.getCode(context)+"&sdk="+sdk+"&appid="+context.getPackageName();
 	}
-	/*public static CharSequence[] getProvinceFromJSON(Context context, JSONObject result, boolean dummy1) {
-    	JSONArray htappData = null;
-    	JSONObject province;
-    	String name;
-    	int cid;
-    	CharSequence[] provinceC;
-		try {
-			htappData = result.getJSONObject("HTAppData").getJSONArray("lb_province");
-			if (dummy1) {
-				provinceC = new CharSequence[htappData.length()+1];
-				provinceC[0] = context.getString(R.string.city_nolimit);
-			} else {
-				provinceC = new CharSequence[htappData.length()];
 
-			}
-			for (int i=0;i<htappData.length();i++) {
-				province = htappData.getJSONObject(i);
-				name = province.getString("name");
-				cid = province.getInt("cid");
-				provinceC[dummy1?(i+1):i] =  name;
-			}
-			return provinceC;
-
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}*/
 	// ftp
 	public static void setFtpRoot(Context context, String root) {
     	NStorage.setSP(context, "ftp.root", root);
@@ -981,7 +960,7 @@ public class NAction {
 			return false;
 		}
 		File f=null;
-		final String kSuSearchPaths[]={"/system/bin/","/system/xbin/","/system/sbin/","/sbin/","/vendor/bin/"};
+		final String kSuSearchPaths[]={"/su/bin/", "/system/bin/","/system/xbin/","/system/sbin/","/sbin/","/vendor/bin/"};
 		try {
 			for(int i=0;i<kSuSearchPaths.length;i++)
 			{

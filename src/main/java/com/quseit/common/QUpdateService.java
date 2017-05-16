@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.quseit.android.R;
 import com.quseit.config.CONF;
 import com.quseit.util.FileHelper;
+import com.quseit.util.NAction;
 import com.quseit.util.NUtil;
 import com.quseit.util.Utils;
 
@@ -87,8 +88,7 @@ public abstract class QUpdateService extends Service {
 			}
 	   	 
 		    this.updateNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		    Notification updateNotification = new Notification();
-		 
+
 		    //设置下载过程中，点击通知栏，回到主界面
 		    Intent x = getSrvUpdateRet();
 		    if (x == null) {
@@ -99,13 +99,10 @@ public abstract class QUpdateService extends Service {
 		    } else {
 		    	Intent updateIntent = x;
 			    updatePendingIntent = PendingIntent.getActivity(this,NOTIFICATION_ID,updateIntent,0);
-
 		    }
-		    //设置通知栏显示内容
-		    updateNotification.icon = R.drawable.ic_download_nb;
-		    updateNotification.tickerText = getString(R.string.up_soft_update);
-		    updateNotification.contentIntent = updatePendingIntent;
-		    updateNotification.setLatestEventInfo(this, getString(R.string.app_name),"0%",updatePendingIntent);
+
+			Notification updateNotification = NAction.getNotification(getApplicationContext(), getString(R.string.up_soft_update),"%0", updatePendingIntent, R.drawable.ic_download_nb, null,Notification.FLAG_ONGOING_EVENT);
+
 		    //发出通知
 		    updateNotificationManager.notify(NotifyIndex,updateNotification);
 		 
@@ -154,12 +151,9 @@ public abstract class QUpdateService extends Service {
 	                stopService(intentS);
 	                break;
 	            case DOWNLOAD_FAIL:
-	                //下载失败
-	                Notification updateNotification2 = new Notification();
-	            	//updateNotification2.defaults = Notification.DEFAULT_VIBRATE;// 振动提醒
-	            	updateNotification2.icon = R.drawable.ic_warning_nb;
-	            	updateNotification2.contentIntent = updatePendingIntent;
-	                updateNotification2.setLatestEventInfo(QUpdateService.this, getString(R.string.app_name), getString(R.string.up_update_failed), updatePendingIntent);
+
+					Notification updateNotification2 = NAction.getNotification(getApplicationContext(), getString(R.string.app_name),getString(R.string.up_update_failed), updatePendingIntent, R.drawable.ic_warning_nb, null, Notification.FLAG_AUTO_CANCEL);
+
 	                updateNotificationManager.notify(NotifyIndex, updateNotification2);
 	            default:
 	                stopService(intentS);
@@ -265,11 +259,10 @@ public abstract class QUpdateService extends Service {
 			         //为了防止频繁的通知导致应用吃紧，百分比增加10才通知一次
 			         if ((downloadCount == 0)||(int) (totalSize*100/updateTotalSize)-10>downloadCount) {
 			        	 downloadCount += 10;
-			        	 Notification updateNotification = new Notification();
-			        	 updateNotification.icon = R.drawable.ic_download_nb;
-			             updateNotification.contentIntent = updatePendingIntent;
-			             updateNotification.setLatestEventInfo(QUpdateService.this, getString(R.string.up_soft_downloading), (int)totalSize*100/updateTotalSize+"%", updatePendingIntent);
-			             updateNotificationManager.notify(NotifyIndex, updateNotification);
+
+						 Notification updateNotification2 = NAction.getNotification(getApplicationContext(), getString(R.string.up_soft_downloading),(int)totalSize*100/updateTotalSize+"%", updatePendingIntent, R.drawable.ic_download_nb, null, Notification.FLAG_AUTO_CANCEL);
+
+			             updateNotificationManager.notify(NotifyIndex, updateNotification2);
 			         }                       
 			     }
 			} finally {
