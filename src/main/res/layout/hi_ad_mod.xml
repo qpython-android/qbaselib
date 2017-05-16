@@ -44,14 +44,6 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:visibility="gone" >
-
-        <greendroid.widget.AsyncImageView
-            android:id="@+id/image_ad"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

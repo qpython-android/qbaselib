@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import greendroid.image.ImageProcessor;
+//import greendroid.image.ImageProcessor;
 
 import com.quseit.android.R;
 import com.quseit.base.MyApp;
@@ -18,8 +18,8 @@ import com.quseit.util.ImageRequest.ImageRequestCallback;
 import com.quseit.util.MD5;
 import com.quseit.util.NAction;
 
-import greendroid.util.Config;
-import greendroid.util.GDUtils;
+//import greendroid.util.Config;
+//import greendroid.util.GDUtils;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -58,7 +58,7 @@ import com.quseit.util.ImageUtil;
  * method. Once the scrolling/flinging is over, <em>un-pause</em> your
  * {@link AsyncImageView}s using <code>setPaused(false)</code>
  * </p>
- * 
+ *
  * @author Cyril Mottier
  */
 public class AsyncImageView extends ImageView implements ImageRequestCallback {
@@ -68,14 +68,14 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     /**
      * Clients may listen to {@link AsyncImageView} changes using a
      * {@link OnImageViewLoadListener}.
-     * 
+     *
      * @author Cyril Mottier
      */
     public static interface OnImageViewLoadListener {
 
         /**
          * Called when the image started to load
-         * 
+         *
          * @param imageView The AsyncImageView that started loading
          */
         void onLoadingStarted(AsyncImageView imageView);
@@ -83,14 +83,14 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
         /**
          * Called when the image ended to load that is when the image has been
          * downloaded and is ready to be displayed on screen
-         * 
+         *
          * @param imageView The AsyncImageView that ended loading
          */
         void onLoadingEnded(AsyncImageView imageView, Bitmap image);
 
         /**
          * Called when the image loading failed
-         * 
+         *
          * @param imageView The AsyncImageView that failed to load
          */
         void onLoadingFailed(AsyncImageView imageView, Throwable throwable);
@@ -113,7 +113,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
     private Bitmap mBitmap;
     private OnImageViewLoadListener mOnImageViewLoadListener;
-    private ImageProcessor mImageProcessor;
+//    private ImageProcessor mImageProcessor;
     private BitmapFactory.Options mOptions;
 
     public AsyncImageView(Context context) {
@@ -129,23 +129,23 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
         initializeDefaultValues();
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AsyncImageView, defStyle, 0);
-		try {
-	        Drawable d = a.getDrawable(R.styleable.AsyncImageView_defaultSrc);
-	        if (d != null) {
-	            setDefaultImageDrawable(d);
-	        }
-		} catch (OutOfMemoryError e) {
-			
-		}
-        final int inDensity = a.getInt(R.styleable.AsyncImageView_inDensity, -1);
-        if (inDensity != -1) {
-            setInDensity(inDensity);
-        }
-
-        setUrl(a.getString(R.styleable.AsyncImageView_url));
-
-        a.recycle();
+//        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AsyncImageView, defStyle, 0);
+//		try {
+//	        Drawable d = a.getDrawable(R.styleable.AsyncImageView_defaultSrc);
+//	        if (d != null) {
+//	            setDefaultImageDrawable(d);
+//	        }
+//		} catch (OutOfMemoryError e) {
+//
+//		}
+//        final int inDensity = a.getInt(R.styleable.AsyncImageView_inDensity, -1);
+//        if (inDensity != -1) {
+//            setInDensity(inDensity);
+//        }
+//
+//        setUrl(a.getString(R.styleable.AsyncImageView_url));
+//
+//        a.recycle();
     }
 
     private void initializeDefaultValues() {
@@ -155,7 +155,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
     /**
      * Return true if this AsyncImageView is currently loading an image.
-     * 
+     *
      * @return true if this AsyncImageView is currently loading an image.
      *         Otherwise it returns false.
      */
@@ -165,7 +165,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
     /**
      * Return true if the displayed image has been correctly loaded.
-     * 
+     *
      * @return true if this AsyncImageView succeed to load the image at the
      *         given url.
      */
@@ -176,7 +176,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     /**
      * Pause this AsyncImageView preventing it from downloading the image. The
      * download process will start back once setPaused(false) is called.
-     * 
+     *
      * @param paused
      */
     public void setPaused(boolean paused) {
@@ -191,7 +191,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     /**
      * Helper to {@link #setBitmapFactoryOptions(Options)} that simply sets the
      * inDensity for loaded image.
-     * 
+     *
      * @param inDensity
      * @see AsyncImageView#setBitmapFactoryOptions(Options)
      */
@@ -212,7 +212,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
      * options are used internally by the {@link AsyncImageView} when decoding
      * the image. This may be used to prevent the default behavior that loads
      * all images as mdpi density.
-     * 
+     *
      * @param options
      */
     public void setOptions(BitmapFactory.Options options) {
@@ -229,7 +229,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     /**
      * Reload the image pointed by the given URL. You may want to force
      * reloading by setting the force parameter to true.
-     * 
+     *
      * @param force if true the AsyncImageView won't look into the
      *            application-wide cache.
      */
@@ -242,12 +242,12 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
         		/*try {
         			mBitmap.recycle();
         		}catch (Exception e) {
-        			
+
         		}*/
         		mBitmap = null;
         	}
             if (!force) {
-                mBitmap = GDUtils.getImageCache(getContext()).get(mUrl);
+//                mBitmap = GDUtils.getImageCache(getContext()).get(mUrl);
             }
 
             if (mBitmap != null) {	// roundcorner
@@ -260,14 +260,14 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
                 return;
             }
 
-            if (Config.GD_INFO_LOGS_ENABLED) {
-                Log.i(LOG_TAG, "Cache miss. Starting to load the image at the given URL");
-            }
+//            if (Config.GD_INFO_LOGS_ENABLED) {
+//                Log.i(LOG_TAG, "Cache miss. Starting to load the image at the given URL");
+//            }
             if (CONF.DEBUG) Log.d("AsyncImageView", "refetch:"+mUrl);
 
             setDefaultImage();
-            mRequest = new ImageRequest(mUrl, this, mImageProcessor, mOptions);
-            mRequest.load(getContext());
+//            mRequest = new ImageRequest(mUrl, this, mImageProcessor, mOptions);
+//            mRequest.load(getContext());
         }
     }
 
@@ -284,7 +284,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     /**
      * Register a callback to be invoked when an event occured for this
      * AsyncImageView.
-     * 
+     *
      * @param listener The listener that will be notified
      */
     public void setOnImageViewLoadListener(OnImageViewLoadListener listener) {
@@ -297,7 +297,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
      * image. Please note the url may be a local url. For instance, you can
      * asynchronously load images from the disk memory is the url scheme is
      * <code>file://</code>
-     * 
+     *
      * @param url The url of the image to set. Pass null to force the
      *            AsyncImageView to display the default image
      */
@@ -305,12 +305,12 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     	// cache
     	if (url!=null) {
     		String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+CONF.DCACHE+"/";
-    	
+
 	    	String imgHash = MD5.encrypByMd5(Base64.encode(url));
 	    	File imgCache = new File(cacheDir+imgHash);
 	    	if (imgCache.canRead()) {
 	    		imgCache.setLastModified(DateTimeHelper.getNowTime());
-	    		
+
 	    		mBitmap = ImageUtil.getBitFromImg(imgCache.getAbsolutePath());
 	    		if (mBitmap!=null) {
 
@@ -318,7 +318,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 	    	    		setImageBitmap(ImageUtil.toRoundCorner(mBitmap));
 	            	} else {
 	    	    		setImageBitmap(mBitmap);
-	
+
 	            	}
 	    		}
 	    		//setImageBitmap(ImageUtil.toRoundCorner(mBitmap));
@@ -352,7 +352,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
             } else {
                 // We're paused: let's look in a synchronous and efficient cache
                 // prior using the default image.
-                mBitmap = GDUtils.getImageCache(getContext()).get(mUrl);
+//                mBitmap = GDUtils.getImageCache(getContext()).get(mUrl);
                 if (mBitmap != null) {
                 	if (NAction.getExtP(getContext(), "conf_image_round").equals("1")) {
 
@@ -376,54 +376,54 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     	mBitmap.recycle();
     	mBitmap = null;
     	} catch (Exception e) {
-    		
+
     	}
     }
-    
+
     /////////
-    public static int computeSampleSize(BitmapFactory.Options options,  
-            int minSideLength, int maxNumOfPixels) {  
-        int initialSize = computeInitialSampleSize(options, minSideLength,maxNumOfPixels);  
-      
-        int roundedSize;  
-        if (initialSize <= 8 ) {  
-            roundedSize = 1;  
-            while (roundedSize < initialSize) {  
-                roundedSize <<= 1;  
-            }  
-        } else {  
-            roundedSize = (initialSize + 7) / 8 * 8;  
-        }  
-      
-        return roundedSize;  
-    }  
-      
-    private static int computeInitialSampleSize(BitmapFactory.Options options,int minSideLength, int maxNumOfPixels) {  
-        double w = options.outWidth;  
-        double h = options.outHeight;  
-      
-        int lowerBound = (maxNumOfPixels == -1) ? 1 :  
-                (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));  
-        int upperBound = (minSideLength == -1) ? 128 :  
-                (int) Math.min(Math.floor(w / minSideLength),  
-                Math.floor(h / minSideLength));  
-      
-        if (upperBound < lowerBound) {  
-            // return the larger one when there is no overlapping zone.  
-            return lowerBound;  
-        }  
-      
-        if ((maxNumOfPixels == -1) &&  
-                (minSideLength == -1)) {  
-            return 1;  
-        } else if (minSideLength == -1) {  
-            return lowerBound;  
-        } else {  
-            return upperBound;  
-        }  
-    }  
+    public static int computeSampleSize(BitmapFactory.Options options,
+            int minSideLength, int maxNumOfPixels) {
+        int initialSize = computeInitialSampleSize(options, minSideLength,maxNumOfPixels);
+
+        int roundedSize;
+        if (initialSize <= 8 ) {
+            roundedSize = 1;
+            while (roundedSize < initialSize) {
+                roundedSize <<= 1;
+            }
+        } else {
+            roundedSize = (initialSize + 7) / 8 * 8;
+        }
+
+        return roundedSize;
+    }
+
+    private static int computeInitialSampleSize(BitmapFactory.Options options,int minSideLength, int maxNumOfPixels) {
+        double w = options.outWidth;
+        double h = options.outHeight;
+
+        int lowerBound = (maxNumOfPixels == -1) ? 1 :
+                (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
+        int upperBound = (minSideLength == -1) ? 128 :
+                (int) Math.min(Math.floor(w / minSideLength),
+                Math.floor(h / minSideLength));
+
+        if (upperBound < lowerBound) {
+            // return the larger one when there is no overlapping zone.
+            return lowerBound;
+        }
+
+        if ((maxNumOfPixels == -1) &&
+                (minSideLength == -1)) {
+            return 1;
+        } else if (minSideLength == -1) {
+            return lowerBound;
+        } else {
+            return upperBound;
+        }
+    }
     ////////
-    
+
     public void setImageBitmap(Bitmap bitmap) {
     	//Log.d("AsyncImageView", "setImageBitmap:");
 		/*try {
@@ -436,10 +436,10 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 		// compute
 		bitmapOptions.inJustDecodeBounds = true;
 		BitmapFactory.decodeByteArray(bitmapBt,0,bitmapBt.length, bitmapOptions);
-		bitmapOptions.inSampleSize = computeSampleSize(bitmapOptions, -1, bitmap.getWidth()*bitmap.getHeight());  
-		
+		bitmapOptions.inSampleSize = computeSampleSize(bitmapOptions, -1, bitmap.getWidth()*bitmap.getHeight());
+
 		// set
-		bitmapOptions.inJustDecodeBounds = false; 
+		bitmapOptions.inJustDecodeBounds = false;
 		Bitmap bitmap1 = BitmapFactory.decodeByteArray(bitmapBt,0,bitmapBt.length, bitmapOptions);
 
 		//bitmapFactory.decodeFile(imgFilePath, bitmapOptions);
@@ -458,16 +458,16 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
             //bitmapOptions.inSampleSize = 4;
 			//Bitmap mBitmap=BitmapFactory.decodeFile(imgFilePath, bitmapOptions);
-        } 
+        }
 
 		/*}
-		
+
     	super.setImageBitmap(bitmap);*/
-    
+
     }
     /**
      * Set the default bitmap as the content of this AsyncImageView
-     * 
+     *
      * @param bitmap The bitmap to set
      */
     public void setDefaultImageBitmap(Bitmap bitmap) {
@@ -478,7 +478,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
     /**
      * Set the default drawable as the content of this AsyncImageView
-     * 
+     *
      * @param drawable The drawable to set
      */
     public void setDefaultImageDrawable(Drawable drawable) {
@@ -489,7 +489,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
     /**
      * Set the default resource as the content of this AsyncImageView
-     * 
+     *
      * @param resId The resource identifier to set
      */
     public void setDefaultImageResource(int resId) {
@@ -502,12 +502,12 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
      * Set an image processor to this AsyncImageView. An ImageProcessor may be
      * used in order to work on the retrieved Bitmap prior displaying it on
      * screen.
-     * 
+     *
      * @param imageProcessor The {@link ImageProcessor} to set
      * @see ImageProcessor
      */
-    public void setImageProcessor(ImageProcessor imageProcessor) {
-        mImageProcessor = imageProcessor;
+    public void setImageProcessor(/*ImageProcessor imageProcessor*/) {
+//        mImageProcessor = imageProcessor;
     }
 
     private void setDefaultImage() {
@@ -618,7 +618,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 	    	String imgHashPath;
 			try {
 				imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(), CONF.DCACHE)+"/"+imgHash;
-				
+
 		    	try {
 			    	File imgCache = new File(imgHashPath);
 			    	if (!imgCache.exists()) {
@@ -640,7 +640,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
 					e.printStackTrace();
 				}
-		    	
+
 			} catch (IOException e1) {
 				if (CONF.DEBUG) Log.d(LOG_TAG, "IOException save image ("+mUrl+")");
 				e1.printStackTrace();
@@ -665,5 +665,5 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
             mOnImageViewLoadListener.onLoadingFailed(this, null);
         }
     }
-    
+
 }

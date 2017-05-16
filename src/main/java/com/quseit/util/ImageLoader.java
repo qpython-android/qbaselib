@@ -1,11 +1,6 @@
 
 package com.quseit.util;
 
-import greendroid.image.ImageCache;
-import greendroid.image.ImageProcessor;
-import greendroid.util.Config;
-import greendroid.util.GDUtils;
-
 import java.io.InputStream;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
@@ -31,7 +26,7 @@ import android.util.Log;
  * class directly in your application. You'll generally prefer using an
  * {@link ImageRequest} that takes care of the entire loading process.</em>
  * </p>
- * 
+ *
  * @author Cyril Mottier
  */
 public class ImageLoader {
@@ -50,19 +45,12 @@ public class ImageLoader {
     private static final int ON_START = 0x100;
     private static final int ON_FAIL = 0x101;
     private static final int ON_END = 0x102;
-    
-    private static ImageCache sImageCache;
+
     private static ExecutorService sExecutor;
     private static BitmapFactory.Options sDefaultOptions;
     private static AssetManager sAssetManager;
 
     public ImageLoader(Context context) {
-        if (sImageCache == null) {
-            sImageCache = GDUtils.getImageCache(context);
-        }
-        if (sExecutor == null) {
-            sExecutor = GDUtils.getExecutor(context);
-        }
         if (sDefaultOptions == null) {
         	sDefaultOptions = new BitmapFactory.Options();
         	sDefaultOptions.inDither = true;
@@ -73,29 +61,29 @@ public class ImageLoader {
         sAssetManager = context.getAssets();
     }
 
+//    public Future<?> loadImage(String url, ImageLoaderCallback callback, BitmapFactory.Options mOptions) {
+//        return loadImage(url, callback/*, null*/);
+//    }
+
     public Future<?> loadImage(String url, ImageLoaderCallback callback) {
-        return loadImage(url, callback, null);
+        return loadImage(url, callback, /*bitmapProcessor,*/ null);
     }
 
-    public Future<?> loadImage(String url, ImageLoaderCallback callback, ImageProcessor bitmapProcessor) {
-        return loadImage(url, callback, bitmapProcessor, null);
-    }
-    
-    public Future<?> loadImage(String url, ImageLoaderCallback callback, ImageProcessor bitmapProcessor, BitmapFactory.Options options) {
-        return sExecutor.submit(new ImageFetcher(url, callback, bitmapProcessor, options));
+    public Future<?> loadImage(String url, ImageLoaderCallback callback/*, ImageProcessor bitmapProcessor*/, BitmapFactory.Options options) {
+        return sExecutor.submit(new ImageFetcher(url, callback,/* bitmapProcessor,*/ options));
     }
 
     private class ImageFetcher implements Runnable {
 
         private String mUrl;
         private ImageHandler mHandler;
-        private ImageProcessor mBitmapProcessor;
+//        private ImageProcessor mBitmapProcessor;
         private BitmapFactory.Options mOptions;
 
-        public ImageFetcher(String url, ImageLoaderCallback callback, ImageProcessor bitmapProcessor, BitmapFactory.Options options) {
+        public ImageFetcher(String url, ImageLoaderCallback callback,/* ImageProcessor bitmapProcessor,*/ BitmapFactory.Options options) {
             mUrl = url;
             mHandler = new ImageHandler(url, callback);
-            mBitmapProcessor = bitmapProcessor;
+//            mBitmapProcessor = bitmapProcessor;
             mOptions = options;
         }
 
@@ -114,37 +102,37 @@ public class ImageLoader {
                 if (TextUtils.isEmpty(mUrl)) {
                     throw new Exception("The given URL cannot be null or empty");
                 }
-                
+
                 InputStream inputStream = null;
-                
+
                 if (mUrl.startsWith("file:///android_asset/")) {
                     inputStream = sAssetManager.open(mUrl.replaceFirst("file:///android_asset/", ""));
                 } else {
-                	
+
         			//NAction.userProxy(MyApp.getInstance().getContext());
 
                     inputStream = new URL(mUrl).openStream();
                 }
 
                 // TODO Cyril: Use a AndroidHttpClient?
-                
+
                 bitmap = BitmapFactory.decodeStream(inputStream, null, (mOptions == null) ? sDefaultOptions : mOptions);
-                
+
                 if (bitmap!=null) {
                 	bitmap = ImageUtil.toRoundCorner(bitmap);
                 }
-                if (mBitmapProcessor != null && bitmap != null) {
-                    final Bitmap processedBitmap = mBitmapProcessor.processImage(bitmap);
-                    if (processedBitmap != null) {
-                        bitmap = processedBitmap;
-                    }
-                }
+//                if (mBitmapProcessor != null && bitmap != null) {
+//                    final Bitmap processedBitmap = mBitmapProcessor.processImage(bitmap);
+//                    if (processedBitmap != null) {
+//                        bitmap = processedBitmap;
+//                    }
+//                }
 
             } catch (Exception e) {
                 // An error occured while retrieving the image
-                if (Config.GD_ERROR_LOGS_ENABLED) {
-                    Log.e(LOG_TAG, "Error while fetching image", e);
-                }
+//                if (Config.GD_ERROR_LOGS_ENABLED) {
+//                    Log.e(LOG_TAG, "Error while fetching image", e);
+//                }
                 throwable = e;
             }
 
@@ -191,7 +179,7 @@ public class ImageLoader {
                 case ON_END:
 
                     final Bitmap bitmap = (Bitmap) msg.obj;
-                    sImageCache.put(mUrl, bitmap);
+//                    sImageCache.put(mUrl, bitmap);
 
                     if (mCallback != null) {
                         mCallback.onImageLoadingEnded(ImageLoader.this, bitmap);

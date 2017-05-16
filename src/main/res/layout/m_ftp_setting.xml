@@ -1,192 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/cwhite3"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/cwhite3"
+              android:orientation="vertical"
     >
-	<FrameLayout
-		android:layout_width="fill_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1"> 
-		   
-	<ScrollView
-		android:scrollbars="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		>
-		
-		<LinearLayout
-			android:orientation="vertical"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			>
-			<!--script-->
-			<TextView
-				style="@style/gridBox_desc"
-				android:text="@string/ftp_service_setting"
-				android:textSize="17sp" />
-			
-			<View
-				style="@style/p_line" />
-				
-				
-				<TextView 
-				android:id="@+id/ftp_root_value" 
-				android:layout_width="fill_parent" 
-				android:layout_height="wrap_content" 
-				style="@style/LinkText_Mid"
-				android:paddingLeft="20.0dip"
-				android:paddingRight="20.0dip"
-				android:paddingBottom="10.0dip"
-				android:text="" 
-				android:gravity="center"
-				android:textColor="@color/maintextcolor"
-				/>	
-				
-				
-			<Button
-				android:gravity="center"
-				android:id="@+id/ftp_op_btn"
-				style="@style/gridBox_Title"
-				android:text="@string/ftp_start"
-				android:paddingTop="10dip"
-				android:paddingBottom="10dip"				
-				android:background="@drawable/background_button"
-				android:layout_marginBottom="20.0dip"
-				android:layout_marginLeft="50.0dip"
-				android:layout_marginRight="50.0dip"					
-				android:layout_width="fill_parent"
-				android:scaleType="centerInside"
-				android:textColor="@color/cwhite"
-				android:onClick="onFTPOp"
-				android:layout_height="wrap_content"
-				/>
 
-				<TextView 
-				android:id="@+id/ftp_service_value" 
-				android:layout_width="fill_parent" 
-				android:layout_height="wrap_content" 
-				style="@style/LinkText_Mid"
-				android:paddingLeft="20.0dip"
-				android:paddingRight="20.0dip"
-				android:text="" 
-				android:gravity="center"
-				android:textColor="@color/maintextcolor"
-				/>	
-				
-				
-			<TextView
-				style="@style/gridBox_desc"
-				android:text="@string/ftp_setting"
-				android:textSize="17sp" />
-			
-			<View
-				style="@style/p_line" />
-								
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-						
-			<!-- ftp managerd -->
-			<RelativeLayout
-				android:id="@+id/plugin_ftp_port_box"
-				style="@style/gridBox"
-				android:onClick="onFtpPortSetting"				
-				>		
-				<TextView
-					android:id="@+id/plugin_ftp_port"
-					android:text="@string/ftp_port"
-					style="@style/gridBox_Title"
-					/>
-				<TextView
-					android:id="@+id/ftp_port_value"
-					android:layout_toRightOf="@id/plugin_ftp_port"
-					android:layout_alignTop="@id/plugin_ftp_port"
-					style="@style/gridBox_Value"
-				android:text=""
-				/>		
-				<ImageView 
-					style="@style/gridBox_RTag"
-					android:src="@drawable/mini_right_tag"
-					android:onClick="onFtpPortSetting"
-				/>
-			</RelativeLayout>
-						
-			<RelativeLayout
-				android:id="@+id/plugin_ftp_account_box"
-				style="@style/gridBox"
-				android:onClick="onFtpAccountSetting"				
-				>
-						
-				<TextView
-					android:id="@+id/plugin_ftp_account"
-					android:text="@string/ftp_account"
-					style="@style/gridBox_Title"
-					/>
-				<TextView
-					android:id="@+id/plugin_ftp_account_value"
-					android:layout_toRightOf="@id/plugin_ftp_account"
-					android:layout_alignTop="@id/plugin_ftp_account"
-					style="@style/gridBox_Value"
-				android:text=""
-				/>		
-				<ImageView 
-					style="@style/gridBox_RTag"
-					android:src="@drawable/mini_right_tag"
-					android:onClick="onFtpAccountSetting"
-				/>
-			</RelativeLayout>
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="horizontal"
+            >
 
-		</LinearLayout>		
-	</ScrollView>
-	</FrameLayout>				
-				
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                >
+                <!--script-->
+                <TextView
+                    style="@style/gridBox_desc"
+                    android:text="@string/ftp_service_setting"
+                    android:textSize="17sp"/>
+
+                <View
+                    style="@style/p_line"/>
+
+                <TextView
+                    android:id="@+id/ftp_root_value"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="10.0dip"
+                    android:paddingLeft="20.0dip"
+                    android:paddingRight="20.0dip"
+                    android:text=""
+                    android:textColor="@color/maintextcolor"
+                    />
 
 
-	<LinearLayout
-		android:id="@+id/return_bar_box"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/cgrey6"
-		>	
-		<ImageButton
-		android:layout_width="0dp"
-		android:layout_height="0dp"
-		android:layout_weight="1"
-		android:onClick="onBack"
-		android:paddingTop="10dip"
-		
-		android:layout_margin="10.0dip"
-		android:src="@drawable/ic_right_a" 
-		android:background="@null"
-		/>
+                <Button
+                    android:id="@+id/ftp_op_btn"
+                    style="@style/gridBox_Title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20.0dip"
+                    android:layout_marginLeft="50.0dip"
+                    android:layout_marginRight="50.0dip"
+                    android:background="@drawable/background_button"
+                    android:gravity="center"
+                    android:onClick="onFTPOp"
+                    android:paddingBottom="10dip"
+                    android:paddingTop="10dip"
+                    android:scaleType="centerInside"
+                    android:text="@string/ftp_start"
+                    android:textColor="@color/cwhite"
+                    />
 
-		
-		<ImageButton
-		android:gravity="center"
-		android:id="@+id/download_btn"
-		android:layout_weight="3"
-		
-		style="@style/gridBox_Title"
-    	android:text="@string/ftp_start"
-		android:background="@null"
-		android:padding="5.0dip"
-		android:layout_width="0dp"
-		android:scaleType="centerInside"
-		android:textColor="@color/cwhite"
-		android:textSize="18sp"
-		android:onClick="onBack"
-		android:src="@drawable/ic_undo" 
-		android:layout_height="wrap_content"
-		/>
-		<ImageButton
-		android:layout_width="0dp"
-		android:layout_height="0dp"
-		android:layout_weight="1"
-		android:onClick="onLeft"
-		android:layout_margin="10.0dip"
-		android:src="@drawable/ic_right_a" 
-		android:background="@null"
-		/>
+                <TextView
+                    android:id="@+id/ftp_service_value"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingLeft="20.0dip"
+                    android:paddingRight="20.0dip"
+                    android:text=""
+                    android:textColor="@color/maintextcolor"
+                    />
 
-	</LinearLayout>
+
+                <TextView
+                    style="@style/gridBox_desc"
+                    android:text="@string/ftp_setting"
+                    android:textSize="17sp"/>
+
+                <View
+                    style="@style/p_line"/>
+
+
+                <!-- ftp managerd -->
+                <RelativeLayout
+                    android:id="@+id/plugin_ftp_port_box"
+                    style="@style/gridBox"
+                    android:onClick="onFtpPortSetting"
+                    >
+
+                    <TextView
+                        android:id="@+id/plugin_ftp_port"
+                        style="@style/gridBox_Title"
+                        android:text="@string/ftp_port"
+                        />
+
+                    <TextView
+                        android:id="@+id/ftp_port_value"
+                        style="@style/gridBox_Value"
+                        android:layout_alignTop="@id/plugin_ftp_port"
+                        android:layout_toRightOf="@id/plugin_ftp_port"
+                        android:text=""
+                        />
+
+                    <ImageView
+                        style="@style/gridBox_RTag"
+                        android:onClick="onFtpPortSetting"
+                        android:src="@drawable/mini_right_tag"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/plugin_ftp_account_box"
+                    style="@style/gridBox"
+                    android:onClick="onFtpAccountSetting"
+                    >
+
+                    <TextView
+                        android:id="@+id/plugin_ftp_account"
+                        style="@style/gridBox_Title"
+                        android:text="@string/ftp_account"
+                        />
+
+                    <TextView
+                        android:id="@+id/plugin_ftp_account_value"
+                        style="@style/gridBox_Value"
+                        android:layout_alignTop="@id/plugin_ftp_account"
+                        android:layout_toRightOf="@id/plugin_ftp_account"
+                        android:text=""
+                        />
+
+                    <ImageView
+                        style="@style/gridBox_RTag"
+                        android:onClick="onFtpAccountSetting"
+                        android:src="@drawable/mini_right_tag"
+                        />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/return_bar_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cgrey6"
+        >
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10.0dip"
+            android:layout_weight="1"
+            android:background="@null"
+
+            android:onClick="onBack"
+            android:paddingTop="10dip"
+            android:src="@drawable/ic_right_a"
+            />
+
+
+        <ImageButton
+            android:id="@+id/download_btn"
+            style="@style/gridBox_Title"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@null"
+            android:gravity="center"
+            android:onClick="onBack"
+            android:padding="5.0dip"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_undo"
+            android:text="@string/ftp_start"
+            android:textColor="@color/cwhite"
+            android:textSize="18sp"
+            />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10.0dip"
+            android:layout_weight="1"
+            android:background="@null"
+            android:onClick="onLeft"
+            android:src="@drawable/ic_right_a"
+            />
+
+    </LinearLayout>
 </LinearLayout>

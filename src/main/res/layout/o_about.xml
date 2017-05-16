@@ -42,8 +42,7 @@
 				android:id="@+id/about"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				style="@style/LinkText_Mid"
-				android:text="@string/about_content" 
+				android:text="@string/about_content"
 				android:textColor="@color/maintextcolor"
 				android:paddingRight="10dp"
 				android:paddingLeft="10dp"
@@ -69,7 +68,6 @@
 				android:id="@+id/privacy_title"
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" 
-				style="@style/LinkText_Mid"
 				android:paddingLeft="10.0dip"
 				android:paddingRight="10.0dip"
 				android:paddingTop="10.0dip"
@@ -99,7 +97,6 @@
 				android:id="@+id/update_content" 
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" 
-				style="@style/LinkText_Mid"
 				android:paddingLeft="10.0dip"
 				android:paddingRight="10.0dip"
 				android:paddingTop="10.0dip"
@@ -154,7 +151,6 @@
 				android:paddingLeft="10dp"
 				android:paddingBottom="20dp"
 				
-				style="@style/LinkText_Mid"
 				android:textColor="@color/maintextcolor"
 				/>
 			</LinearLayout>

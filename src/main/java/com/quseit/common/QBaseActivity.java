@@ -2,6 +2,7 @@ package com.quseit.common;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
@@ -72,15 +73,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import greendroid.app.GDActivity;
-import greendroid.widget.AsyncImageView;
-import greendroid.widget.item.TextItem;
 
 //import greendroid.widget.QuickActionWidget;
 
 //public abstract class QBaseActivity extends GDActivity  implements TapjoyFeaturedAppNotifier, TapjoyDisplayAdNotifier, TapjoyVideoNotifier {
 
-public abstract class QBaseActivity extends GDActivity {
+public abstract class QBaseActivity extends Activity {
 	protected static final String TAG = "QBaseActivity";
 
 	private static int NOTIFICATION_ID = 0x20001;// 通知栏消息id
@@ -211,10 +209,6 @@ public abstract class QBaseActivity extends GDActivity {
 		LinearLayout modBanner = (LinearLayout) findViewById(R.id.modbanner);
 
 		if (NAction.checkIfPayIAP(getApplicationContext(), "ad")) {
-			AsyncImageView imageAd = (AsyncImageView) findViewById(R.id.image_ad);
-			if (imageAd != null) {
-				imageAd.setVisibility(View.GONE);
-			}
 
 			/*
 			 * if (adMob!=null) { adMob.destroy(); modBanner.removeView(adMob); adMob = null; }
@@ -317,17 +311,6 @@ public abstract class QBaseActivity extends GDActivity {
 					final String adBanner = adConf[1];
 					final String adLink = adConf[2];
 					final String adKey = adConf[3];
-					AsyncImageView imageAd = (AsyncImageView) findViewById(R.id.image_ad);
-					imageAd.setUrl(adBanner);
-					imageAd.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							NAction.recordAdLog(getApplicationContext(), "ad", adKey);
-							Intent intent = NAction.openRemoteLink(getApplicationContext(), adLink);
-							startActivity(intent);
-						}
-					});
-					imageAd.setVisibility(View.VISIBLE);
 					findViewById(R.id.modbanner_wrap).setVisibility(View.VISIBLE);
 				}
 			}
@@ -961,91 +944,6 @@ public abstract class QBaseActivity extends GDActivity {
 		startActivityForResult(Intent.createChooser(intent, getString(R.string.info_share_withbt)), 1000);
 	}
 
-	public void playMusic(TextItem curTextItem) {
-		try {
-			Object o0 = curTextItem.getTag(0);
-			String filename = o0.toString();
-			NAction.recordUseLog(getApplicationContext(), "play", filename);
-
-			Object o1 = curTextItem.getTag(1);
-			String path = o1.toString();
-
-			/*
-			 * Intent intent = new Intent(); intent.setAction(Intent.ACTION_VIEW); Uri uri = Uri.parse(path);
-			 * intent.setDataAndType(uri , "video/*"); //intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
-			 * startActivity(Intent.createChooser(intent, getString(R.string.info_play)));
-			 */
-
-			Intent it = new Intent(Intent.ACTION_VIEW);
-			Uri uri = Uri.parse(path);
-			it.setDataAndType(uri, "audio/*");
-			startActivity(it);
-		}
-		catch (Exception e) {
-			Toast.makeText(getApplicationContext(), R.string.cannot_play, Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	public void playTube(TextItem curTextItem) {
-		try {
-			// Object o0 = curTextItem.getTag(0);
-			// String filename = o0.toString();
-
-			Object o1 = curTextItem.getTag(1);
-			String path = o1.toString();
-			String ext = FileHelper.getExt(path.toLowerCase(), "").toLowerCase();
-
-			Log.d(TAG, "playTube:" + ext);
-			if (!ext.equals("") && CONF.MVEXT.contains("#" + ext + "#")) {
-				// NAction.recordUseLog(getApplicationContext(), "play",
-				// filename);
-
-				/*
-				 * Intent intent = new Intent(); intent.setAction(Intent.ACTION_VIEW); Uri uri = Uri.parse(path);
-				 * intent.setDataAndType(uri , "video/*"); //intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path));
-				 * startActivity(Intent.createChooser(intent, getString(R.string.info_play)));
-				 */
-
-				Intent it = new Intent(Intent.ACTION_VIEW);
-				it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				Uri uri = Uri.parse(path);
-				it.setDataAndType(uri, "video/*");
-				startActivity(it);
-
-			}
-			else if (!ext.equals("") && CONF.MUEXT.contains("#" + ext + "#")) {
-				Intent it = new Intent(Intent.ACTION_VIEW);
-				it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				Uri uri = Uri.parse(path);
-				it.setDataAndType(uri, "audio/*");
-				startActivity(it);
-
-			}
-			else if (ext.equals("apk")) {
-				Intent it = new Intent(Intent.ACTION_VIEW);
-				Uri uri = Uri.parse(path);
-				it.setDataAndType(uri, "application/vnd.android.package-archive");
-
-				startActivity(it);
-
-			}
-			else {
-
-				Intent it = new Intent(Intent.ACTION_VIEW);
-				it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-				Uri uri = Uri.parse(path);
-				it.setDataAndType(uri, "*/*");
-				startActivity(it);
-
-			}
-		}
-		catch (Exception e) {
-			Toast.makeText(getApplicationContext(), R.string.cannot_play, Toast.LENGTH_SHORT).show();
-		}
-	}
 
 	/*
 	 * @Override protected void onStart() { super.onStart(); Log.e(TAG, "start onStart~~~"); }

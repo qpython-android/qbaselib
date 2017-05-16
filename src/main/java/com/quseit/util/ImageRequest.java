@@ -16,7 +16,6 @@
 package com.quseit.util;
 
 import com.quseit.util.ImageLoader.ImageLoaderCallback;
-import greendroid.image.ImageProcessor;
 
 import java.util.concurrent.Future;
 
@@ -55,21 +54,15 @@ public class ImageRequest {
     private Future<?> mFuture;
     private String mUrl;
     private ImageRequestCallback mCallback;
-    private ImageProcessor mBitmapProcessor;
     private BitmapFactory.Options mOptions;
 
     public ImageRequest(String url, ImageRequestCallback callback) {
-        this(url, callback, null);
+    	this(url, callback, null);
     }
     
-    public ImageRequest(String url, ImageRequestCallback callback, ImageProcessor bitmapProcessor) {
-    	this(url, callback, bitmapProcessor, null);
-    }
-    
-    public ImageRequest(String url, ImageRequestCallback callback, ImageProcessor bitmapProcessor, BitmapFactory.Options options) {
+    public ImageRequest(String url, ImageRequestCallback callback, BitmapFactory.Options options) {
         mUrl = url;
         mCallback = callback;
-        mBitmapProcessor = bitmapProcessor;
         mOptions = options;
     }
 
@@ -86,7 +79,7 @@ public class ImageRequest {
             if (sImageLoader == null) {
                 sImageLoader = new ImageLoader(context);
             }
-            mFuture = sImageLoader.loadImage(mUrl, new InnerCallback(), mBitmapProcessor, mOptions);
+            mFuture = sImageLoader.loadImage(mUrl, new InnerCallback(), mOptions);
         }
     }
 

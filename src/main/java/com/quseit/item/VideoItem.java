@@ -7,8 +7,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.quseit.android.R;
 
-import greendroid.widget.item.TextItem;
-import greendroid.widget.itemview.ItemView;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -18,7 +16,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 
-public class VideoItem extends TextItem {
+public class VideoItem{
 	private static final String TAG = "VideoItem";
 
     public String headerText;
@@ -31,7 +29,6 @@ public class VideoItem extends TextItem {
     public int tpl;
     
     public VideoItem(String text, String desc) {
-        super(text);
         this.desc = desc;
         this.headUrl = "";
         this.other = "";
@@ -42,7 +39,6 @@ public class VideoItem extends TextItem {
     }
     
     public VideoItem(String text, String desc, String headUrl, String other, int stat) {
-        super(text);
         this.desc = desc;
         this.headUrl = headUrl;
         this.other = other;
@@ -54,7 +50,6 @@ public class VideoItem extends TextItem {
 
     }
     public VideoItem(String text, String desc, String headUrl, String other, int stat, int thumb) {
-        super(text);
         this.desc = desc;
         this.headUrl = headUrl;
         this.other = other;
@@ -67,7 +62,6 @@ public class VideoItem extends TextItem {
     }
     
     public VideoItem(String text, String desc, Bitmap coverBitmap, String other, int stat, int thumb) {
-        super(text);
         this.desc = desc;
         this.coverBitmap = coverBitmap;
         this.other = other;
@@ -78,7 +72,6 @@ public class VideoItem extends TextItem {
     }
 
     public VideoItem(String text, String desc, String headUrl, String other, int stat, int thumb, int tpl) {
-        super(text);
         this.desc = desc;
         this.headUrl = headUrl;
         this.other = other;
@@ -90,19 +83,8 @@ public class VideoItem extends TextItem {
 
     }
     
-    @Override
-    public ItemView newView(Context context, ViewGroup parent) {
-    	if (tpl == 0) {
-    		return createCellFromXml(context, R.layout.q_video_item_view_0, parent);
-    	} else {
-            return createCellFromXml(context, R.layout.q_video_item_view_1, parent);
 
-    	}
-    }
-    
-    @Override
     public void inflate(Resources r, XmlPullParser parser, AttributeSet attrs) throws XmlPullParserException, IOException {
-        super.inflate(r, parser, attrs);
         TypedArray a = r.obtainAttributes(attrs, R.styleable.VideoItem);
         
         headerText = a.getString(R.styleable.VideoItem_headerText);

@@ -18,9 +18,9 @@ package com.quseit.view;
 import com.quseit.android.R;
 import com.quseit.item.HeadedTextItem;
 
-import greendroid.widget.AsyncImageView;
-import greendroid.widget.item.Item;
-import greendroid.widget.itemview.ItemView;
+//import greendroid.widget.AsyncImageView;
+//import greendroid.widget.item.Item;
+//import greendroid.widget.itemview.ItemView;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -31,15 +31,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-public class HeadedTextItemView extends LinearLayout implements ItemView {
+public class HeadedTextItemView extends LinearLayout /*implements ItemView*/ {
 	private static final String TAG = "HeadedTextItemView";
 
     private TextView mHeaderView;
     private TextView mTextView;
     private TextView dTextView;
-    
+
     private TextView oTextView;
-    private AsyncImageView imageThumb;
+//    private AsyncImageView imageThumb;
     private ImageView  imageStat;
 
     public HeadedTextItemView(Context context) {
@@ -51,44 +51,44 @@ public class HeadedTextItemView extends LinearLayout implements ItemView {
     }
 
     public void prepareItemView() {
-        mHeaderView = (TextView) findViewById(R.id.gd_separator_text);
+//        mHeaderView = (TextView) findViewById(R.id.gd_separator_text);
         mTextView = (TextView) findViewById(R.id.gd_text);
         dTextView = (TextView) findViewById(R.id.gd_text_desc);
-        imageThumb = (AsyncImageView) findViewById(R.id.item_thumbnail);
+//        imageThumb = (AsyncImageView) findViewById(R.id.item_thumbnail);
         oTextView = (TextView) findViewById(R.id.gd_text_other);
         imageStat = (ImageView) findViewById(R.id.gd_stat_image);
     }
 
-    public void setObject(Item object) {
-    	try {
-	        final HeadedTextItem item = (HeadedTextItem) object;
-	        final String headerText = item.headerText;
-	
-	        if (!TextUtils.isEmpty(headerText)) {
-	            mHeaderView.setText(headerText);
-	            mHeaderView.setVisibility(View.VISIBLE);
-	        } else {
-	            mHeaderView.setVisibility(View.GONE);
-	        }
-	
-	        mTextView.setText(item.text);
-	        dTextView.setText(item.desc);
-	        
-	        if (!item.headUrl.equals("")) {
-	        	imageThumb.setUrl(item.headUrl);
-	        }
-	        
-	        if (!item.other.equals("")) {
-	        	oTextView.setText(item.other);
-	        }
-	        
-	        if (item.statImage!=0) {
-	        	//imageStat.setImageDrawable(item.statImage);
-	        	imageStat.setImageResource(item.statImage);
-	        }
-    	} catch (ClassCastException e) {
-    		Log.e(TAG, "ClassCastException:"+e.getMessage());
-    	}
+    public void setObject(/*Item object*/) {
+//    	try {
+//	        final HeadedTextItem item = (HeadedTextItem) object;
+//	        final String headerText = item.headerText;
+//
+//	        if (!TextUtils.isEmpty(headerText)) {
+//	            mHeaderView.setText(headerText);
+//	            mHeaderView.setVisibility(View.VISIBLE);
+//	        } else {
+//	            mHeaderView.setVisibility(View.GONE);
+//	        }
+//
+//	        mTextView.setText(item.text);
+//	        dTextView.setText(item.desc);
+//
+//	        if (!item.headUrl.equals("")) {
+//	        	imageThumb.setUrl(item.headUrl);
+//	        }
+//
+//	        if (!item.other.equals("")) {
+//	        	oTextView.setText(item.other);
+//	        }
+//
+//	        if (item.statImage!=0) {
+//	        	//imageStat.setImageDrawable(item.statImage);
+//	        	imageStat.setImageResource(item.statImage);
+//	        }
+//    	} catch (ClassCastException e) {
+//    		Log.e(TAG, "ClassCastException:"+e.getMessage());
+//    	}
 
     }
 
