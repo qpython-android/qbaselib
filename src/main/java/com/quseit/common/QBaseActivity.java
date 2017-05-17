@@ -307,21 +307,21 @@ public abstract class QBaseActivity extends Activity {
 					adSlid.setVisibility(View.VISIBLE);
 				}
 				if (adConf[0].equals("self")) {
-					final String adBanner = adConf[1];
-					final String adLink = adConf[2];
-					final String adKey = adConf[3];
-					AsyncImageView imageAd = (AsyncImageView) findViewById(R.id.image_ad);
-					imageAd.setUrl(adBanner);
-					imageAd.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							NAction.recordAdLog(getApplicationContext(), "ad", adKey);
-							Intent intent = NAction.getLinkAsIntent(getApplicationContext(), adLink);
-							startActivity(intent);
-						}
-					});
-					imageAd.setVisibility(View.VISIBLE);
-					findViewById(R.id.modbanner_wrap).setVisibility(View.VISIBLE);
+//					final String adBanner = adConf[1];
+//					final String adLink = adConf[2];
+//					final String adKey = adConf[3];
+//					AsyncImageView imageAd = (AsyncImageView) findViewById(R.id.image_ad);
+//					imageAd.setUrl(adBanner);
+//					imageAd.setOnClickListener(new OnClickListener() {
+//						@Override
+//						public void onClick(View v) {
+//							NAction.recordAdLog(getApplicationContext(), "ad", adKey);
+//							Intent intent = NAction.getLinkAsIntent(getApplicationContext(), adLink);
+//							startActivity(intent);
+//						}
+//					});
+//					imageAd.setVisibility(View.VISIBLE);
+//					findViewById(R.id.modbanner_wrap).setVisibility(View.VISIBLE);
 				}
 			}
 		}
