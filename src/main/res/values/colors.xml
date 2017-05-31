@@ -6,6 +6,8 @@
   <color name="text_color_hint">#FF9B9B9B</color>
   <color name="topbar">#1f1f1f</color>
   <color name="maintextcolor">#000000</color>
+  <color name="theme_green">#FF4BAC07</color>
+  <color name="theme_bg">#FF363636</color>
 
   <color name="contentbg">#05a494</color>
   <color name="text">#888</color>  
