@@ -43,7 +43,7 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				style="@style/LinkText_Mid"
-				android:text="@string/about_content" 
+				android:text="@string/about_content"
 				android:textColor="@color/maintextcolor"
 				android:paddingRight="10dp"
 				android:paddingLeft="10dp"
@@ -62,7 +62,7 @@
 				android:autoLink="web"
 				android:textStyle="bold" 
 				android:visibility="gone"
-				/>			
+				/>
 				
 				<!-- feedback and update-->
 				<TextView 
