@@ -59,8 +59,6 @@ public class SpeedWindowManager  {
         if (windowParams == null) {
             windowParams = getWindowParams(context);
         }
-
-
                 if (mSmallWindowView == null) {
                     mSmallWindowView = new SmallWindowView(context);
                     Drawable background = getCurrentBgDrawable(context);
@@ -73,10 +71,7 @@ public class SpeedWindowManager  {
                     windowManager.addView(mSmallWindowView, windowParams);
                 }
                 tvSum = (TextView) mSmallWindowView.findViewById(R.id.tvSum);
-
-
         }
-
 
     private Drawable getCurrentBgDrawable(Context context) {
         Drawable background;
@@ -121,8 +116,8 @@ public class SpeedWindowManager  {
         int x = PreferenceUtil.getSingleton(context).getInt(CONF.SP_X, -1);
         int y = PreferenceUtil.getSingleton(context).getInt(CONF.SP_Y, -1);
         if (x == -1 || y == -1) {
-            x = screenWidth/2;
-            y = 0;
+            x = screenWidth-380;
+            y = screenHeight/18;
         }
         windowParams.x = x;
         windowParams.y = y;
@@ -215,7 +210,10 @@ public class SpeedWindowManager  {
     }
 
     public void updateViewData(Context context) {
-
+        if (CONF.open){
+            tvSum.setText("");
+            return;
+        }
         long tempSum = TrafficStats.getTotalRxBytes()
                 + TrafficStats.getTotalTxBytes();
         long rxtxLast = tempSum - rxtxTotal;
@@ -268,7 +266,7 @@ public class SpeedWindowManager  {
     }
 
     public boolean isWindowShowing() {
-        return mBigWindowView != null || mSmallWindowView != null;
+        return  mSmallWindowView != null;
     }
 
     private WindowManager getWindowManager(Context context) {
@@ -294,5 +292,4 @@ public class SpeedWindowManager  {
             setOnTouchListener(getWindowManager(context), context, mSmallWindowView == null ? mBigWindowView : mSmallWindowView, mSmallWindowView == null ? CONF.SMALL_WINDOW_TYPE : CONF.BIG_WINDOW_TYPE);
         }
     }
-
 }

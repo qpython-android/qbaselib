@@ -18,6 +18,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager.BadTokenException;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -51,6 +52,11 @@ import com.quseit.util.Utils;
 import com.quseit.util.VeDate;
 import com.quseit.view.AdSlidShowView;
 import com.quseit.view.AdSlidShowView.urlBackcall;
+import com.smaato.soma.AdDownloaderInterface;
+import com.smaato.soma.AdListenerInterface;
+import com.smaato.soma.BannerView;
+import com.smaato.soma.ReceivedBannerInterface;
+import com.smaato.soma.bannerutilities.constant.BannerStatus;
 
 import org.apache.http.HttpHost;
 import org.json.JSONArray;
@@ -261,13 +267,43 @@ public abstract class QBaseActivity extends GDActivity {
 
     }
 
-
     public void showRecommandAd(String pageId) {
-
         String adf = NAction.getExtP(getApplicationContext(), "adx_" + pageId);
         if (!adf.equals("")) {
-
             String[] xx = adf.split(Pattern.quote("|"));
+            if("smaato_banner".equals(xx[1])){
+                Log.e("tag----admine","tag");
+                try {
+                    BannerView mBanner = new BannerView(this);
+                    final LinearLayout modbanner = (LinearLayout) findViewById(R.id.modbanner_wrap);
+                    modbanner.removeAllViews();
+
+                    modbanner.addView(mBanner, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getPx(50)));
+                    String ADKEY = CONF.SMAATOBKEY;
+                    String adspaceId = NAction.getExtP(getApplicationContext(), "smaato.adspaceid");
+                    if (adspaceId.equals("")) {
+                        adspaceId = "130039156";
+                    }
+                    mBanner.getAdSettings().setPublisherId(Long.parseLong(ADKEY));
+                    mBanner.getAdSettings().setAdspaceId(Long.parseLong(adspaceId));
+                    mBanner.asyncLoadNewBanner();
+                    mBanner.addAdListener(new AdListenerInterface() {
+                        @Override
+                        public void onReceiveAd(AdDownloaderInterface arg0, ReceivedBannerInterface banner) {
+                            if (banner.getStatus() == BannerStatus.ERROR) {
+                                Log.w(TAG, "" + banner.getErrorCode() + "-" + banner.getErrorMessage());
+                            } else {
+                                modbanner.setVisibility(View.VISIBLE);
+
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+
+                } catch (NoSuchMethodError e) {
+                }
+                return;
+            }
 
             String ad = NAction.getExtAdConf(getApplicationContext());
             final List<String> ltImgLink = new ArrayList<String>();
@@ -1491,6 +1527,11 @@ public abstract class QBaseActivity extends GDActivity {
         Intent intent = NAction.getLinkAsIntent(getApplicationContext(), privacyUrl);
         startActivity(intent);
 
+    }
+
+    public int getPx(int dimensionDp) {
+        float density = getResources().getDisplayMetrics().density;
+        return (int) (dimensionDp * density + 0.5f);
     }
 
 	/*

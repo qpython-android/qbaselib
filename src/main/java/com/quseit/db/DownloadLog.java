@@ -21,10 +21,24 @@ import com.quseit.lib.DownloadInfo;
 public class DownloadLog {
 	private Context context;
 	private static final String TAG = "DownloadLog";
+	private volatile  static DownloadLog d=null;
 
-	public DownloadLog(Context context) {
+	private  DownloadLog(Context context) {
 		this.context = context;
 	}
+
+	public static DownloadLog getInstance(Context context){
+		if(d==null){
+			synchronized (DownloadLog.class){
+				if (d==null){
+					d=new DownloadLog(context);
+				}
+			}
+		}
+		return d;
+	}
+
+
 
 	/**
 	 * 查看数据库中是否有数据
@@ -129,7 +143,7 @@ public class DownloadLog {
 	/**
 	 * 保存 下载的具体信息
 	 */
-	public void saveInfos(final List<DownloadInfo> infos, final int count) {
+	public synchronized void saveInfos(final List<DownloadInfo> infos, final int count) {
 		if (count < CONF.TRY_COUNT) {
 
 			DBHelper dbHelper = new DBHelper(context);
@@ -352,7 +366,7 @@ public class DownloadLog {
 
 	}
 
-	public void updatefileleng(long end, String urlstr, String path) {
+	public synchronized void updatefileleng(long end, String urlstr, String path) {
 		DBHelper dbHelper = new DBHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		db.execSQL(
@@ -362,7 +376,7 @@ public class DownloadLog {
 		dbHelper.close();
 	}
 
-	public void updateInfos(final long start_pos, final long compeleteSize,
+	public synchronized void updateInfos(final long start_pos, final long compeleteSize,
 			final String urlstr, final String path, final int count) {
 		if (count < CONF.TRY_COUNT) {
 			DBHelper dbHelper = new DBHelper(context);
@@ -394,7 +408,7 @@ public class DownloadLog {
 
 	}
 
-	public int getDownLoadStat() {
+	public synchronized int getDownLoadStat() {
 		DBHelper dbHelper = new DBHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -427,7 +441,7 @@ public class DownloadLog {
 		return state;
 	}
 
-	public void updateDownLoadState(int service_stat, String service_json,int stat, String urlstr, String path) {
+	public synchronized void updateDownLoadState(int service_stat, String service_json,int stat, String urlstr, String path) {
 		DBHelper dbHelper = new DBHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		db.execSQL(
@@ -437,7 +451,7 @@ public class DownloadLog {
 		dbHelper.close();
 	}
 
-	public void updateDownLoadState(int service_stat, int stat, String urlstr,
+	public synchronized void updateDownLoadState(int service_stat, int stat, String urlstr,
 			String path) {
 		DBHelper dbHelper = new DBHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -448,7 +462,7 @@ public class DownloadLog {
 		dbHelper.close();
 	}
 
-	public List<DownloadInfo> query() {
+	public synchronized List<DownloadInfo> query() {
 		DBHelper dbHelper = new DBHelper(context);
 		List<DownloadInfo> list = new ArrayList<DownloadInfo>();
 		SQLiteDatabase database = dbHelper.getReadableDatabase();

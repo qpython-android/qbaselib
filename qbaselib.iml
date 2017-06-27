@@ -107,6 +107,7 @@
     <orderEntry type="library" exported="" name="libGoogleAnalytics" level="project" />
     <orderEntry type="library" exported="" name="qaysnchttplib" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.4.2" level="project" />
+    <orderEntry type="library" exported="" name="SOMAAndroidSDK4.5.0" level="project" />
     <orderEntry type="library" exported="" name="jsr305-2.0.1" level="project" />
     <orderEntry type="module" module-name="qftplib" exported="" />
     <orderEntry type="module" module-name="qgdlib" exported="" />

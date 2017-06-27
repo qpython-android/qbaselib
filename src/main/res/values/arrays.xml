@@ -36,5 +36,8 @@
         <item>Most Popular</item>                
 
     </string-array>
+    <string-array name="pm_title">
+        <item>CLOUND PLUGIN</item>
+    </string-array>
       
 </resources>

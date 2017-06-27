@@ -71,8 +71,7 @@ public class NAction {
 	
 	@SuppressLint("NewApi")
 	public static boolean isOpenGL2supported(Context context) {
-		
-		final ActivityManager activityManager = 
+		final ActivityManager activityManager =
 			    (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 			final ConfigurationInfo configurationInfo = 
 			    activityManager.getDeviceConfigurationInfo();
@@ -640,9 +639,11 @@ public class NAction {
 	public static void setUpdateConfCheckTime(Context context){
 		NStorage.setSP(context,"tmp.update_conf_check_time",String.valueOf(VeDate.getStringDateHourAsInt()));
 	}
+	public static void setUpdateConfCheckTimeToZero(Context context){
+		NStorage.setSP(context,"tmp.update_conf_check_time",String.valueOf("0"));
+	}
 
 
-	
 	public static boolean welcomeRead(Context context) {
 		String xx = NStorage.getSP(context, "app_opt.welcome_read");
 		if (!xx.equals("")) {

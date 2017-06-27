@@ -4,12 +4,16 @@ public class CONF {
     // 插件版本
     public static int plugin_ver=0;
 
+    public static boolean open=false;
+
 
     public static final String UPDATER_URL="http://www.tubebook.net/250/update.json";
 	public static final String BA_SITE2 = "conf.quseit.com";
 	public static final String FR_SITE = "play.quseit.com";
     public static final int TRY_COUNT = 3;
     public static final long TRY_DELAY = 1000;
+
+    public final static String SMAATOBKEY = "1100010539";
 
     
 	public final static int ROUND_PIX = 0;	// IMAGE ROUND PIX
@@ -84,6 +88,8 @@ public class CONF {
     public static String SP_X = "SP_X";
     public static String SP_Y = "SP_Y";
     public static String SP_STATUSBAR_HEIGHT = "SP_STATUSBAR_HEIGHT";
+
+    public static int CODE_FOR_WRITE_PERMISSION=10000;
 
 
 
