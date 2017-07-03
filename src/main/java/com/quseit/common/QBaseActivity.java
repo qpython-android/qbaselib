@@ -1058,7 +1058,6 @@ public abstract class QBaseActivity extends GDActivity {
 
         String ua = wv.getSettings().getUserAgentString();
         wv.getSettings().setUserAgentString(ua + " :QUSEIT");
-
 		/*
 		 * try { wv.getSettings().setPluginsEnabled(true); } catch (Exception e) { }
 		 */
