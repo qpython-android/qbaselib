@@ -68,7 +68,7 @@ public abstract class DownloaderBase extends Service {
 
     private long fileLenght;
 
-    final private int THREADCOUNT = CONF.THREA_STAT.length;
+    final private int THREADCOUNT = CONF.THREA_STAT.length+2;
 
     private int runingTread = 3;
     private long downlenght = 0;
@@ -202,6 +202,7 @@ public abstract class DownloaderBase extends Service {
                     conn.setConnectTimeout(5000);
                     conn.setRequestMethod("GET");
                     int code = conn.getResponseCode();
+                    Log.e("tag------<","code="+code);
                     if (code == 200) {
                         fileLenght = conn.getContentLength();
                         ISERORR = false;
@@ -226,6 +227,7 @@ public abstract class DownloaderBase extends Service {
                             } else {
                                 NStorage.setLongSP(getContext(), "download" + threadId, 0);
                             }
+                            Log.e("tag------<","start="+start+"-----end="+end);
                             new DownloadThread(start, end, threadId, DOWNLOADLINK).start();
                         }
                     } else if (code == 403) {
@@ -267,7 +269,6 @@ public abstract class DownloaderBase extends Service {
         public void run() {
             int catched = 0;
             try {
-               /* synchronized (DownloaderBase.this) {*/
                 NAction.setThreadStat(getApplicationContext(), threadId, 1);
                 Long done = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
                 if (done > 0) {
@@ -277,11 +278,11 @@ public abstract class DownloaderBase extends Service {
                 }
                 URL url = new URL(path);
                 conn = (HttpURLConnection) url.openConnection();
-                conn.setConnectTimeout(5000);
+                conn.setConnectTimeout(0);
                 conn.setRequestMethod("GET");
                 Log.e("tag---->","start="+start+"-----"+"end="+end);
                 conn.setRequestProperty("Range", "bytes=" + start + "-" + end);
-              /*  }*/
+                conn.connect();
                 int code = conn.getResponseCode();
                 if (code >= 200 || code < 400) {
                     InputStream is = conn.getInputStream();
@@ -295,6 +296,7 @@ public abstract class DownloaderBase extends Service {
                         synchronized (DownloaderBase.this) {
                             total += len;
                             NStorage.setLongSP(getApplicationContext(), "download" + threadId, (total + start));
+                            Log.e("download------>",total+start+"");
                             NStorage.setLongSP(getApplicationContext(), "downloadProgress", mCompletedSize * 100 / fileLenght);
                             if (mCompletedSize * 100 / fileLenght % 2 == 0) {
                                 updatePendingIntent = PendingIntent.getActivity(DownloaderBase.this, NOTIFICATION_ID, updateIntent, 0);
@@ -323,11 +325,13 @@ public abstract class DownloaderBase extends Service {
                 }
                 catched = 1;
             } catch (IOException e) {
+                Log.e("erro------>","threadID"+threadId+"-----"+e.getMessage());
                 updateHandler.obtainMessage(EXCEPTION_FILE_NOTFOUND).sendToTarget();
                 catched = 1;
             } finally {
                 Log.d(TAG, "download run finally:" + catched);
                 if (catched != 1) {
+                    Log.e("catched------>",catched+"");
                     updateHandler.obtainMessage(DOWNLOAD_EXCEPTION).sendToTarget();
                 } else {
                     synchronized (DownloaderBase.this) {
