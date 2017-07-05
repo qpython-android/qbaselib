@@ -68,7 +68,7 @@ public abstract class DownloaderBase extends Service {
 
     private long fileLenght;
 
-    final private int THREADCOUNT = CONF.THREA_STAT.length+2;
+    final private int THREADCOUNT = CONF.THREA_STAT.length;
 
     private int runingTread = 3;
     private long downlenght = 0;
@@ -166,15 +166,12 @@ public abstract class DownloaderBase extends Service {
                 Log.d(TAG, "onStartCommand[title:" + mTitle + ",artist:"
                         + mArtist + ",album:" + mAlbum + ",completedSize:"
                         + mCompletedSize + "]");
-
             // 创建文件
             if (NUtil.isExternalStorageExists()) {
                 try {
                     downloadFile = new File(FileHelper.getBasePath(MyApp
                             .getInstance().getRoot(), "tmp"), mArtist + "_"
                             + mTitle + mExt);
-
-
                 } catch (NotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -202,7 +199,6 @@ public abstract class DownloaderBase extends Service {
                     conn.setConnectTimeout(5000);
                     conn.setRequestMethod("GET");
                     int code = conn.getResponseCode();
-                    Log.e("tag------<","code="+code);
                     if (code == 200) {
                         fileLenght = conn.getContentLength();
                         ISERORR = false;
@@ -219,7 +215,7 @@ public abstract class DownloaderBase extends Service {
 //                                end = end - 1;
 //                            }
                             if (threadId == THREADCOUNT) {
-                                end = fileLenght;
+                                end = fileLenght-1;
                             }
                             if (!service_json.equals("")) {
                                 JSONObject jsonData = new JSONObject(service_json);
@@ -227,7 +223,6 @@ public abstract class DownloaderBase extends Service {
                             } else {
                                 NStorage.setLongSP(getContext(), "download" + threadId, 0);
                             }
-                            Log.e("tag------<","start="+start+"-----end="+end);
                             new DownloadThread(start, end, threadId, DOWNLOADLINK).start();
                         }
                     } else if (code == 403) {
@@ -257,18 +252,21 @@ public abstract class DownloaderBase extends Service {
         int threadId;
         private String path;
         private HttpURLConnection conn;
+        private int totalsize=0;
 
         public DownloadThread(long start, long end, int threadId, String path) {
             this.start = start;
             this.end = end;
             this.threadId = threadId;
             this.path = path;
+
         }
 
         @Override
         public void run() {
             int catched = 0;
             try {
+               /* synchronized (DownloaderBase.this) {*/
                 NAction.setThreadStat(getApplicationContext(), threadId, 1);
                 Long done = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
                 if (done > 0) {
@@ -278,25 +276,24 @@ public abstract class DownloaderBase extends Service {
                 }
                 URL url = new URL(path);
                 conn = (HttpURLConnection) url.openConnection();
-                conn.setConnectTimeout(0);
+                conn.setConnectTimeout(5000);
                 conn.setRequestMethod("GET");
-                Log.e("tag---->","start="+start+"-----"+"end="+end);
                 conn.setRequestProperty("Range", "bytes=" + start + "-" + end);
-                conn.connect();
+              /*  }*/
                 int code = conn.getResponseCode();
                 if (code >= 200 || code < 400) {
                     InputStream is = conn.getInputStream();
                     RandomAccessFile raf = new RandomAccessFile(downloadFile, "rwd");
                     raf.seek(start);
-                    int len = -1;
+                    int len = 0;
                     long total = 0;
                     byte[] buffer = new byte[1024];
-                    while ((len = is.read(buffer)) != -1) {
-                        raf.write(buffer, 0, len);
+                    while ((len=is.read(buffer)) != -1) {
+                            raf.write(buffer,0,len);
                         synchronized (DownloaderBase.this) {
                             total += len;
+                            totalsize+=len;
                             NStorage.setLongSP(getApplicationContext(), "download" + threadId, (total + start));
-                            Log.e("download------>",total+start+"");
                             NStorage.setLongSP(getApplicationContext(), "downloadProgress", mCompletedSize * 100 / fileLenght);
                             if (mCompletedSize * 100 / fileLenght % 2 == 0) {
                                 updatePendingIntent = PendingIntent.getActivity(DownloaderBase.this, NOTIFICATION_ID, updateIntent, 0);
@@ -325,19 +322,19 @@ public abstract class DownloaderBase extends Service {
                 }
                 catched = 1;
             } catch (IOException e) {
-                Log.e("erro------>","threadID"+threadId+"-----"+e.getMessage());
-                updateHandler.obtainMessage(EXCEPTION_FILE_NOTFOUND).sendToTarget();
+//                updateHandler.obtainMessage(EXCEPTION_FILE_NOTFOUND).sendToTarget();
                 catched = 1;
-            } finally {
+                downloadContinue();
+            }
                 Log.d(TAG, "download run finally:" + catched);
                 if (catched != 1) {
-                    Log.e("catched------>",catched+"");
                     updateHandler.obtainMessage(DOWNLOAD_EXCEPTION).sendToTarget();
                 } else {
                     synchronized (DownloaderBase.this) {
                         long done = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
-                        end = end - (sonThreadSize * (threadId - 1));
-                        if ((done - (sonThreadSize * (threadId - 1)) >= end))
+                        //end = end - (sonThreadSize * (threadId - 1));
+                        Log.e("stratandend>>>>>",done - (sonThreadSize * (threadId - 1))+"-----"+end);
+                        if (done >= end)
                             runingTread--;
                         if (runingTread == 0) {
                             for (int i = 1; i <= THREADCOUNT; i++) {
@@ -356,8 +353,76 @@ public abstract class DownloaderBase extends Service {
                     }
                 }
             }
+
+
+        private  void downloadContinue(){
+            Log.e("continue------->","continue");
+            URL rurl = null;
+            HttpURLConnection rconn=null;
+            Long rdone=0L;
+            try {
+                synchronized (DownloaderBase.class){
+                   rdone = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
+                rurl = new URL(path);
+                 rconn = (HttpURLConnection) rurl.openConnection();
+                rconn.setConnectTimeout(5000);
+                rconn.setRequestMethod("GET");
+                rconn.setRequestProperty("Range", "bytes=" + rdone + "-" + end);
+            }
+                int rcode = rconn.getResponseCode();
+                if (rcode>=200&&rcode<400){
+                    InputStream ris = rconn.getInputStream();
+                    RandomAccessFile rraf = new RandomAccessFile(downloadFile, "rwd");
+                    rraf.seek(rdone);
+                    int rlen = 0;
+                    long rtotal = 0;
+                    byte[] buffer = new byte[1024];
+                    while ((rlen=ris.read(buffer)) != -1) {
+                        rraf.write(buffer,0,rlen);
+                        synchronized (DownloaderBase.this) {
+                            rtotal += rlen;
+                            totalsize+=rlen;
+                            NStorage.setLongSP(getApplicationContext(), "download" + threadId, (rtotal + rdone));
+                            NStorage.setLongSP(getApplicationContext(), "downloadProgress", mCompletedSize * 100 / fileLenght);
+                            if (mCompletedSize * 100 / fileLenght % 2 == 0) {
+                                updatePendingIntent = PendingIntent.getActivity(DownloaderBase.this, NOTIFICATION_ID, updateIntent, 0);
+                                Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", mCompletedSize * 100 / fileLenght + "%", updatePendingIntent,
+                                        R.drawable.ic_download_nb, null, Notification.FLAG_ONGOING_EVENT);
+                                downloadNotificationManager.notify(NotifyIndex,
+                                        downloadNotification);
+                            }
+                            DownloadInfo dInfo = DBDao.getInfoByPath(downloadFile.getName());
+                            if (dInfo != null) {
+                                if (dInfo.getStat() == 2) {
+                                    NStorage.setLongSP(getApplicationContext(), "download" + threadId, (rtotal + rdone));
+                                    synchronized (DownloaderBase.this) {
+                                        servicePause();
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        mCompletedSize += rlen;
+                    }
+                    rraf.close();
+                    ris.close();
+                }
+            } catch (IOException e) {
+                downloadContinue();
+                e.printStackTrace();
+            }
+              /*  }*/
+
+
+
         }
+
+
+
+
     }
+
+
 
 
     protected Handler updateHandler = new Handler() {

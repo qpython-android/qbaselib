@@ -55,7 +55,7 @@ public class CONF {
 	
 	public static final String FEEDBACK_EMAIL = "quseitlab@gmail.com";
 
-    public final static String DEFAULT_ROOT = "Quseit";
+    public final static String DEFAULT_ROOT = "Tubebook";
     
     public static final String EXT_PLG = "org.qpython.qpy";
     public static final String EXT_PLG_3 = "org.qpython.qpy3";
