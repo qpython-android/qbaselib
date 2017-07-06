@@ -2,6 +2,7 @@ package com.quseit.db;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.util.Log;
 
 import com.quseit.config.CONF;
 import com.quseit.lib.DownloadInfo;
+import com.quseit.lib.RecordInfo;
 
 
 /**
@@ -45,7 +47,6 @@ public class DownloadLog {
 	 */
 	public DownloadInfo getInfoByPath(String path) {
 		DBHelper dbHelper = new DBHelper(context);
-
 		try {
 			SQLiteDatabase database = dbHelper.getReadableDatabase();
 			String sql = "select thread_id, start_pos, end_pos,compelete_size,url,path,orglink,quality,stat,title,artist,album ,service_stat,service_json from download_info where path=? ORDER BY _id DESC";
@@ -145,7 +146,6 @@ public class DownloadLog {
 	 */
 	public synchronized void saveInfos(final List<DownloadInfo> infos, final int count) {
 		if (count < CONF.TRY_COUNT) {
-
 			DBHelper dbHelper = new DBHelper(context);
 			try {
 				SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -182,6 +182,35 @@ public class DownloadLog {
 			dbHelper.close();
 		}
 
+	}
+
+	public synchronized void saveRecord(int thread_id,long comSize,String url){
+		DBHelper helper=new DBHelper(context);
+		SQLiteDatabase database = helper.getWritableDatabase();
+		String sql="insert into record(thread_id,complete_size,url)values(?,?,?)";
+		Object[] objects={thread_id,comSize,url};
+		database.execSQL(sql,objects);
+		database.close();
+	}
+
+	public synchronized long getRecord(int threadId,String url){
+		DBHelper helper=new DBHelper(context);
+		SQLiteDatabase database = helper.getWritableDatabase();
+		Cursor cursor=database.rawQuery("select complete_size from record  where thread_id=? and url=?",new String[]{String.valueOf(threadId),url});
+		long size=-1;
+		while (cursor.moveToNext()){
+			size=cursor.getLong(0);
+		}
+		database.close();
+		return size;
+
+	}
+
+	public synchronized void updateRecord(long comSize,int threadId,String url){
+		DBHelper helper=new DBHelper(context);
+		SQLiteDatabase database = helper.getWritableDatabase();
+		database.execSQL("update record set complete_size=? where thread_id=? and url=? ",new Object[]{comSize,threadId,url});
+		database.close();
 	}
 
 	/**
@@ -376,11 +405,14 @@ public class DownloadLog {
 		dbHelper.close();
 	}
 
+	public synchronized void saveDownloadinfo(String link, String path, Map<Integer ,Integer> map){
+
+	}
+
 	public synchronized void updateInfos(final long start_pos, final long compeleteSize,
 			final String urlstr, final String path, final int count) {
 		if (count < CONF.TRY_COUNT) {
 			DBHelper dbHelper = new DBHelper(context);
-
 			try {
 				SQLiteDatabase database = dbHelper.getWritableDatabase();
 				String sql = "update download_info set compelete_size=?,start_pos=? where  url=? and path=?";
@@ -390,13 +422,11 @@ public class DownloadLog {
 			} catch (SQLiteException e) {
 				Handler handler = new Handler();
 				handler.postDelayed(new Runnable() {
-
 					@Override
 					public void run() {
 						updateInfos(start_pos, compeleteSize, urlstr, path,
 								count);
 					}
-
 				}, CONF.TRY_DELAY);
 			}
 			dbHelper.close();
