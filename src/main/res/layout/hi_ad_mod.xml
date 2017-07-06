@@ -31,7 +31,7 @@
     </LinearLayout>
 
     <com.quseit.view.AdSlidShowView
-        android:id="@+id/adSlid"
+        android:id="@+id/adSlid2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:visibility="gone" >

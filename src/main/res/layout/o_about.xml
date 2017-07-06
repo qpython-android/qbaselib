@@ -67,7 +67,7 @@
 				<TextView 
 				android:id="@+id/privacy_title"
 				android:layout_width="fill_parent" 
-				android:layout_height="wrap_content" 
+				android:layout_height="wrap_content"
 				android:paddingLeft="10.0dip"
 				android:paddingRight="10.0dip"
 				android:paddingTop="10.0dip"
@@ -96,7 +96,7 @@
 				<TextView 
 				android:id="@+id/update_content" 
 				android:layout_width="fill_parent" 
-				android:layout_height="wrap_content" 
+				android:layout_height="wrap_content"
 				android:paddingLeft="10.0dip"
 				android:paddingRight="10.0dip"
 				android:paddingTop="10.0dip"
@@ -150,7 +150,7 @@
 				android:paddingRight="10dp"
 				android:paddingLeft="10dp"
 				android:paddingBottom="20dp"
-				
+
 				android:textColor="@color/maintextcolor"
 				/>
 			</LinearLayout>
