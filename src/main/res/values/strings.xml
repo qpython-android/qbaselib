@@ -170,7 +170,7 @@
     <string name="get_script_plugin">Install script</string>
     <string name="about_about">About</string>
     <string name="about_other">More</string>
-    <string name="check_update">Check for new version</string>
+    <string name="check_update">Check for update</string>
     <string name="plugin_script">Script Plugin Support</string>
     <string name="plugin_script_enable">Script Plugin</string>
     <string name="scriptrunning">Script running</string>

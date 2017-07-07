@@ -39,62 +39,187 @@ import java.util.List;
 
 public abstract class DownloaderBase extends Service {
     protected static final String TAG = "MyDownloader";
+    protected final static int DOWNLOAD_EXCEPTION = -3;
+    protected final static int DOWNLOAD_CANCL = -1;
+    protected final static int DOWNLOAD_PAUSE = -2;
+    protected final static int DOWNLOAD_COMPLETE = 0;
+    protected final static int DOWNLOAD_FAIL = 1;
     private static int NOTIFICATION_ID = 0x20001;// 通知栏消息id
-
-    protected String DOWNLOADLINK;
-
     private final int DOWN_LOAD = 4; // 进行中
     private final int DOWN_WAIT = 1; // 排队中
     private final int DOWN_SEECSS = 2; // 下载完毕
     private final int DOWN_PUSE = 3; // 暂停中
     private final int DOWN_ERROR = 5; // 出错的
     private final int DOWN_CONTINUE = 5; // 继续 对 暂停
-
     private final int EXCEPTION_FILE_NOTFOUND = 6;//链接失效
-
+    final private int THREADCOUNT = CONF.THREA_STAT.length;
+    public boolean showToast = false;
+    protected String DOWNLOADLINK;
     protected String mTitle;
     protected String mArtist;
     protected String mAlbum;
     protected String mExt;
     protected long mCompletedSize;
-
-    public boolean showToast = false;
-
+    // protected File updateDir = null;
+    protected File downloadFile = null;
+    protected String rootPath = null;
+    protected NotificationManager downloadNotificationManager = null;
+    protected Intent updateIntent = null;
+    protected PendingIntent updatePendingIntent = null;
+    protected int NotifyIndex;
+    protected String referCookie;
+    protected String referUrl;
+    protected String referUa;
     private long fileLenght;
-
-    final private int THREADCOUNT = CONF.THREA_STAT.length;
-
     private int runingTread = 3;
     private long downlenght = 0;
     private DownloadLog DBDao;
     private long locklenght = 0;
     private long sonThreadSize;
-
     private int service_stat = 0;
+    //protected String play;
     private String service_json;
-
-    // protected File updateDir = null;
-    protected File downloadFile = null;
-    protected String rootPath = null;
-
-    protected final static int DOWNLOAD_EXCEPTION = -3;
-    protected final static int DOWNLOAD_CANCL = -1;
-    protected final static int DOWNLOAD_PAUSE = -2;
-    protected final static int DOWNLOAD_COMPLETE = 0;
-    protected final static int DOWNLOAD_FAIL = 1;
     private boolean ISERORR;
     private boolean isREAD;
+    protected Handler updateHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Intent intentS = new Intent(getApplicationContext(), getSelf());
+            boolean stopFlag = true;
+            switch (msg.what) {
 
-    protected NotificationManager downloadNotificationManager = null;
+                case DOWNLOAD_COMPLETE:
 
-    protected Intent updateIntent = null;
-    protected PendingIntent updatePendingIntent = null;
-    protected int NotifyIndex;
-    //protected String play;
 
-    protected String referCookie;
-    protected String referUrl;
-    protected String referUa;
+                    Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.up_soft_done), updatePendingIntent,
+                            R.drawable.ic_download_nb, null, Notification.FLAG_AUTO_CANCEL);
+
+                    downloadNotificationManager.notify(NotifyIndex,
+                            downloadNotification);
+
+                    Log.d(TAG, "DOWNLOAD_COMPLETE:" + downloadFile + "-" + mTitle);
+
+                    try {
+                        String ext = "."
+                                + FileHelper.getExt(downloadFile.getName(), "dat");
+
+                        String root = NAction
+                                .getDefaultRoot(getApplicationContext());
+
+
+                        File dstFile;
+                        if (rootPath != null && !rootPath.equals("")) {
+                            dstFile = new File(FileHelper.getABSPath(rootPath + "/"
+                                    + mArtist + "/"), mTitle + ext);
+
+                        } else {
+                            if (!root.equals("")) {
+                                dstFile = new File(FileHelper.getABSPath(root + "/"
+                                        + mArtist + "/"), mTitle + ext);
+
+                            } else {
+                                dstFile = new File(FileHelper.getBasePath(MyApp
+                                        .getInstance().getFullRoot() + "/", mArtist
+                                        + "/"), mTitle + ext);
+                            }
+                        }
+                        downloadFile.renameTo(dstFile);
+
+                        Toast.makeText(
+                                getApplicationContext(),
+                                MessageFormat.format(
+                                        getString(R.string.download_ok),
+                                        mTitle), Toast.LENGTH_SHORT).show();
+
+                        recordLog(mTitle, mArtist, mAlbum, "9",
+                                dstFile.getAbsolutePath());
+
+                        serviceSuccess();
+
+                        reOpenDownLoad();
+
+
+                    } catch (IOException e) { // 改名失败
+
+                        downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.up_soft_failed), updatePendingIntent,
+                                R.drawable.ic_error_nb, null, Notification.FLAG_AUTO_CANCEL);
+
+                        downloadNotificationManager.notify(NotifyIndex,
+                                downloadNotification);
+
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case DOWNLOAD_FAIL:
+                    // 下载失败
+                    downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.up_soft_failed), updatePendingIntent,
+                            R.drawable.ic_warning_nb, null, Notification.FLAG_AUTO_CANCEL);
+
+
+                    downloadNotificationManager.notify(NotifyIndex,
+                            downloadNotification);
+                    servicePause();
+                    NAction.clearThreadsStat(getApplicationContext());
+                    break;
+
+                case DOWNLOAD_CANCL:
+                    Toast.makeText(
+                            getApplicationContext(),
+                            MessageFormat.format(
+                                    getString(R.string.download_cancel), mTitle),
+                            Toast.LENGTH_SHORT).show();
+
+                    downloadNotificationManager.cancel(NotifyIndex);
+                    break;
+
+                case DOWNLOAD_EXCEPTION:
+                    Log.e("downexception----------","downexception");
+                    downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.download_exception), updatePendingIntent,
+                            R.drawable.ic_error_nb, null, Notification.FLAG_AUTO_CANCEL);
+
+                    downloadNotificationManager.notify(NotifyIndex,
+                            downloadNotification);
+                    servicePause();
+                    NAction.clearThreadsStat(getApplicationContext());
+                    break;
+
+                case DOWNLOAD_PAUSE:
+                    Toast.makeText(
+                            getApplicationContext(),
+                            MessageFormat.format(
+                                    getString(R.string.download_pause), mTitle),
+                            Toast.LENGTH_SHORT).show();
+
+                    downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.task_pause), updatePendingIntent,
+                            R.drawable.ic_pause, null, Notification.FLAG_AUTO_CANCEL);
+
+                    downloadNotificationManager.notify(NotifyIndex,
+                            downloadNotification);
+                    break;
+                case DOWN_LOAD:
+
+                    break;
+
+                case EXCEPTION_FILE_NOTFOUND:
+                    Toast.makeText(
+                            getApplicationContext(),
+                            MessageFormat.format(
+                                    (getString(R.string.tip_expire)), mTitle),
+                            Toast.LENGTH_SHORT).show();
+                default:
+                    stopFlag = false;
+
+                     //stopService(updateIntent);
+            }
+            if (stopFlag) {
+                Intent intent = new Intent(".MDownloadManAct");
+                sendBroadcast(intent);
+
+                stopService(intentS);
+            }
+        }
+    };
 
     @Override
     public void onStart(Intent intent, int startId) {
@@ -247,271 +372,6 @@ public abstract class DownloaderBase extends Service {
 
     public abstract Context getContext();
 
-    class DownloadThread extends Thread {
-        private long start, end;
-        int threadId;
-        private String path;
-
-        public DownloadThread(long start, long end, int threadId, String path) {
-            this.start = start;
-            this.end = end;
-            this.threadId = threadId;
-            this.path = path;
-        }
-
-        @Override
-        public void run() {
-            int catched = 0;
-            try {
-                NAction.setThreadStat(getApplicationContext(), threadId, 1);
-                Long done = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
-                if (done > 0) {
-                    synchronized (DownloaderBase.this) {
-                        long oldAlldownData = done - (sonThreadSize * (threadId - 1));
-                        mCompletedSize += oldAlldownData;
-                        start = done;
-                    }
-                }
-
-
-                URL url = new URL(path);
-                HttpURLConnection conn = (HttpURLConnection) url
-                        .openConnection();
-                conn.setConnectTimeout(5000);
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Range", "bytes=" + start + "-" + end);
-                int code = conn.getResponseCode();
-                if (code >= 200 || code < 400) {
-                    InputStream is = conn.getInputStream();
-                    RandomAccessFile raf = new RandomAccessFile(downloadFile,
-                            "rwd");
-                    raf.seek(start);
-
-                    int len = 0;
-                    long total = 0;
-                    byte[] buffer = new byte[4096];
-                    while ((len = is.read(buffer)) != -1) {
-                        raf.write(buffer, 0, len);
-                        total += len;
-                        mCompletedSize += len;
-                        synchronized (DownloaderBase.this) {
-
-                            NStorage.setLongSP(getApplicationContext(), "download" + threadId, (total + start));
-                            NStorage.setLongSP(getApplicationContext(), "downloadProgress", mCompletedSize * 100 / fileLenght);
-
-
-                            if (mCompletedSize * 100 / fileLenght % 2 == 0) {
-
-                                updatePendingIntent = PendingIntent.getActivity(DownloaderBase.this,
-                                        NOTIFICATION_ID, updateIntent, 0);
-
-                                Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", mCompletedSize * 100 / fileLenght + "%", updatePendingIntent,
-                                        R.drawable.ic_download_nb, null, Notification.FLAG_ONGOING_EVENT);
-
-                                downloadNotificationManager.notify(NotifyIndex,
-                                        downloadNotification);
-                            }
-                        }
-
-
-                        DownloadInfo dInfo = DBDao.getInfoByPath(downloadFile
-                                .getName());
-
-                        if (dInfo != null) {
-                            if (dInfo.getStat() == 2) {
-                                NStorage.setLongSP(getApplicationContext(), "download" + threadId, (total + start));
-                                synchronized (DownloaderBase.this) {
-                                    servicePause();
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    is.close();
-                    raf.close();
-                } else {
-                    updateHandler.obtainMessage(DOWNLOAD_EXCEPTION).sendToTarget();
-                }
-                catched = 1;
-            } catch (IOException e) {
-                updateHandler.obtainMessage(EXCEPTION_FILE_NOTFOUND).sendToTarget();
-
-                catched = 1;
-            } finally {
-
-                Log.d(TAG, "download run finally:" + catched);
-                if (catched != 1) {
-                    updateHandler.obtainMessage(DOWNLOAD_EXCEPTION).sendToTarget();
-                } else {
-
-                    synchronized (DownloaderBase.this) {
-                        long done = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
-                        end = end - (sonThreadSize * (threadId - 1));
-                        if ((done - (sonThreadSize * (threadId - 1)) >= end))
-                            runingTread--;
-                        if (runingTread == 0) {
-
-                            for (int i = 1; i <= THREADCOUNT; i++) {
-                                NStorage.setLongSP(getApplicationContext(), "download" + i, 0);
-                            }
-                            updateHandler.obtainMessage(DOWNLOAD_COMPLETE).sendToTarget();
-                        }
-
-                        if (NAction.isThreadsStop(getApplicationContext())) {
-                            Log.d(TAG, "HERE");
-                            if (showToast) {
-                                updateHandler.obtainMessage(DOWNLOAD_PAUSE).sendToTarget();
-                                showToast = false;
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-    protected Handler updateHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Intent intentS = new Intent(getApplicationContext(), getSelf());
-            boolean stopFlag = true;
-            switch (msg.what) {
-
-                case DOWNLOAD_COMPLETE:
-
-
-                    Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.up_soft_done), updatePendingIntent,
-                            R.drawable.ic_download_nb, null, Notification.FLAG_AUTO_CANCEL);
-
-                    downloadNotificationManager.notify(NotifyIndex,
-                            downloadNotification);
-
-                    Log.d(TAG, "DOWNLOAD_COMPLETE:" + downloadFile + "-" + mTitle);
-
-                    try {
-                        String ext = "."
-                                + FileHelper.getExt(downloadFile.getName(), "dat");
-
-                        String root = NAction
-                                .getDefaultRoot(getApplicationContext());
-
-
-                        File dstFile;
-                        if (rootPath != null && !rootPath.equals("")) {
-                            dstFile = new File(FileHelper.getABSPath(rootPath + "/"
-                                    + mArtist + "/"), mTitle + ext);
-
-                        } else {
-                            if (!root.equals("")) {
-                                dstFile = new File(FileHelper.getABSPath(root + "/"
-                                        + mArtist + "/"), mTitle + ext);
-
-                            } else {
-                                dstFile = new File(FileHelper.getBasePath(MyApp
-                                        .getInstance().getFullRoot() + "/", mArtist
-                                        + "/"), mTitle + ext);
-                            }
-                        }
-                        downloadFile.renameTo(dstFile);
-
-                        Toast.makeText(
-                                getApplicationContext(),
-                                MessageFormat.format(
-                                        getString(R.string.download_ok),
-                                        mTitle), Toast.LENGTH_SHORT).show();
-
-                        recordLog(mTitle, mArtist, mAlbum, "9",
-                                dstFile.getAbsolutePath());
-
-                        serviceSuccess();
-
-                        reOpenDownLoad();
-
-
-                    } catch (IOException e) { // 改名失败
-
-                        downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.up_soft_failed), updatePendingIntent,
-                                R.drawable.ic_error_nb, null, Notification.FLAG_AUTO_CANCEL);
-
-                        downloadNotificationManager.notify(NotifyIndex,
-                                downloadNotification);
-
-                        e.printStackTrace();
-                    }
-                    break;
-
-                case DOWNLOAD_FAIL:
-                    // 下载失败
-                    downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.up_soft_failed), updatePendingIntent,
-                            R.drawable.ic_warning_nb, null, Notification.FLAG_AUTO_CANCEL);
-
-
-                    downloadNotificationManager.notify(NotifyIndex,
-                            downloadNotification);
-                    servicePause();
-                    NAction.clearThreadsStat(getApplicationContext());
-                    break;
-
-                case DOWNLOAD_CANCL:
-                    Toast.makeText(
-                            getApplicationContext(),
-                            MessageFormat.format(
-                                    getString(R.string.download_cancel), mTitle),
-                            Toast.LENGTH_SHORT).show();
-
-                    downloadNotificationManager.cancel(NotifyIndex);
-                    break;
-
-                case DOWNLOAD_EXCEPTION:
-                    Log.e("downexception----------","downexception");
-                    downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.download_exception), updatePendingIntent,
-                            R.drawable.ic_error_nb, null, Notification.FLAG_AUTO_CANCEL);
-
-                    downloadNotificationManager.notify(NotifyIndex,
-                            downloadNotification);
-                    servicePause();
-                    NAction.clearThreadsStat(getApplicationContext());
-                    break;
-
-                case DOWNLOAD_PAUSE:
-                    Toast.makeText(
-                            getApplicationContext(),
-                            MessageFormat.format(
-                                    getString(R.string.download_pause), mTitle),
-                            Toast.LENGTH_SHORT).show();
-
-                    downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", getString(R.string.task_pause), updatePendingIntent,
-                            R.drawable.ic_pause, null, Notification.FLAG_AUTO_CANCEL);
-
-                    downloadNotificationManager.notify(NotifyIndex,
-                            downloadNotification);
-                    break;
-                case DOWN_LOAD:
-
-                    break;
-
-                case EXCEPTION_FILE_NOTFOUND:
-                    Toast.makeText(
-                            getApplicationContext(),
-                            MessageFormat.format(
-                                    (getString(R.string.tip_expire)), mTitle),
-                            Toast.LENGTH_SHORT).show();
-                default:
-                    stopFlag = false;
-
-                     //stopService(updateIntent);
-            }
-            if (stopFlag) {
-                Intent intent = new Intent(".MDownloadManAct");
-                sendBroadcast(intent);
-
-                stopService(intentS);
-            }
-        }
-    };
-
     public void recordLog(String title, String artist, String album,
                           String type, String path) {
 
@@ -526,50 +386,6 @@ public abstract class DownloaderBase extends Service {
     public IBinder onBind(Intent intent) {
 
         return null;
-    }
-
-    class sonThreadInfo {
-        private int start, end, state, done, threadId;
-
-        public int getStart() {
-            return start;
-        }
-
-        public void setStart(int start) {
-            this.start = start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
-        public void setEnd(int end) {
-            this.end = end;
-        }
-
-        public int getState() {
-            return state;
-        }
-
-        public void setState(int state) {
-            this.state = state;
-        }
-
-        public int getDone() {
-            return done;
-        }
-
-        public void setDone(int done) {
-            this.done = done;
-        }
-
-        public int getThreadId() {
-            return threadId;
-        }
-
-        public void setThreadId(int threadId) {
-            this.threadId = threadId;
-        }
     }
 
     public void setNStorageThreadInfo(long start, long end, int state,
@@ -740,7 +556,7 @@ public abstract class DownloaderBase extends Service {
                                 end = fileLenght;
                             }
 
-							
+
 							/*if(!service_json.equals("")){
                                 JSONObject jsonData=new JSONObject(service_json);
 								NStorage.setLongSP(getContext(), "download"+threadId, jsonData.getLong("download"+threadId));
@@ -771,6 +587,174 @@ public abstract class DownloaderBase extends Service {
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
         super.onDestroy();
+    }
+
+    class DownloadThread extends Thread {
+        int threadId;
+        private long start, end;
+        private String path;
+
+        public DownloadThread(long start, long end, int threadId, String path) {
+            this.start = start;
+            this.end = end;
+            this.threadId = threadId;
+            this.path = path;
+        }
+
+        @Override
+        public void run() {
+            int catched = 0;
+            try {
+                NAction.setThreadStat(getApplicationContext(), threadId, 1);
+                Long done = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
+                if (done > 0) {
+                    synchronized (DownloaderBase.this) {
+                        long oldAlldownData = done - (sonThreadSize * (threadId - 1));
+                        mCompletedSize += oldAlldownData;
+                        start = done;
+                    }
+                }
+
+
+                URL url = new URL(path);
+                HttpURLConnection conn = (HttpURLConnection) url
+                        .openConnection();
+                conn.setConnectTimeout(5000);
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Range", "bytes=" + start + "-" + end);
+                int code = conn.getResponseCode();
+                if (code >= 200 || code < 400) {
+                    InputStream is = conn.getInputStream();
+                    RandomAccessFile raf = new RandomAccessFile(downloadFile,
+                            "rwd");
+                    raf.seek(start);
+
+                    int len = 0;
+                    long total = 0;
+                    byte[] buffer = new byte[4096];
+                    while ((len = is.read(buffer)) != -1) {
+                        raf.write(buffer, 0, len);
+                        total += len;
+                        mCompletedSize += len;
+                        synchronized (DownloaderBase.this) {
+
+                            NStorage.setLongSP(getApplicationContext(), "download" + threadId, (total + start));
+                            NStorage.setLongSP(getApplicationContext(), "downloadProgress", mCompletedSize * 100 / fileLenght);
+
+
+                            if (mCompletedSize * 100 / fileLenght % 2 == 0) {
+
+                                updatePendingIntent = PendingIntent.getActivity(DownloaderBase.this,
+                                        NOTIFICATION_ID, updateIntent, 0);
+
+                                Notification downloadNotification = NAction.getNotification(getApplicationContext(), mTitle + "(" + mArtist + ")", mCompletedSize * 100 / fileLenght + "%", updatePendingIntent,
+                                        R.drawable.ic_download_nb, null, Notification.FLAG_ONGOING_EVENT);
+
+                                downloadNotificationManager.notify(NotifyIndex,
+                                        downloadNotification);
+                            }
+                        }
+
+
+                        DownloadInfo dInfo = DBDao.getInfoByPath(downloadFile
+                                .getName());
+
+                        if (dInfo != null) {
+                            if (dInfo.getStat() == 2) {
+                                NStorage.setLongSP(getApplicationContext(), "download" + threadId, (total + start));
+                                synchronized (DownloaderBase.this) {
+                                    servicePause();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    is.close();
+                    raf.close();
+                } else {
+                    updateHandler.obtainMessage(DOWNLOAD_EXCEPTION).sendToTarget();
+                }
+                catched = 1;
+            } catch (IOException e) {
+                updateHandler.obtainMessage(EXCEPTION_FILE_NOTFOUND).sendToTarget();
+
+                catched = 1;
+            } finally {
+
+                Log.d(TAG, "download run finally:" + catched);
+                if (catched != 1) {
+                    updateHandler.obtainMessage(DOWNLOAD_EXCEPTION).sendToTarget();
+                } else {
+
+                    synchronized (DownloaderBase.this) {
+                        long done = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
+                        end = end - (sonThreadSize * (threadId - 1));
+                        if ((done - (sonThreadSize * (threadId - 1)) >= end))
+                            runingTread--;
+                        if (runingTread == 0) {
+
+                            for (int i = 1; i <= THREADCOUNT; i++) {
+                                NStorage.setLongSP(getApplicationContext(), "download" + i, 0);
+                            }
+                            updateHandler.obtainMessage(DOWNLOAD_COMPLETE).sendToTarget();
+                        }
+
+                        if (NAction.isThreadsStop(getApplicationContext())) {
+                            Log.d(TAG, "HERE");
+                            if (showToast) {
+                                updateHandler.obtainMessage(DOWNLOAD_PAUSE).sendToTarget();
+                                showToast = false;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    class sonThreadInfo {
+        private int start, end, state, done, threadId;
+
+        public int getStart() {
+            return start;
+        }
+
+        public void setStart(int start) {
+            this.start = start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+
+        public void setEnd(int end) {
+            this.end = end;
+        }
+
+        public int getState() {
+            return state;
+        }
+
+        public void setState(int state) {
+            this.state = state;
+        }
+
+        public int getDone() {
+            return done;
+        }
+
+        public void setDone(int done) {
+            this.done = done;
+        }
+
+        public int getThreadId() {
+            return threadId;
+        }
+
+        public void setThreadId(int threadId) {
+            this.threadId = threadId;
+        }
     }
 
 }

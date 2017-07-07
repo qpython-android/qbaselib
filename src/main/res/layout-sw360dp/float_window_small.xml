@@ -9,10 +9,10 @@
     android:paddingRight="2dp">
 
     <TextView
-        android:gravity="center"
         android:id="@+id/tvSum"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:text="实时网速"
         android:textColor="#ffffff"
         android:textSize="13sp" />

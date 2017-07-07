@@ -67,7 +67,7 @@ public class ZipUtils {
      * @param folderPath 解压缩的目标目录
      * @throws IOException 当解压缩过程出错时抛出
      */
-    public static void upZipFile(File zipFile, String folderPath) throws ZipException, IOException {
+    public static void upZipFile(File zipFile, String folderPath) throws IOException {
         File desDir = new File(folderPath);
         if (!desDir.exists()) {
             desDir.mkdirs();
@@ -358,7 +358,7 @@ public class ZipUtils {
 								+ zipEntry.getName());
 						// f.createNewFile();
 						in = zipFile.getInputStream(zipEntry);
-						out = new FileOutputStream(f);
+						out = new FileOutputStream(f.getAbsoluteFile());
 						int c;
 						byte[] by = new byte[1024];
 						while ((c = in.read(by)) != -1) {

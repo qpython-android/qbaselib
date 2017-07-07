@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -19,6 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -225,8 +227,8 @@ public class FileHelper {
             if (level > 0 || deleteS) {
                 basePath.delete();
             }
-
-
+        } else if (basePath.exists()) {
+            basePath.delete();
         }
     }
 
@@ -380,8 +382,6 @@ public class FileHelper {
 
             //System.out.println("Done");
             return true;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -429,4 +429,25 @@ public class FileHelper {
             }
         }
     }
+
+    public static void copyFile(File file, String outputPath) {
+        int BUFFER_SIZE = 4069;
+        try {
+            InputStream inputStream = new FileInputStream(file);
+            OutputStream outputStream = new FileOutputStream(outputPath);
+
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+//
+//    public static void unzipFile() {
+//
+//    }
 }

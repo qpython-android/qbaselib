@@ -3,9 +3,9 @@
     android:id="@+id/modbanner_wrap"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:background="@color/cwhite3"
     android:orientation="vertical"
-    android:layout_gravity="center"
     android:visibility="gone" >
 
     <LinearLayout
@@ -31,7 +31,7 @@
     </LinearLayout>
 
     <com.quseit.view.AdSlidShowView
-        android:id="@+id/adSlid2"
+        android:id="@+id/adSlid"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:visibility="gone" >

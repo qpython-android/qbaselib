@@ -14,6 +14,7 @@ import java.net.URLConnection;
 
 import com.quseit.config.CONF;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -28,6 +29,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
 
 public class ImageUtil {
 	public static Bitmap resizeBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
@@ -362,6 +364,10 @@ public class ImageUtil {
             } else {  
                 return upperBound;  
             }  
-        }  
-        
+        }
+
+    public static float dp2px(float dp) {
+        Resources r = Resources.getSystem();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+    }
 }
