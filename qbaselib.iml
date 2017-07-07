@@ -109,6 +109,5 @@
     <orderEntry type="module" module-name="qftplib" exported="" />
     <orderEntry type="module" module-name="qpagerlib" exported="" />
     <orderEntry type="library" exported="" name="org.apache.http.legacy-android-25" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-25.1.0" level="project" />
   </component>
 </module>
