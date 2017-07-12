@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.*;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import java.io.BufferedReader;
@@ -209,11 +211,12 @@ public class FileHelper {
 		//Log.d(TAG, "clearDir:"+dir);
 		File basePath = new File(dir);
 		if (basePath.exists() && basePath.isDirectory()) {
+			Log.e("tag-----------","deletefile1");
 			for (File item : basePath.listFiles()) {
 				if (item.isFile()) {
+					Log.e("tag-----------","deletefile");
 					//Log.d(TAG, "deleteItem:"+item.getAbsolutePath());
 					item.delete();
-					
 				} else if (item.isDirectory()){
 					clearDir(item.getAbsolutePath(), level+1, deleteS);
 				}
@@ -221,8 +224,8 @@ public class FileHelper {
 			if (level>0 || deleteS) {
 				basePath.delete();
 			}
-			
-			
+		}else {
+			basePath.delete();
 		}
 	}
 	public static File getBasePath(String parDir, String subdir) throws IOException {

@@ -3,6 +3,7 @@ package com.quseit.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.*;
 
 public class NStorage {
 
@@ -47,6 +48,4 @@ public class NStorage {
 		wobj.putLong(key, val);
 		wobj.commit();
 	}
-	
-	
 }

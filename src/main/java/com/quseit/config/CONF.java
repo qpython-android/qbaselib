@@ -1,10 +1,20 @@
 package com.quseit.config;
 
 public class CONF {
+    // 插件版本
+    public static int plugin_ver=0;
+
+    public static boolean open=false;
+
+
+    public static final String UPDATER_URL="http://www.tubebook.net/250/update.json";
 	public static final String BA_SITE2 = "conf.quseit.com";
 	public static final String FR_SITE = "play.quseit.com";
     public static final int TRY_COUNT = 3;
     public static final long TRY_DELAY = 1000;
+
+    public final static String SMAATOBKEY = "1100010539";
+
     
 	public final static int ROUND_PIX = 0;	// IMAGE ROUND PIX
 	public final static int DOWNLOAD_NOTIFY_INDEX = 10001;
@@ -45,7 +55,7 @@ public class CONF {
 	
 	public static final String FEEDBACK_EMAIL = "quseitlab@gmail.com";
 
-    public final static String DEFAULT_ROOT = "Quseit";
+    public final static String DEFAULT_ROOT = "Tubebook";
     
     public static final String EXT_PLG = "org.qpython.qpy";
     public static final String EXT_PLG_3 = "org.qpython.qpy3";
@@ -55,5 +65,32 @@ public class CONF {
 
 
 	public static int[] THREA_STAT = {0,0,0};	//FIXME DOWNLOAD STATUS
+
+    //版本更新
+    public static final String VERSION_KEY="ver";
+    public static final String DOWNLOAD_LINK_KEY="link";
+    public static final String VERIOSN_DESC_KEY="ver_desc";
+    public static final String APP_KEY="app";
+    public static final String VERSION_NAME_KEY="ver_name";
+    public static final String VERSION_PLUGIN_KEY="ver_plugin";
+    public static final String PLUGIN_KEY="plugins";
+
+     //speed
+
+    public static double TIME_SPAN = 2000d;
+    public static long CHANGE_DELAY = 300;
+    public static int SMALL_WINDOW_TYPE = 0;
+    public static int BIG_WINDOW_TYPE = 1;
+    public static int OVERLAY_PERMISSION_REQ_CODE = 11;
+    public static String SP_BOOT = "SP_BOOT";
+    public static String SP_BG = "SP_BG";
+    public static String SP_LOC = "SP_LOC";
+    public static String SP_X = "SP_X";
+    public static String SP_Y = "SP_Y";
+    public static String SP_STATUSBAR_HEIGHT = "SP_STATUSBAR_HEIGHT";
+
+    public static int CODE_FOR_WRITE_PERMISSION=10000;
+
+
 
 }

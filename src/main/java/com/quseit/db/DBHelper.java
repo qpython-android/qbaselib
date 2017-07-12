@@ -24,7 +24,7 @@ package com.quseit.db;
 	 
      //download.db-->数据库名
      public DBHelper(Context context) {
-         super(context, "download2.db", null, 1);
+         super(context, "download2.db", null, 2);
      }
      
      /**
@@ -35,11 +35,23 @@ package com.quseit.db;
          db.execSQL("create table download_info(_id integer PRIMARY KEY AUTOINCREMENT, thread_id integer, "
                  + "start_pos integer, end_pos integer, compelete_size integer,url char, path char,  orglink char, quality integer,stat integer,title char,artist char,album char,service_stat integer,service_json char)");
          db.execSQL("create table cache (key char, value text, type INTEGER, created INTEGER, expired INTEGER)");
+         db.execSQL("create table record(id integer primary key autoincrement,thread_id bigint,complete_size integer,url char)");
      }
      
      @Override
      public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
- 
+        if (newVersion>1){
+            try {
+                db.execSQL("create table download_info(_id integer PRIMARY KEY AUTOINCREMENT, thread_id integer, "
+                        + "start_pos integer, end_pos integer, compelete_size integer,url char, path char,  orglink char, quality integer,stat integer,title char,artist char,album char,service_stat integer,service_json char)");
+                db.execSQL("create table cache (key char, value text, type INTEGER, created INTEGER, expired INTEGER)");
+                db.execSQL("create table record(id integer primary key autoincrement,thread_id bigint,complete_size integer,url char)");
+                db.execSQL("delete * from  download_info");
+            }catch (Exception e){
+
+            }
+
+        }
      }
  
  }

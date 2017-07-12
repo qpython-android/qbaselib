@@ -178,8 +178,8 @@
         <attr name="src" format="reference|color"></attr>
     </declare-styleable>
     
-    <declare-styleable name="adSplashView">
+    <!--<declare-styleable name="adSplashView">
         <attr name="background" format="reference|color"></attr>
-    </declare-styleable>
+    </declare-styleable>-->
     
 </resources>

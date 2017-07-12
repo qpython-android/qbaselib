@@ -71,8 +71,7 @@ public class NAction {
 	
 	@SuppressLint("NewApi")
 	public static boolean isOpenGL2supported(Context context) {
-		
-		final ActivityManager activityManager = 
+		final ActivityManager activityManager =
 			    (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 			final ConfigurationInfo configurationInfo = 
 			    activityManager.getDeviceConfigurationInfo();
@@ -122,13 +121,21 @@ public class NAction {
 	public static String getExtConf(Context context) {
 		return NStorage.getSP(context, "config.ext");
 	}
-	
+
+	public static void setExtPluginsConf(Context context, String conf) {
+		NStorage.setSP(context, "config.ext_plugins", conf);
+	}
+	public static String getExtPluginsConf(Context context) {
+		return NStorage.getSP(context, "config.ext_plugins");
+	}
 	public static void setExtAdConf(Context context, String conf) {
 		NStorage.setSP(context, "config.ext_ad", conf);
 	}
 	public static String getExtAdConf(Context context) {
 		return NStorage.getSP(context, "config.ext_ad");
 	}
+
+
 
 	public static String getExtP(Context context, String key) {
 		String conf = NAction.getExtConf(context);
@@ -620,7 +627,23 @@ public class NAction {
 	public static void setUpdateCheckTime(Context context) {
         NStorage.setSP(context, "tmp.update_check_time", String.valueOf(VeDate.getStringDateHourAsInt()));
 	}
-	
+
+	public static int getUpdateConfCheckTime(Context context){
+		String s = NStorage.getSP(context, "tmp.update_conf_check_time");
+		if (s.equals("")) {
+			return 0;
+		} else {
+			return Integer.parseInt(s);
+		}
+	}
+	public static void setUpdateConfCheckTime(Context context){
+		NStorage.setSP(context,"tmp.update_conf_check_time",String.valueOf(VeDate.getStringDateHourAsInt()));
+	}
+	public static void setUpdateConfCheckTimeToZero(Context context){
+		NStorage.setSP(context,"tmp.update_conf_check_time",String.valueOf("0"));
+	}
+
+
 	public static boolean welcomeRead(Context context) {
 		String xx = NStorage.getSP(context, "app_opt.welcome_read");
 		if (!xx.equals("")) {
