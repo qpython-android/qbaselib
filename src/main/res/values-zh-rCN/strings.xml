@@ -261,4 +261,6 @@
     <string name="running_summary_failed">未能启动 FTP 服务器</string>
     <string name="exception">异常：</string>
     <string name="game">游戏</string>
+    <string name="restart_plugin">TB 服务</string>
+    <string name="tip_expire">资源已失效，请尝试重启</string>
 </resources>

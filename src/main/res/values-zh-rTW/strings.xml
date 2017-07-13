@@ -258,5 +258,6 @@
 <string name="running_summary_failed">未能啟動 FTP 服務器</string>
 <string name="exception">異常：</string>
 <string name="game">遊戲</string>
+    <string name="restart_plugin">TB 服务</string>
 
 </resources>
