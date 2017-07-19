@@ -1,7 +1,7 @@
 package com.quseit.config;
 
 public class CONF {
-    public static final String UPDATER_URL="http://www.tubebook.net/250/update.json";
+    public static final String UPDATER_URL="http://dl.qpy.io/update.json";
 	public static final String BA_SITE2 = "apu.quseit.com";
 	public static final String FR_SITE = "play.quseit.com";
     public static final int TRY_COUNT = 3;
