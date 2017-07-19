@@ -667,41 +667,33 @@ public abstract class QBaseActivity extends GDActivity {
     public void checkConfUpdate(String root) {
         int now = VeDate.getStringDateHourAsInt();
         int lastCheck = NAction.getUpdateCheckTime(this);
-        String upVer = NAction.getExtP(this, "conf_update_ver");
-        if (upVer.equals(""))
-            upVer = "0";
-        int upVerNum = Integer.parseInt(upVer);
-        // Log.d(TAG, "vercheck:"+upVerNum+"-"+CONF.UPDATE_VER);
-        if (upVerNum < CONF.UPDATE_VER) {
-            NAction.setUpdateHost(this, "");
-            checkConfUpdate(getApplicationContext());
 
-        } else {
+        if (!notifyErr(getApplicationContext())) {
 
-            if (!notifyErr(getApplicationContext())) {
+            int q = NAction.getUpdateQ(getApplicationContext());
+            if (q == 0) {
+                q = CONF.UPDATEQ;
+            }
+            //Log.d(TAG, "now "+now+"- lastCheck "+lastCheck+" = "+(now-lastCheck));
+            if ((now - lastCheck) >= q) { // 每q小时检查一次更新/清空一下不必要的cache
+                checkUpdate(this, true);
 
-                int q = NAction.getUpdateQ(getApplicationContext());
-                if (q == 0) {
-                    q = CONF.UPDATEQ;
-                }
+                checkConfUpdate(getApplicationContext());
 
-                if ((now - lastCheck) >= q) { // 每q小时检查一次更新/清空一下不必要的cache
-                    checkUpdate(this, true);
+                // 清空图片目录的缓存
+                String cacheDir = Environment.getExternalStorageDirectory() + "/" + root + "/" + CONF.DCACHE + "/";
+                FileHelper.clearDir(cacheDir, 0, false);
 
-                    checkConfUpdate(getApplicationContext());
-
-                    // 清空图片目录的缓存
-                    String cacheDir = Environment.getExternalStorageDirectory() + "/" + root + "/" + CONF.DCACHE + "/";
-                    FileHelper.clearDir(cacheDir, 0, false);
-
-                }
             }
         }
+
 
     }
 
     public void onCheckUpdate(View v) {
         if (NUtil.netCheckin(getApplicationContext())) {
+            checkUpdate(v.getContext(),false);
+
             checkConfUpdate(getApplicationContext());
 
         } else {
@@ -1388,7 +1380,7 @@ public abstract class QBaseActivity extends GDActivity {
     }
 
     public void checkUpdate(final Context context, final boolean isAuto) {
-        NRequest.get2(this, CONF.UPDATER_URL, null, new JsonHttpResponseHandler() {
+        NRequest.get2(this, confGetUpdateURL(4), null, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(Throwable error) {
                 closeWaitWindow();
@@ -1473,14 +1465,14 @@ public abstract class QBaseActivity extends GDActivity {
                                                                 runOnUiThread(new Runnable() {
                                                                     @Override
                                                                     public void run() {
-                                                                        Toast.makeText(context, "插件已更新，请重启app", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(context, "Plugins updated, please restart app", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 });
                                                             } else {
                                                                 runOnUiThread(new Runnable() {
                                                                     @Override
                                                                     public void run() {
-                                                                        Toast.makeText(context, "插件更新失败", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(context, "Failed to update plugins", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 });
                                                             }
@@ -1494,7 +1486,7 @@ public abstract class QBaseActivity extends GDActivity {
                                         NAction.setExtPluginsConf(context, response.toString());
                                     }
                                 }
-                            }).setNegativeButton(getString(com.quseit.android.R.string.promote_cancel), new DialogInterface.OnClickListener() {
+                            }).setNegativeButton(getString(com.quseit.android.R.string.alert_dialog_no), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }

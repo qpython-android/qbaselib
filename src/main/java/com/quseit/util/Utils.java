@@ -68,7 +68,7 @@ public class Utils {
 			  File file2 = new File(dest);
 			  if (file2.exists()) {
 	 	      try {
-	 	    	  boolean b = deleteDir(file2);
+	 	    	  //boolean b = deleteDir(file2);
 	 	      } catch (Exception e) {
 	 	      }
 	        }
@@ -115,42 +115,41 @@ public class Utils {
 		       // extract
 		       File file = new File(fs);
 		       
-		       if (file.exists()){
+		       if (!replaceIfExists && file.exists()){
 		    	   Log.d(TAG, "unzip exists");
 		       } else {
-		    	   
-		        if(zipEntry.isDirectory()){
-			         file.mkdirs(); 
-			         FileUtils.chmod(file, 0755);
+				   if(zipEntry.isDirectory()){
+					   file.mkdirs();
+					   FileUtils.chmod(file, 0755);
 
-		        }else{
-			        	
-		 	         // create parent file folder if not exists yet
-		 	         if(!file.getParentFile().exists()) {
-				          file.getParentFile().mkdirs(); 
-				          FileUtils.chmod(file.getParentFile(), 0755);
-		 	         }
-				 	       
-			         byte buffer[] = new byte[BUFFER_SIZE];
-			         bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file), BUFFER_SIZE);
-			         int count;
-	
-			         while ((count = zipInputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
-			          bufferedOutputStream.write(buffer, 0, count);
-			         }
-	
-			         bufferedOutputStream.flush();
-			         bufferedOutputStream.close(); 
-			        }
-		       }
-		       
-		       // enable standalone python
-		       if(file.getName().endsWith(".so")) {
-			       FileUtils.chmod(file, 0755);
-		       }
+				   }else{
 
-		       Log.d(TAG,"Unzip extracted " + dest + zipEntryName);
+					   // create parent file folder if not exists yet
+					   if(!file.getParentFile().exists()) {
+						   file.getParentFile().mkdirs();
+						   FileUtils.chmod(file.getParentFile(), 0755);
+					   }
+
+					   byte buffer[] = new byte[BUFFER_SIZE];
+					   bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file), BUFFER_SIZE);
+					   int count;
+
+					   while ((count = zipInputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
+						   bufferedOutputStream.write(buffer, 0, count);
+					   }
+
+					   bufferedOutputStream.flush();
+					   bufferedOutputStream.close();
+				   }
+			   }
+
+				if(file.getName().endsWith(".so")) {
+					FileUtils.chmod(file, 0755);
+				}
+
+				Log.d(TAG,"Unzip extracted " + dest + zipEntryName);
 		      }
+
 		      
 		      zipInputStream.close();
 

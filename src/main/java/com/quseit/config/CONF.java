@@ -58,7 +58,7 @@ public class CONF {
     public final static String DEFAULT_ROOT = "Tubebook";
     
     public static final String EXT_PLG = "org.qpython.qpy";
-    public static final String EXT_PLG_3 = "org.qpython.qpy3";
+    public static final String EXT_PLG3 = "org.qpython.qpy3";
     
     public static final String EXT_PLG_URL = "http://"+FR_SITE+"/qpython.html";
     public static final String EXT_PLG_URL3 = "http://"+FR_SITE+"/qpython3.html";
