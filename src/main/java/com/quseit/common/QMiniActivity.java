@@ -77,36 +77,74 @@ import java.util.List;
 
 //public abstract class QBaseActivity extends GDActivity  implements TapjoyFeaturedAppNotifier, TapjoyDisplayAdNotifier, TapjoyVideoNotifier {
 
-public abstract class QBaseActivity extends Activity {
+public abstract class QMiniActivity extends Activity {
 	protected static final String TAG = "QBaseActivity";
-
-	private static int NOTIFICATION_ID = 0x20001;// 通知栏消息id
+	protected final static int FILECHOOSER_RESULTCODE = 1;
 
 	// private AdLayout amazonAdView; // The ad view used to load and display
 	// the ad.
+	private static int NOTIFICATION_ID = 0x20001;// 通知栏消息id
+	/*
+	 * @Override protected void onStart() { super.onStart(); Log.e(TAG, "start onStart~~~"); }
+	 * @Override protected void onRestart() { super.onRestart(); Log.e(TAG, "start onRestart~~~"); }
+	 * @Override protected void onPause() { super.onPause(); Log.e(TAG, "start onPause~~~"); }
+	 * @Override public void onConfigurationChanged(Configuration newConfig) { }
+	 * @Override protected void onStop() { super.onStop(); Log.e(TAG, "start onStop~~~"); }
+	 */
+	// 文件排序 - 名称排序
+	@SuppressWarnings("rawtypes")
+	protected final Comparator sortTypeByName = new Comparator<File>() {
+		@Override
+		public int compare(File arg00, File arg11) {
+			String arg0 = arg00.toString();
+			String arg1 = arg11.toString();
+			String ext = null;
+			String ext2 = null;
+			int ret;
 
-	protected int limit = CONF.PAGE_NUM;
+			try {
+				ext = arg0.substring(arg0.lastIndexOf(".") + 1, arg0.length()).toLowerCase();
+				ext2 = arg1.substring(arg1.lastIndexOf(".") + 1, arg1.length()).toLowerCase();
 
-	protected int start = 0;
+			}
+			catch (IndexOutOfBoundsException e) {
+				return 0;
+			}
+			ret = ext.compareTo(ext2);
 
-	protected int total = 0;
-
-	protected boolean myload = true;
-
-	protected ProgressDialog waitingWindow;
-
-	protected DialogBase WBase;
-
-	protected int dialogIndex;
-
-	// private AdView adMob = null;
-
+			if (ret == 0)
+				return arg0.toLowerCase().compareTo(arg1.toLowerCase());
+			return ret;
+		}
+	};
+	@SuppressWarnings("rawtypes")
+	protected final Comparator sortTypeByTime = new Comparator<File>() {
+		@Override
+		public int compare(File arg00, File arg11) {
+			long diff = arg00.lastModified() - arg11.lastModified();
+			if (diff > 0)
+				return -1;
+			else if (diff == 0)
+				return 0;
+			else
+				return 1;
+		}
+	};
+	final Runnable adUpdateResults = new Runnable() {
+		public void run() {
+			LinearLayout modBanner = (LinearLayout) findViewById(R.id.modbanner);
+			Log.d(TAG, "initAD:" + modBanner.getHeight() + "-" + modBanner.getWidth());
+		}
+	};
 	// private QuickActionWidget mBar;
 	public WebView wv;
-
 	public ProgressBar wvProgressBar;
+	protected int limit = CONF.PAGE_NUM;
 
-	private ProgressDialog pDialog;
+	// private AdView adMob = null;
+	protected int start = 0;
+	protected int total = 0;
+	protected boolean myload = true;
 
 	// Banner Ads.
 //	boolean update_display_ad = false;
@@ -116,19 +154,26 @@ public abstract class QBaseActivity extends Activity {
 
 	// MobclixMMABannerXLAdView mobClix = null;
 	// MobFoxView mobFox = null;
-
-	public void progress(String title, String msg, int x) {
-		pDialog = ProgressDialog.show(this, title, msg, true, false);
-		// progressHandler.sendEmptyMessage(0);
-		if (x != 0) {
-			pDialog.setContentView(x);
+	protected ProgressDialog waitingWindow;
+	protected DialogBase WBase;
+	protected int dialogIndex;
+	protected ValueCallback<Uri> mUploadMessage;
+	Handler wvHandler = new Handler() {
+		public void handleMessage(Message msg) {// 定义一个Handler，用于处理下载线程与UI间通讯
+			if (!Thread.currentThread().isInterrupted()) {
+				switch (msg.what) {
+				case 0:
+					openWaitWindow();
+					break;
+				case 1:
+					closeWaitWindow();
+					break;
+				}
+			}
+			super.handleMessage(msg);
 		}
-	}
-
-	public void xprogress() {
-		progressHandler.sendEmptyMessage(0);
-	}
-
+	};
+	private ProgressDialog pDialog;
 	@SuppressLint("HandlerLeak")
 	public Handler progressHandler = new Handler() {
 		@Override
@@ -142,6 +187,20 @@ public abstract class QBaseActivity extends Activity {
 			// handle the result here
 		}
 	};
+	private String wvCookie = "";
+	private String wvDocument = "";
+
+	public void progress(String title, String msg, int x) {
+		pDialog = ProgressDialog.show(this, title, msg, true, false);
+		// progressHandler.sendEmptyMessage(0);
+		if (x != 0) {
+			pDialog.setContentView(x);
+		}
+	}
+
+	public void xprogress() {
+		progressHandler.sendEmptyMessage(0);
+	}
 
 	/*
 	 * protected ItemAdapter adapter; protected GestureDetector mGestureDetector; protected static final int
@@ -153,7 +212,7 @@ public abstract class QBaseActivity extends Activity {
 		WBase = new DialogBase(this, this);
 		dialogIndex = 1;
 	}
-
+	
 	@Override
 	protected void onPause() {
 		/*
@@ -236,13 +295,6 @@ public abstract class QBaseActivity extends Activity {
 
 		}
 	}
-
-	final Runnable adUpdateResults = new Runnable() {
-		public void run() {
-			LinearLayout modBanner = (LinearLayout) findViewById(R.id.modbanner);
-			Log.d(TAG, "initAD:" + modBanner.getHeight() + "-" + modBanner.getWidth());
-		}
-	};
 
 	public void initAD(String pageId) {
 		Log.d(TAG, "initAD:" + pageId);
@@ -353,7 +405,7 @@ public abstract class QBaseActivity extends Activity {
 
 		}
 	}
-	
+
 	public void openWaitWindow(String message) {
 		Log.d(TAG, "openWaitWindow");
 		if (waitingWindow == null) {
@@ -949,64 +1001,12 @@ public abstract class QBaseActivity extends Activity {
 		startActivityForResult(Intent.createChooser(intent, getString(R.string.info_share_withbt)), 1000);
 	}
 
-
-	/*
-	 * @Override protected void onStart() { super.onStart(); Log.e(TAG, "start onStart~~~"); }
-	 * @Override protected void onRestart() { super.onRestart(); Log.e(TAG, "start onRestart~~~"); }
-	 * @Override protected void onPause() { super.onPause(); Log.e(TAG, "start onPause~~~"); }
-	 * @Override public void onConfigurationChanged(Configuration newConfig) { }
-	 * @Override protected void onStop() { super.onStop(); Log.e(TAG, "start onStop~~~"); }
-	 */
-	// 文件排序 - 名称排序
-	@SuppressWarnings("rawtypes")
-	protected final Comparator sortTypeByName = new Comparator<File>() {
-		@Override
-		public int compare(File arg00, File arg11) {
-			String arg0 = arg00.toString();
-			String arg1 = arg11.toString();
-			String ext = null;
-			String ext2 = null;
-			int ret;
-
-			try {
-				ext = arg0.substring(arg0.lastIndexOf(".") + 1, arg0.length()).toLowerCase();
-				ext2 = arg1.substring(arg1.lastIndexOf(".") + 1, arg1.length()).toLowerCase();
-
-			}
-			catch (IndexOutOfBoundsException e) {
-				return 0;
-			}
-			ret = ext.compareTo(ext2);
-
-			if (ret == 0)
-				return arg0.toLowerCase().compareTo(arg1.toLowerCase());
-			return ret;
-		}
-	};
-
-	@SuppressWarnings("rawtypes")
-	protected final Comparator sortTypeByTime = new Comparator<File>() {
-		@Override
-		public int compare(File arg00, File arg11) {
-			long diff = arg00.lastModified() - arg11.lastModified();
-			if (diff > 0)
-				return -1;
-			else if (diff == 0)
-				return 0;
-			else
-				return 1;
-		}
-	};
-
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public void openURL(String url) {
 		Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
 		startActivity(it);
 	}
-
-	private String wvCookie = "";
-	private String wvDocument = "";
 
 	@SuppressLint("NewApi")
 	public String getwvAU() {
@@ -1036,24 +1036,6 @@ public abstract class QBaseActivity extends Activity {
 		return wvDocument;
 
 	}
-
-	class QPyLib {
-		public QPyLib(Context context) {
-		}
-
-		@JavascriptInterface
-		public void processHTML(String cookie, String data) {
-			// Log.d(TAG, "processHTML called(cookie):"+cookie);
-			// Log.d(TAG, "processHTML called(data):"+data);
-			wvCookie = cookie;
-			wvDocument = data;
-
-		}
-	}
-
-	protected ValueCallback<Uri> mUploadMessage;
-
-	protected final static int FILECHOOSER_RESULTCODE = 1;
 
 	// webview
 	@TargetApi(7)
@@ -1242,22 +1224,6 @@ public abstract class QBaseActivity extends Activity {
 		// openWaitWindow();
 	}
 
-	Handler wvHandler = new Handler() {
-		public void handleMessage(Message msg) {// 定义一个Handler，用于处理下载线程与UI间通讯
-			if (!Thread.currentThread().isInterrupted()) {
-				switch (msg.what) {
-				case 0:
-					openWaitWindow();
-					break;
-				case 1:
-					closeWaitWindow();
-					break;
-				}
-			}
-			super.handleMessage(msg);
-		}
-	};
-
 	public void loadurl(final WebView view, final String url) {
 		view.loadUrl(url);// 载入网页
 		/*
@@ -1371,8 +1337,6 @@ public abstract class QBaseActivity extends Activity {
 
 	public abstract String confGetUpdateURL(int flag);
 
-	// //////////////////////////////////////////////////////
-
 	// feedback
 	public void onFeedback(View v) {
 		String mailto = NAction.getExtP(getApplicationContext(), "conf_feedback_email");
@@ -1397,6 +1361,9 @@ public abstract class QBaseActivity extends Activity {
 		// OFeedBackAct.class);
 		// startActivity(intent);
 	}
+
+	// //////////////////////////////////////////////////////
+
 	//
     public void unpackData(final String resource, File target) {
     	ResourceManager resourceManager = new ResourceManager(this);
@@ -1438,7 +1405,7 @@ public abstract class QBaseActivity extends Activity {
         		extract = true;
         	}
         }*/
-        
+
         //Log.d(TAG, "data_version:"+Math.round(Double.parseDouble(data_version))+"-disk_version:"+Math.round(Double.parseDouble(disk_version))+"-RET:"+(int)(Double.parseDouble(data_version)-Double.parseDouble(disk_version)));
         if ((int)(Double.parseDouble(data_version)-Double.parseDouble(disk_version))>0 || disk_version.equals("0")) {
             Log.v(TAG, "Extracting " + resource + " assets.");
@@ -1475,7 +1442,7 @@ public abstract class QBaseActivity extends Activity {
 			for (File bin : bind.listFiles()) {
 				try {
 		  			//Log.d(TAG, "chmod:"+bin.getAbsolutePath());
-		          
+
 					FileUtils.chmod(bin, 0755);
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -1497,6 +1464,20 @@ public abstract class QBaseActivity extends Activity {
 		Intent intent = NAction.getLinkAsIntent(getApplicationContext(), privacyUrl);
 		startActivity(intent);
 
+	}
+
+	class QPyLib {
+		public QPyLib(Context context) {
+		}
+
+		@JavascriptInterface
+		public void processHTML(String cookie, String data) {
+			// Log.d(TAG, "processHTML called(cookie):"+cookie);
+			// Log.d(TAG, "processHTML called(data):"+data);
+			wvCookie = cookie;
+			wvDocument = data;
+
+		}
 	}
 
 	/*
