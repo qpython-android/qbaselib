@@ -91,6 +91,7 @@
     <string name="m_title_local">Videos downloaded</string>
     <string name="m_title_hot">Hot Music</string>
 
+
     <string name="not_found">The music is not available</string>
     <string name="download_queue">Downloader</string>
     <string name="download_queue_1">Current tasks: {0}</string>
@@ -170,7 +171,7 @@
     <string name="get_script_plugin">Install script</string>
     <string name="about_about">About</string>
     <string name="about_other">More</string>
-    <string name="check_update">Check for update</string>
+    <string name="check_update">Check for new version</string>
     <string name="plugin_script">Script Plugin Support</string>
     <string name="plugin_script_enable">Script Plugin</string>
     <string name="scriptrunning">Script running</string>
@@ -262,13 +263,17 @@
     <string name="exception">exception:</string>
     <string name="game">Games</string>
 
-    <!---->
-    <string name="private1_version">1347438520.05</string>
-    <string name="private2_version">1347438543.05</string>
-    <string name="private3_version">1347438520.05</string>
+    <string name="tip_expire">Resource is expired,please re-download</string>
+
+    <string name="permission_alert">Enable the float window need android verson >=6.0</string>
+    <string name="permission_result">Please allow the permission</string>
+    <string name="string_setting_fix">Please enable the float window</string>
+
+    <string name="private1_version">1347438560.05</string>
+    <string name="private2_version">1347438560.05</string>
+    <string name="private3_version">1347438550.05</string>
     <string name="private_version">1347438520.05</string>
     <string name="public_version">1347438500.05</string>
-    <string name="public3_version">1347438500.05</string>
-    <string name="tip_expire">Resource is expired,please re-download</string>
+    <string name="public3_version">1347438550.05</string>
 
 </resources>

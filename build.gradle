@@ -46,4 +46,5 @@ dependencies {
     //compile files('libs/mint-5.0.0.jar')
     compile 'org.apache.httpcomponents:httpcore:4.4.2'
     compile files('libs/qaysnchttplib.jar')
+    compile files('libs/SOMAAndroidSDK4.5.0.jar')
 }

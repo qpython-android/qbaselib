@@ -2,6 +2,7 @@ package com.quseit.db;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.util.Log;
 
 import com.quseit.config.CONF;
 import com.quseit.lib.DownloadInfo;
+import com.quseit.lib.RecordInfo;
 
 
 /**
@@ -21,17 +23,30 @@ import com.quseit.lib.DownloadInfo;
 public class DownloadLog {
 	private Context context;
 	private static final String TAG = "DownloadLog";
+	private volatile  static DownloadLog d=null;
 
-	public DownloadLog(Context context) {
+	private  DownloadLog(Context context) {
 		this.context = context;
 	}
+
+	public static DownloadLog getInstance(Context context){
+		if(d==null){
+			synchronized (DownloadLog.class){
+				if (d==null){
+					d=new DownloadLog(context);
+				}
+			}
+		}
+		return d;
+	}
+
+
 
 	/**
 	 * 查看数据库中是否有数据
 	 */
 	public DownloadInfo getInfoByPath(String path) {
 		DBHelper dbHelper = new DBHelper(context);
-
 		try {
 			SQLiteDatabase database = dbHelper.getReadableDatabase();
 			String sql = "select thread_id, start_pos, end_pos,compelete_size,url,path,orglink,quality,stat,title,artist,album ,service_stat,service_json from download_info where path=? ORDER BY _id DESC";
@@ -129,9 +144,8 @@ public class DownloadLog {
 	/**
 	 * 保存 下载的具体信息
 	 */
-	public void saveInfos(final List<DownloadInfo> infos, final int count) {
+	public synchronized void saveInfos(final List<DownloadInfo> infos, final int count) {
 		if (count < CONF.TRY_COUNT) {
-
 			DBHelper dbHelper = new DBHelper(context);
 			try {
 				SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -168,6 +182,35 @@ public class DownloadLog {
 			dbHelper.close();
 		}
 
+	}
+
+	public synchronized void saveRecord(int thread_id,long comSize,String url){
+		DBHelper helper=new DBHelper(context);
+		SQLiteDatabase database = helper.getWritableDatabase();
+		String sql="insert into record(thread_id,complete_size,url)values(?,?,?)";
+		Object[] objects={thread_id,comSize,url};
+		database.execSQL(sql,objects);
+		database.close();
+	}
+
+	public synchronized long getRecord(int threadId,String url){
+		DBHelper helper=new DBHelper(context);
+		SQLiteDatabase database = helper.getWritableDatabase();
+		Cursor cursor=database.rawQuery("select complete_size from record  where thread_id=? and url=?",new String[]{String.valueOf(threadId),url});
+		long size=-1;
+		while (cursor.moveToNext()){
+			size=cursor.getLong(0);
+		}
+		database.close();
+		return size;
+
+	}
+
+	public synchronized void updateRecord(long comSize,int threadId,String url){
+		DBHelper helper=new DBHelper(context);
+		SQLiteDatabase database = helper.getWritableDatabase();
+		database.execSQL("update record set complete_size=? where thread_id=? and url=? ",new Object[]{comSize,threadId,url});
+		database.close();
 	}
 
 	/**
@@ -352,7 +395,7 @@ public class DownloadLog {
 
 	}
 
-	public void updatefileleng(long end, String urlstr, String path) {
+	public synchronized void updatefileleng(long end, String urlstr, String path) {
 		DBHelper dbHelper = new DBHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		db.execSQL(
@@ -362,11 +405,14 @@ public class DownloadLog {
 		dbHelper.close();
 	}
 
-	public void updateInfos(final long start_pos, final long compeleteSize,
+	public synchronized void saveDownloadinfo(String link, String path, Map<Integer ,Integer> map){
+
+	}
+
+	public synchronized void updateInfos(final long start_pos, final long compeleteSize,
 			final String urlstr, final String path, final int count) {
 		if (count < CONF.TRY_COUNT) {
 			DBHelper dbHelper = new DBHelper(context);
-
 			try {
 				SQLiteDatabase database = dbHelper.getWritableDatabase();
 				String sql = "update download_info set compelete_size=?,start_pos=? where  url=? and path=?";
@@ -376,13 +422,11 @@ public class DownloadLog {
 			} catch (SQLiteException e) {
 				Handler handler = new Handler();
 				handler.postDelayed(new Runnable() {
-
 					@Override
 					public void run() {
 						updateInfos(start_pos, compeleteSize, urlstr, path,
 								count);
 					}
-
 				}, CONF.TRY_DELAY);
 			}
 			dbHelper.close();
@@ -394,7 +438,7 @@ public class DownloadLog {
 
 	}
 
-	public int getDownLoadStat() {
+	public synchronized int getDownLoadStat() {
 		DBHelper dbHelper = new DBHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -427,7 +471,7 @@ public class DownloadLog {
 		return state;
 	}
 
-	public void updateDownLoadState(int service_stat, String service_json,int stat, String urlstr, String path) {
+	public synchronized void updateDownLoadState(int service_stat, String service_json,int stat, String urlstr, String path) {
 		DBHelper dbHelper = new DBHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		db.execSQL(
@@ -437,7 +481,7 @@ public class DownloadLog {
 		dbHelper.close();
 	}
 
-	public void updateDownLoadState(int service_stat, int stat, String urlstr,
+	public synchronized void updateDownLoadState(int service_stat, int stat, String urlstr,
 			String path) {
 		DBHelper dbHelper = new DBHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -448,7 +492,7 @@ public class DownloadLog {
 		dbHelper.close();
 	}
 
-	public List<DownloadInfo> query() {
+	public synchronized List<DownloadInfo> query() {
 		DBHelper dbHelper = new DBHelper(context);
 		List<DownloadInfo> list = new ArrayList<DownloadInfo>();
 		SQLiteDatabase database = dbHelper.getReadableDatabase();
