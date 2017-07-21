@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+  android:layout_width="fill_parent" 
+  android:id="@+id/search_div"
+  android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  	<!--LinearLayout 
+		android:id="@+id/search_div"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:padding="5dip"        
+		android:layout_marginTop="5dip"
+		android:background="@drawable/background_div_bg"
+		-->
+	<ImageButton 
+		android:layout_gravity="fill_vertical" 
+		android:layout_marginBottom="4.0dip" 
+		android:background="@drawable/silver_button"
+		android:layout_width="wrap_content" 
+		android:layout_height="fill_parent" 
+		android:layout_marginRight="3.0dip" 
+		android:src="@drawable/ic_mic" 
+		android:onClick="onEnableVoice"
+		android:text="" />
+    <FrameLayout 
+    	android:layout_width="0.0dip" 
+    	android:layout_height="wrap_content" 
+    	android:layout_weight="1.0">
+        <EditText android:textColorHint="@color/topbar"  
+        	android:id="@+id/search_input" 
+        	android:layout_width="fill_parent" 
+        	android:layout_height="wrap_content"
+        	android:layout_marginTop="0.0dip" 
+        	android:hint="" 
+        	android:textSize="17sp"        	
+        	android:maxLines="1" 
+        	android:onClick="onInputClicked"
+        	android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage" />
+        <ImageButton 
+        	android:layout_gravity="center|right|center" 
+        	android:id="@+id/icon_remove" 
+        	android:background="@android:color/transparent" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="fill_parent" 
+        	android:layout_marginRight="7.0dip"
+        	android:src="@drawable/ic_remove"         	
+        	android:onClick="doClear"/>
+    </FrameLayout>
+		<ImageButton 
+		android:layout_gravity="fill_vertical" 
+		android:layout_marginBottom="4.0dip" 
+		android:id="@+id/voiceim_button" 
+		android:background="@drawable/silver_button" 
+		android:layout_width="wrap_content" 
+		android:layout_height="fill_parent" 
+		android:layout_marginLeft="3.0dip" 
+		android:src="@drawable/ic_search_light" 
+		android:onClick="doSearch"
+		/>	
+
+    <!--/LinearLayout-->
+    	
+</LinearLayout>

@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion 21
+
+
+//        ndk {
+//            moduleName "sdlsufaceview"
+//            ldLibs "log"
+//            abiFilter "armeabi"
+//
+//        }
+//        buildTypes {
+//            release {
+//                minifyEnabled false
+//                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//            }
+//        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+
+        }
+    }
+    useLibrary 'org.apache.http.legacy'
+
+}
+
+dependencies {
+    compile project(':qpagerlib')
+    compile project(':qftplib')
+    compile files('libs/jsr305-2.0.1.jar')
+    compile files('libs/libGoogleAnalytics.jar')
+    //compile files('libs/mint-5.0.0.jar')
+    compile 'org.apache.httpcomponents:httpcore:4.4.2'
+    compile files('libs/qaysnchttplib.jar')
+    compile files('libs/SOMAAndroidSDK4.5.0.jar')
+}

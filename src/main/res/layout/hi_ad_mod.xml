@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/modbanner_wrap"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/cwhite3"
+    android:orientation="vertical"
+    android:visibility="gone" >
+
+    <LinearLayout
+        android:id="@+id/notify_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onNotify"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/notify"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_horizontal"
+            android:onClick="onNotify"
+            android:text=""
+            android:textColor="@color/link"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <com.quseit.view.AdSlidShowView
+        android:id="@+id/adSlid"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:visibility="gone" >
+    </com.quseit.view.AdSlidShowView>
+
+    <LinearLayout
+        android:id="@+id/modbanner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+    </LinearLayout>
+
+</LinearLayout>

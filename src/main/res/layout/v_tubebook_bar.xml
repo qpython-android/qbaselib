@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+  android:layout_width="fill_parent" 
+  android:id="@+id/search_div"
+  android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+
+    <FrameLayout 
+    	android:layout_width="0.0dip" 
+    	android:layout_height="wrap_content" 
+    	android:layout_weight="1.0">
+    	
+        <EditText android:textColorHint="@color/topbar"  
+        	android:id="@+id/url_input" 
+        	android:layout_width="fill_parent" 
+        	android:layout_height="wrap_content" 
+        	android:layout_marginTop="0.0dip" 
+        	android:hint=""         	
+        	android:singleLine="true"
+        	android:inputType="textUri"
+        	android:drawableRight="@drawable/ic_remove"  />
+
+    </FrameLayout>
+	<ImageButton 
+		android:layout_gravity="fill_vertical" 
+		android:layout_marginBottom="4.0dip" 
+		android:id="@+id/voiceim_button" 
+		android:background="@drawable/silver_button" 
+		android:layout_width="wrap_content" 
+		android:layout_height="fill_parent" 
+		android:layout_marginLeft="3.0dip" 
+		android:src="@drawable/ic_right" 
+		android:onClick="onSearch"
+		android:text="" />		
+
+    <!--/LinearLayout-->
+    	
+</LinearLayout>

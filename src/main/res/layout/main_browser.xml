@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+<FrameLayout
+		android:id="@+id/gd_action_bar_content_view"
+		android:layout_height="0dp"
+		android:layout_width="fill_parent"
+		android:layout_weight="1">
+<ProgressBar
+	android:id="@+id/progress_bar"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    style="@android:style/Widget.ProgressBar.Small"
+    android:layout_marginRight="5dp" />
+    
+<WebView 
+    android:id="@+id/webview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+/>
+</FrameLayout>
+
+
+	<LinearLayout 
+		android:id="@+id/return_bar"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="5dp"
+		android:visibility="gone"
+		>
+	</LinearLayout>
+	<LinearLayout
+		android:id="@+id/return_bar_box"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		>			
+		
+				
+		<Button
+		android:id="@+id/return_btn"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:onClick="onReturn"
+		android:layout_marginLeft="20.0dip"
+		android:layout_marginRight="5.0dip"
+		android:layout_marginBottom="0.0dip"
+		/>
+		
+		
+		<ImageButton
+		android:layout_marginTop="5.0dip"
+		android:id="@+id/submit_btn_2"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:onClick="onTalk"		
+		android:background="@drawable/silver_button"
+		/>
+		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:onClick="onHome"
+		android:layout_marginTop="5.0dip"
+		android:layout_marginLeft="5.0dip"
+		android:layout_marginRight="20.0dip"	
+		android:background="@drawable/silver_button"
+						
+		/>
+
+		</LinearLayout>
+</LinearLayout>
