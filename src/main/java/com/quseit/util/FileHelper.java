@@ -8,6 +8,9 @@ import android.util.*;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -349,6 +352,41 @@ public class FileHelper {
             return ext;
         }
     }
+
+    public static JSONObject getUrlAsJO(String link) {
+        try {
+            // get URL content
+            URL url = new URL(link);
+            URLConnection conn = url.openConnection();
+
+            // open the stream and put it into BufferedReader
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+
+            String inputLine;
+
+
+            String ret = "";
+
+            while ((inputLine = br.readLine()) != null) {
+                ret = ret+inputLine + "\n";
+            }
+
+            br.close();
+
+            try {
+                return new JSONObject(ret.trim());
+            } catch (JSONException e) {
+                return null;
+            }
+            //System.out.println("Done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
 
     public static boolean getUrlAsFile(String link, String fileName) {
         try {
