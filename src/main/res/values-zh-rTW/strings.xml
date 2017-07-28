@@ -36,7 +36,7 @@
 <string name="alert_dialog_cancel">取消</string>
 <string name="alert_dialog_two_buttons_msg">標頭</string>
 <string name="alert_dialog_multi_choice_cursor">對話框</string>
-<string name="select_dialog">請選擇...</string>
+<string name="select_dialog">請選擇…</string>
 <string name="alert_dialog_something">對話框</string>
 <string name="confirm_exit">確認退出？ </string>
 <string name="confirm_title">確認 ？ </string>
