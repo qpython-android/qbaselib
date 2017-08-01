@@ -200,9 +200,9 @@ public class AdSlidShowView extends FrameLayout {
             for (int i = 0; i < adlistImage.size(); i++) {
                 View v = new View(context);
                 if (i == 0)
-                    v.setBackgroundResource(R.drawable.dian);
+                    v.setBackgroundResource(R.drawable.ic_spot_selected);
                 else
-                    v.setBackgroundResource(R.drawable.dian_down);
+                    v.setBackgroundResource(R.drawable.ic_spot);
                 v.setLayoutParams(new LayoutParams(10, 10));
                 dotList.addView(v);
             }
@@ -308,10 +308,10 @@ public class AdSlidShowView extends FrameLayout {
             for (int i = 0; i < dotList.getChildCount(); i++) {
                 if (i == arg0) {
                     ((View) dotList.getChildAt(i))
-                            .setBackgroundResource(R.drawable.dian);
+                            .setBackgroundResource(R.drawable.ic_spot_selected);
                 } else {
                     ((View) dotList.getChildAt(i))
-                            .setBackgroundResource(R.drawable.dian_down);
+                            .setBackgroundResource(R.drawable.ic_spot);
                 }
             }
         }
