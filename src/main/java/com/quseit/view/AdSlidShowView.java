@@ -205,7 +205,7 @@ public class AdSlidShowView extends FrameLayout {
                     v.setBackgroundResource(R.drawable.ic_spot_selected);
                 else
                     v.setBackgroundResource(R.drawable.ic_spot);
-                v.setLayoutParams(new LayoutParams(dp2px(15), dp2px(15)));
+                v.setLayoutParams(new LayoutParams(dp2px(10), dp2px(10)));
                 dotList.addView(v);
             }
         }
