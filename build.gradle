@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    compile project(':qgdlib')
     compile project(':qpagerlib')
     compile project(':qftplib')
     compile files('libs/jsr305-2.0.1.jar')
