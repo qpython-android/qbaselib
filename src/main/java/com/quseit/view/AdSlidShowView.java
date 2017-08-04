@@ -73,9 +73,8 @@ public class AdSlidShowView extends FrameLayout {
         for (int i = 0; i < count; i++) {
             final View v = getChildAt(i);
             // this works because you set the dimensions of the ImageView to FILL_PARENT
-            v.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(),
-                    MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(
-                    getMeasuredHeight(), MeasureSpec.EXACTLY));
+            v.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
         }
     }
 
@@ -211,10 +210,12 @@ public class AdSlidShowView extends FrameLayout {
         }
         initViewPager();
     }
+
     private int dp2px(float dp) {
         Resources r = Resources.getSystem();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
+
     public void setImage(Bitmap bitmap, int i) {
         ImageView view = adlistImage.get(i);
         Drawable drawable = new BitmapDrawable(bitmap);
