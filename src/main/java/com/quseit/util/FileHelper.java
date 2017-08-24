@@ -369,7 +369,7 @@ public class FileHelper {
             String ret = "";
 
             while ((inputLine = br.readLine()) != null) {
-                ret = ret+inputLine + "\n";
+                ret = ret + inputLine + "\n";
             }
 
             br.close();
@@ -484,6 +484,25 @@ public class FileHelper {
             ex.printStackTrace();
         }
     }
+
+    /**
+     *
+     * @param file root file
+     * @return all sub-file except dir file
+     */
+    public static List<File> filterDir(File file) {
+        List<File> files = new ArrayList<>();
+        for (File file1 : file.listFiles()) {
+            if (!file1.isDirectory()) {
+                files.add(file1);
+            } else {
+                files.addAll(filterDir(file1));
+            }
+        }
+        return files;
+    }
+
+
 //
 //    public static void unzipFile() {
 //
