@@ -10,6 +10,15 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DateTimeHelper {
+	// Wed Dec 15 02:53:36 +0000 2010
+	public static final DateFormat TWITTER_DATE_FORMATTER = new SimpleDateFormat(
+			"E MMM d HH:mm:ss Z yyyy", Locale.US);
+	public static final DateFormat TWITTER_SEARCH_API_DATE_FORMATTER = new SimpleDateFormat(
+			"E, d MMM yyyy HH:mm:ss Z", Locale.US);
+	public static final DateFormat AGO_FULL_DATE_FORMATTER = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm");
+	private static final String TAG = "DateTimeHelper";
+
 	   public static String converTime(long timestamp, String[] timeLabels){
            long currentSeconds = System.currentTimeMillis()/1000;
            long timeGap = currentSeconds-timestamp;//与现在时间相差秒数
@@ -33,63 +42,63 @@ public class DateTimeHelper {
            sdf.format(date);
            return sdf.format(date);
    }
-	
-   public static final String getDateAsDirName(){        
-       Calendar cal = Calendar.getInstance();        
-       java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");        
-       String cdate = sdf.format(cal.getTime());                
-       return cdate;     
+    
+	public static String getStandardTime(long timestamp,String format){
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Date date = new Date(timestamp*1000);
+		sdf.format(date);
+		return sdf.format(date);
+	}
+    
+   public static final String getDateAsDirName(){
+       Calendar cal = Calendar.getInstance();
+       java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+       String cdate = sdf.format(cal.getTime());
+       return cdate;
     }
 
-   public static final String getDateAss(){        
-       Calendar cal = Calendar.getInstance();        
-       java.text.SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-HH-mm");        
-       String cdate = sdf.format(cal.getTime());                
-       return cdate;     
+   public static final String getDateAss(){
+       Calendar cal = Calendar.getInstance();
+       java.text.SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-HH-mm");
+       String cdate = sdf.format(cal.getTime());
+       return cdate;
     }
-   
-    public static final String getDate(){        
-       Calendar cal = Calendar.getInstance();        
-       java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");        
-       String cdate = sdf.format(cal.getTime());                
-       return cdate;     
+
+    public static final String getDate(){
+       Calendar cal = Calendar.getInstance();
+       java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       String cdate = sdf.format(cal.getTime());
+       return cdate;
     }
-    
-    public static final String getDateMin(){        
-        Calendar cal = Calendar.getInstance();        
-        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");        
-        String cdate = sdf.format(cal.getTime());                
-        return cdate;     
+
+    public static final String getDateMin(){
+        Calendar cal = Calendar.getInstance();
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String cdate = sdf.format(cal.getTime());
+        return cdate;
      }
-    
+
     public static final String getTodayFull() {
-        Calendar cal = Calendar.getInstance();        
-        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");        
-        String cdate = sdf.format(cal.getTime());         
+        Calendar cal = Calendar.getInstance();
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        String cdate = sdf.format(cal.getTime());
         //Log.d(TAG, "getTodayFull:"+cdate);
-        return cdate;     
+        return cdate;
     }
 
-    public static final int getTimeAsInt(){        
-        Calendar cal = Calendar.getInstance();        
-        java.text.SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");        
-        String cdate = sdf.format(cal.getTime());                
-        return Integer.parseInt(cdate);     
+    public static final int getTimeAsInt(){
+        Calendar cal = Calendar.getInstance();
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
+        String cdate = sdf.format(cal.getTime());
+        return Integer.parseInt(cdate);
      }
-    public static final String getDateAsF(){        
-        Calendar cal = Calendar.getInstance();        
-        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");        
-        String cdate = sdf.format(cal.getTime());                
-        return cdate;     
+
+    public static final String getDateAsF(){
+        Calendar cal = Calendar.getInstance();
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String cdate = sdf.format(cal.getTime());
+        return cdate;
      }
-	private static final String TAG = "DateTimeHelper";
-
-	// Wed Dec 15 02:53:36 +0000 2010
-	public static final DateFormat TWITTER_DATE_FORMATTER = new SimpleDateFormat(
-			"E MMM d HH:mm:ss Z yyyy", Locale.US);
-
-	public static final DateFormat TWITTER_SEARCH_API_DATE_FORMATTER = new SimpleDateFormat(
-			"E, d MMM yyyy HH:mm:ss Z", Locale.US); 
 
 	public static final Date parseDateTime(String dateString) {
 		try {
@@ -102,7 +111,6 @@ public class DateTimeHelper {
 		}
 	}
 
-
 	public static final Date parseSearchApiDateTime(String dateString) {
 		try {
 			return TWITTER_SEARCH_API_DATE_FORMATTER.parse(dateString);
@@ -112,9 +120,6 @@ public class DateTimeHelper {
 			return null;
 		}
 	}
-
-	public static final DateFormat AGO_FULL_DATE_FORMATTER = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm");
 
 	/*public static String getRelativeDate(Date date) {
 		Date now = new Date();
