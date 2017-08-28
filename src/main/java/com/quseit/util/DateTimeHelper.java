@@ -16,7 +16,7 @@ public class DateTimeHelper {
 	public static final DateFormat TWITTER_SEARCH_API_DATE_FORMATTER = new SimpleDateFormat(
 			"E, d MMM yyyy HH:mm:ss Z", Locale.US);
 	public static final DateFormat AGO_FULL_DATE_FORMATTER = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm");
+			"yyyy-MM-dd HH:mm:ss");
 	private static final String TAG = "DateTimeHelper";
 
 	   public static String converTime(long timestamp, String[] timeLabels){
