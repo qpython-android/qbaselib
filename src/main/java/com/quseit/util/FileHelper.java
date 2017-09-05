@@ -486,7 +486,6 @@ public class FileHelper {
     }
 
     /**
-     *
      * @param file root file
      * @return all sub-file except dir file
      */
@@ -503,8 +502,20 @@ public class FileHelper {
     }
 
 
-//
-//    public static void unzipFile() {
-//
-//    }
+    public static List<File> filterExt(File dir, String[] exts) {
+        List<File> filtered = new ArrayList<>();
+        List<File> files = filterDir(dir);
+        for (File file : files) {
+            String ext = "";
+            if (file.getName().lastIndexOf(".") > 0) {
+                ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            }
+            for (String s : exts) {
+                if (s.equals(ext)) {
+                    filtered.add(file);
+                }
+            }
+        }
+        return filtered;
+    }
 }
