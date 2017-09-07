@@ -506,6 +506,9 @@ public class FileHelper {
         List<File> filtered = new ArrayList<>();
         List<File> files = filterDir(dir);
         for (File file : files) {
+            if (file.getName().startsWith(".")) {
+                continue;
+            }
             String ext = "";
             if (file.getName().lastIndexOf(".") > 0) {
                 ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
