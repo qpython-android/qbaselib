@@ -487,20 +487,42 @@ public class FileHelper {
 
     /**
      * @param file root file
-     * @return all sub-file except dir file
+     * @return all sub-file except dir file and hided file(start with '.')
      */
     public static List<File> filterDir(File file) {
         List<File> files = new ArrayList<>();
         for (File file1 : file.listFiles()) {
             if (!file1.isDirectory()) {
                 files.add(file1);
-            } else {
+            } else if (!file1.getName().startsWith(".")) {
                 files.addAll(filterDir(file1));
             }
         }
         return files;
     }
 
+
+    public static List<File> filterExt(File dir, String[] exts, long size) {
+        size = 0;
+        List<File> filtered = new ArrayList<>();
+        List<File> files = filterDir(dir);
+        for (File file : files) {
+            if (file.getName().startsWith(".")) {
+                continue;
+            }
+            String ext = "";
+            if (file.getName().lastIndexOf(".") > 0) {
+                ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            }
+            for (String s : exts) {
+                if (s.equals(ext)) {
+                    filtered.add(file);
+                    size += file.length();
+                }
+            }
+        }
+        return filtered;
+    }
 
     public static List<File> filterExt(File dir, String[] exts) {
         List<File> filtered = new ArrayList<>();
