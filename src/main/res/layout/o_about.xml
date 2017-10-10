@@ -15,8 +15,7 @@
 		<ScrollView
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:id="@+id/main_content_view"
-			>
+            >
 			
 			<LinearLayout
 				android:paddingLeft="5dp"
@@ -93,9 +92,8 @@
 				/>	
 				
 				<!--update-->
-				<TextView 
-				android:id="@+id/update_content" 
-				android:layout_width="fill_parent" 
+				<TextView
+                    android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:paddingLeft="10.0dip"
 				android:paddingRight="10.0dip"
@@ -107,8 +105,7 @@
 				
 				<Button
 				android:gravity="center"
-				android:id="@+id/selfcheck_btn"
-				style="@style/gridBox_Title"
+                style="@style/gridBox_Title"
 				android:text="@string/omenu_update"
 				android:paddingTop="10dip"
 				android:paddingBottom="10dip"
@@ -129,21 +126,18 @@
 				<TextView
 				android:paddingTop="20dip"
 				style="@style/gridBox_desc"
-				android:id="@+id/other_title"
-				android:text="@string/about_other"
+                android:text="@string/about_other"
 				android:visibility="gone"
 				
 				android:textSize="17sp" />
 			
 				<View style="@style/p_line"
-					android:id="@+id/other_line"
-					android:visibility="gone"
+                      android:visibility="gone"
 				
 				 />
 				 
 				<TextView
-				android:id="@+id/other"
-				android:visibility="gone"
+                    android:visibility="gone"
 				
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -179,8 +173,7 @@
 		
 		
 		<ImageButton
-		android:id="@+id/submit_btn_4"
-		android:layout_width="0dp"
+            android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_weight="1"
 		android:src="@drawable/ic_undo" 

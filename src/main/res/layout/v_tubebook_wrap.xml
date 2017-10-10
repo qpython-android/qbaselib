@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	android:id="@+id/tubebook_wrap_box"
-    xmlns:android="http://schemas.android.com/apk/res/android"		
+    xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical">
@@ -30,7 +29,7 @@
 			android:clickable="false"
 			android:padding="5.0dip">
 
-	   		<include android:id="@+id/search_div" layout="@layout/v_tubebook_bar" />
+	   		<include layout="@layout/v_tubebook_bar" />
 		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>

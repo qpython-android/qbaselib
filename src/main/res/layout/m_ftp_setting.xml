@@ -85,7 +85,6 @@
 
                 <!-- ftp managerd -->
                 <RelativeLayout
-                    android:id="@+id/plugin_ftp_port_box"
                     style="@style/gridBox"
                     android:onClick="onFtpPortSetting"
                     >
@@ -112,7 +111,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/plugin_ftp_account_box"
                     style="@style/gridBox"
                     android:onClick="onFtpAccountSetting"
                     >
@@ -164,7 +162,6 @@
 
 
         <ImageButton
-            android:id="@+id/download_btn"
             style="@style/gridBox_Title"
             android:layout_width="0dp"
 

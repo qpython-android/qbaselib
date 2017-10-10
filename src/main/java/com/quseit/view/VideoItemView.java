@@ -44,13 +44,13 @@ public class VideoItemView extends LinearLayout /*implements ItemView*/ {
 
     public void prepareItemView() {
 //        mHeaderView = (TextView) findViewById(R.id.gd_separator_text);
-        mTextView = (TextView) findViewById(R.id.gd_text);
-        dTextView = (TextView) findViewById(R.id.gd_text_desc);
+//        mTextView = (TextView) findViewById(R.id.gd_text);
+//        dTextView = (TextView) findViewById(R.id.gd_text_desc);
         //vTextView = (TextView) findViewById(R.id.gd_text_viwes);
 
 //        imageThumb = (AsyncImageView) findViewById(R.id.item_thumbnail);
-        oTextView = (TextView) findViewById(R.id.gd_text_other);
-        imageStat = (ImageView) findViewById(R.id.gd_stat_image);
+//        oTextView = (TextView) findViewById(R.id.gd_text_other);
+//        imageStat = (ImageView) findViewById(R.id.gd_stat_image);
     }
 
     public void setObject(/*Item object*/) {

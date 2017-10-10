@@ -104,8 +104,7 @@
 
 			<!-- NoAD -->
 			<RelativeLayout
-				android:id="@+id/plugin_pro_box2"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onNoAD"
 				android:visibility="gone"
 				>
@@ -115,8 +114,7 @@
 					android:text="@string/plugin_noadd"
 					/>
 				<TextView
-					android:id="@+id/plugin_noadd_value"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/plugin_noadd"
 					android:layout_toRightOf="@id/plugin_noadd"
 				android:text=""
@@ -202,8 +200,7 @@
 
 			<!-- ADFREE -->
 			<RelativeLayout
-				android:id="@+id/plugin_pro_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onADFree"
 				android:visibility="gone"
 				>
@@ -241,8 +238,7 @@
 
 			<!-- pylib managerd -->
 			<RelativeLayout
-				android:id="@+id/plugin_pylib_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onPyLib"
 				android:visibility="gone"
 
@@ -253,8 +249,7 @@
 					android:text="@string/plugin_pylib"
 					/>
 				<TextView
-					android:id="@+id/plugin_pylib_value"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/plugin_pylib"
 					android:layout_toRightOf="@id/plugin_pylib"
 				android:text=""
@@ -268,8 +263,7 @@
 
 			<!-- local managerd -->
 			<RelativeLayout
-				android:id="@+id/plugin_sl4a_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onSL4ASetting"
 				android:visibility="gone"
 
@@ -280,8 +274,7 @@
 					android:text="@string/plugin_sl4a"
 					/>
 				<TextView
-					android:id="@+id/plugin_ftp_value"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/plugin_sl4a"
 					android:layout_toRightOf="@id/plugin_sl4a"
 				android:text=""
@@ -295,8 +288,7 @@
 
 
 			<RelativeLayout
-				android:id="@+id/plugin_defaultqpy_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onDefaultQPySetting"
 				android:visibility="gone"
 
@@ -307,8 +299,7 @@
 					android:text="@string/plugin_defaultqpy"
 					/>
 				<TextView
-					android:id="@+id/plugin_defaultqpy_value"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/plugin_defaultqpy"
 					android:layout_toRightOf="@id/plugin_defaultqpy"
 					android:text=""
@@ -321,8 +312,7 @@
 			</RelativeLayout>
 
 			<RelativeLayout
-				android:id="@+id/plugin_mediacenter_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onMediaCenterSetting"
 				android:visibility="gone"
 
@@ -360,8 +350,7 @@
 					android:text="@string/plugin_script_enable"
 					/>
 				<TextView
-					android:id="@+id/plugin_script_value"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/plugin_script"
 					android:layout_toRightOf="@id/plugin_script"
 					android:text=""
@@ -375,8 +364,7 @@
 
 
 			<RelativeLayout
-				android:id="@+id/plugin_player_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onPlayerSetting"
 				android:visibility="gone"
 				>
@@ -386,8 +374,7 @@
 					android:text="@string/plugin_player"
 					/>
 				<TextView
-					android:id="@+id/plugin_player_value"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/plugin_player"
 					android:layout_toRightOf="@id/plugin_player"
 				android:text=""
@@ -401,8 +388,7 @@
 
 
 			<RelativeLayout
-				android:id="@+id/plugin_resetprivate_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onResetPrivate"
 				android:visibility="gone"
 
@@ -413,8 +399,7 @@
 					android:text="@string/plugin_resetprivate"
 					/>
 				<TextView
-					android:id="@+id/plugin_resetprivate_value"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/plugin_resetprivate"
 					android:layout_toRightOf="@id/plugin_resetprivate"
 					android:text=""
@@ -429,8 +414,7 @@
 
 			<!-- local managerd -->
 			<RelativeLayout
-				android:id="@+id/plugin_defaultroot_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onDefaultRootSetting"
 				android:visibility="gone"
 
@@ -468,8 +452,7 @@
 					android:text="@string/plugin_ftp"
 					/>
 				<TextView
-					android:id="@+id/plugin_ftp_value2"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/plugin_ftp"
 					android:layout_toRightOf="@id/plugin_ftp"
 				android:text=""
@@ -483,8 +466,7 @@
 
 			<!-- proxy -->
 			<RelativeLayout
-				android:id="@+id/proxy_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onSetProxy"
 				android:visibility="gone"
 
@@ -512,8 +494,7 @@
 
 			<!-- pylib -->
 			<RelativeLayout
-				android:id="@+id/pylib_box"
-				style="@style/gridBox"
+                style="@style/gridBox"
 				android:onClick="onPyLib"
 				android:visibility="gone"
 
@@ -525,8 +506,7 @@
 					/>
 
 				<TextView
-					android:id="@+id/pylib_value"
-					style="@style/gridBox_Value"
+                    style="@style/gridBox_Value"
 					android:layout_alignTop="@id/pylib_setting"
 					android:layout_toRightOf="@id/pylib_setting"
 					android:text=""
@@ -564,8 +544,7 @@
 
 
 		<ImageButton
-		android:id="@+id/download_btn"
-		style="@style/gridBox_Title"
+            style="@style/gridBox_Title"
 		android:layout_width="0dp"
 
 		android:layout_height="wrap_content"

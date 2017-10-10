@@ -14,7 +14,6 @@
         android:layout_weight="1"
         >
         <ScrollView
-            android:id="@+id/main_content_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             >
@@ -94,7 +93,6 @@
 
                 <!--update-->
                 <TextView
-                    android:id="@+id/update_content"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10.0dip"
@@ -106,7 +104,6 @@
                     />
 
                 <Button
-                    android:id="@+id/selfcheck_btn"
                     style="@style/gridBox_Title"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -127,7 +124,6 @@
 
                 <!--other-->
                 <TextView
-                    android:id="@+id/other_title"
                     style="@style/gridBox_desc"
                     android:paddingTop="20dip"
                     android:text="@string/about_other"
@@ -135,14 +131,13 @@
 
                     android:visibility="gone" />
 
-                <View android:id="@+id/other_line"
+                <View
                     style="@style/p_line"
                     android:visibility="gone"
 
                     />
 
                 <TextView
-                    android:id="@+id/other"
                     android:layout_width="fill_parent"
 
                     android:layout_height="wrap_content"
@@ -179,7 +174,6 @@
 
 
         <ImageButton
-            android:id="@+id/submit_btn_4"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"

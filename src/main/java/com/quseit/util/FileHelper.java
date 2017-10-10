@@ -543,4 +543,21 @@ public class FileHelper {
         }
         return filtered;
     }
+
+    public static File findFile(File dir, String findName) {
+        File result = null;
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory()) {
+                File ret = findFile(file, findName);
+                if (ret != null) {
+                    result = ret;
+                }
+            } else {
+                if (file.getName().equals(findName)) {
+                    result = file;
+                }
+            }
+        }
+        return result;
+    }
 }

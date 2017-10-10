@@ -12,7 +12,6 @@
         applied to a LinearLayout
     -->
     <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_height"/>
 

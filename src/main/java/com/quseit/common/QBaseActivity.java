@@ -1066,7 +1066,7 @@ public abstract class QBaseActivity extends Activity {
 			wvProgressBar.setMax(100);
 
 		if (wv == null) {
-			wv = (WebView) findViewById(R.id.wv);
+//			wv = (WebView) findViewById(R.id.wv);
 		}
 		// wv = new WebView(this);
 		wv.getSettings().setJavaScriptEnabled(true);// 可用JS
