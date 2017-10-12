@@ -8,12 +8,12 @@ android {
         targetSdkVersion 21
 
 
-//        ndk {
-//            moduleName "sdlsufaceview"
-//            ldLibs "log"
-//            abiFilter "armeabi"
-//
-//        }
+        ndk {
+            moduleName "sdlsufaceview"
+            ldLibs "log"
+            abiFilter "armeabi"
+
+        }
 //        buildTypes {
 //            release {
 //                minifyEnabled false
