@@ -100,6 +100,12 @@ public class DateTimeHelper {
         return cdate;
      }
 
+	public static String formatData(Date date, String format) {
+		java.text.SimpleDateFormat sdf = new SimpleDateFormat(format);
+		String cdate = sdf.format(date.getTime());
+		return cdate;
+	}
+
 	public static final Date parseDateTime(String dateString) {
 		try {
 			Log.v(TAG, String.format("in parseDateTime, dateString=%s",
