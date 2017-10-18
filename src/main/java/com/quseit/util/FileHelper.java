@@ -485,6 +485,18 @@ public class FileHelper {
         }
     }
 
+    public static void moveFile(File file, String outputPath) {
+        if (file.isDirectory()) {
+            for (File file1 : file.listFiles()) {
+                moveFile(file1, outputPath+"/"+file1.getName());
+            }
+            file.delete();
+        } else {
+            copyFile(file,outputPath+"/"+file.getName());
+            file.delete();
+        }
+    }
+
     /**
      * @param file root file
      * @return all sub-file except dir file and hided file(start with '.')
