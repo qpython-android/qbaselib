@@ -488,7 +488,7 @@ public class FileHelper {
     public static void moveFile(File file, String outputPath) {
         if (file.isDirectory()) {
             for (File file1 : file.listFiles()) {
-                moveFile(file1, outputPath+"/"+file1.getName());
+                moveFile(file1, outputPath);
             }
             file.delete();
         } else {
