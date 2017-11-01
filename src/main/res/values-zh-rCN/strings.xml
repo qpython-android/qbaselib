@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QApplication</string>
     <string name="app_name_label">QApplication</string>
     <string name="app_url">http://quseit.com/</string>
     <string name="omenu_update">检查新版本</string>

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QApplication</string>
     <string name="app_name_label">QApplication</string>
     <string name="app_url">http://quseit.com/</string>
     <string name="omenu_update">Check for new version</string>
     <string name="up_soft">Update</string>
     <string name="up_soft_state_found">New version found</string>
     <string name="up_soft_state_no_found">Already the newest version</string>
-    <string name="up_soft_download">Start to download ...</string>
-    <string name="up_soft_update">Start to update ...</string>
-    <string name="up_soft_downloading">Downloading ...</string>
+    <string name="up_soft_download">Start to download …</string>
+    <string name="up_soft_update">Start to update …</string>
+    <string name="up_soft_downloading">Downloading …</string>
     <string name="up_soft_done">Success update</string>
     <string name="up_soft_failed">An error occurs during download</string>
     <string name="up_update_failed">An error occurs during update</string>
@@ -18,7 +17,7 @@
     <string name="not_implement">No such feature</string>
     <string name="m_title_3">About</string>
     <string name="m_title_recommended">Sponsored ads</string>
-    <string name="wating_title">Loading ...</string>
+    <string name="wating_title">Loading …</string>
     <string name="dialog_title">Title</string>
     <string name="dialog_txt">Content</string>
     <string name="alert_dialog_hide">Hide</string>
@@ -26,7 +25,7 @@
     <string name="alert_dialog_close">Close</string>
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="alert_dialog_multi_choice_cursor">Dialog box</string>
-    <string name="select_dialog">Please choose ...</string>
+    <string name="select_dialog">Please choose …</string>
     <string name="confirm_title">Confirm ?</string>
     <string name="confirm_download">{0} {1} is downloading, are you sure to re-download now?</string>
     <string name="confirm_download_target_exitst">{0} {1} exists, do you want to re-download it?</string>
@@ -65,7 +64,7 @@
     <string name="plugin_script_enable">Script Plugin</string>
     <string name="err_caught">Catch an exception, it will restart</string>
     <string name="plugin_player">Optimized Player Codec</string>
-    <string name="exception_try_again">Error occured, try again</string>
+    <string name="exception_try_again">Error occurred, try again</string>
     <string name="plugin_sl4a">SL4A Service</string>
     <string name="ftp_service_setting">FTP Service Manage</string>
     <string name="ftp_setting">FTP Service Setting</string>
@@ -102,7 +101,7 @@
     <string name="port_hint">port</string>
     <string name="alert_dialog_notify">Alert</string>
     <string name="swiftp_name">FTP Server</string>
-    <string name="cant_get_url">Can\'t retreive url</string>
+    <string name="cant_get_url">Can\'t retrieve url</string>
     <string name="running_summary_started">FTP server running at %s</string>
     <string name="running_summary_stopped">Start FTP server</string>
     <string name="running_summary_failed">Failed to start the FTP server</string>
