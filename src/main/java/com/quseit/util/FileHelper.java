@@ -558,18 +558,22 @@ public class FileHelper {
 
     public static File findFile(File dir, String findName) {
         File result = null;
-        for (File file : dir.listFiles()) {
-            if (file.isDirectory()) {
-                File ret = findFile(file, findName);
-                if (ret != null) {
-                    result = ret;
-                }
-            } else {
-                if (file.getName().equals(findName)) {
-                    result = file;
+        if (dir.isDirectory()) {
+            for (File file : dir.listFiles()) {
+                if (file.isDirectory()) {
+                    File ret = findFile(file, findName);
+                    if (ret != null) {
+                        result = ret;
+                    }
+                } else {
+                    if (file.getName().equals(findName)) {
+                        result = file;
+                    }
                 }
             }
+            return result;
+        } else {
+            return dir;
         }
-        return result;
     }
 }
