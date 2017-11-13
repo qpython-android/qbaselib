@@ -446,6 +446,14 @@ public class FileHelper {
     }
 
     /**
+     * @param dir
+     * @return The main file to be found in dir
+     */
+    public static File getMainFileByType(File dir) {
+        File xx  = new File(dir.getAbsolutePath()+"/main.py");
+        return xx.exists() ? xx : null;
+    }
+    /**
      * Filter Files by type
      *
      * @param dir
