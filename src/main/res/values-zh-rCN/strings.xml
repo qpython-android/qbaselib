@@ -80,7 +80,7 @@
     <string name="plugin_pylib">库管理</string>
     <string name="send_email">发送邮件</string>
     <string name="feeback_email_title">[Feedback]{0} (code:{1}) from:{2}</string>
-    <string name="feedback_email_body">[Feedback]: \n\n[设备信息]\n{0},android:{1},sdk:{2} \n\n[最近错误信息]\n{3}\n\n[您的反馈]: \n</string>
+    <string name="feedback_email_body">[Feedback]: \n\n[设备信息]\n{0},android:{1},sdk:{2} \n\n[最近错误信息]\n{3}\n\n[您的反馈]: \n{4}\n</string>
     <string name="err_need_input">请输入关键字</string>
     <string name="err_need_url">请输入网址</string>
     <string name="plugin_defaultroot">默认根目录</string>
