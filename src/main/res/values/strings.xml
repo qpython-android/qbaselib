@@ -79,7 +79,7 @@
     <string name="plugin_pylib">Libraries manage</string>
     <string name="send_email">Send Email</string>
     <string name="feeback_email_title">[Feedback]{0} (code:{1}) from:{2}</string>
-    <string name="feedback_email_body">[Feedback]: \n\n[Device information]\n{0},android:{1},sdk:{2} \n\n[Recent error information]\n{3}\n\n[Or write your feedback here]: \n</string>
+    <string name="feedback_email_body">[Feedback]: \n\n[Device information]\n{0},android:{1},sdk:{2} \n\n[Recent error information]\n{3}\n\n[Or write your feedback here]: \n{4}\n</string>
     <string name="err_need_input">Please input the keyword</string>
     <string name="err_need_url">Please input the URL</string>
     <string name="plugin_defaultroot">Default Root</string>

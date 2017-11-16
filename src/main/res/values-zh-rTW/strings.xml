@@ -77,7 +77,7 @@
 <string name="plugin_pylib">庫管理</string>
 <string name="send_email">發送郵件</string>
 <string name="feeback_email_title">[Feedback]{0} (code:{1}) from:{2}</string>
-<string name="feedback_email_body">[Feedback]: \n\n[設備信息]\n{0},android:{1},sdk:{2} \n\n[最近錯誤信息]\n{3 }\n\n[您的反饋]: \n</string>
+<string name="feedback_email_body">[Feedback]: \n\n[設備信息]\n{0},android:{1},sdk:{2} \n\n[最近錯誤信息]\n{3 }\n\n[您的反饋]: \n{4}\n</string>
 <string name="err_need_input">請輸入關鍵字</string>
 <string name="err_need_url">請輸入網址</string>
 <string name="plugin_defaultroot">默認根目錄</string>
