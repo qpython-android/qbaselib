@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.quseit.android.R;
+import com.quseit.cache.ACache;
 import com.quseit.config.CONF;
 import com.quseit.db.UserLog;
 
@@ -956,6 +957,8 @@ public class NAction {
         if (!qpyInterVal.equals("3.x")) {
         	qpyInterVal = "2.x";
         }
+		// It shouldn't be here and need to be refactor
+		ACache.get(context).clear();
 
         return qpyInterVal;
 	}
