@@ -957,14 +957,14 @@ public class NAction {
         if (!qpyInterVal.equals("3.x")) {
         	qpyInterVal = "2.x";
         }
-		// It shouldn't be here and need to be refactor
-		ACache.get(context).clear();
 
         return qpyInterVal;
 	}
 
 	public static void setQPyInterpreter(Context context, String qpyInterVal) {
 		 NStorage.setSP(context, "conf.default_qpy_interpreter", qpyInterVal);
+		// It shouldn't be here and need to be refactor
+		ACache.get(context).clear();
 	}
 	
 	public static void setPluginsEnable(Context context, String noad) {
