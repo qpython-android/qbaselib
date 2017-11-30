@@ -18,7 +18,9 @@ package com.quseit.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,145 +31,167 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Utility functions for handling files.
- * 
+ *
  * @author Damon Kohler (damonkohler@gmail.com)
  */
 public class FileUtils {
-	private static final String TAG = "FileUtils";
+    private static final String TAG = "FileUtils";
 
-  private FileUtils() {
-    // Utility class.
-  }
-
-  static public boolean externalStorageMounted() {
-    String state = Environment.getExternalStorageState();
-    return Environment.MEDIA_MOUNTED.equals(state)
-        || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
-  }
-
-  public static int chmod(File path, int mode) throws Exception {
-    Class<?> fileUtils = Class.forName("android.os.FileUtils");
-    Method setPermissions =
-        fileUtils.getMethod("setPermissions", String.class, int.class, int.class, int.class);
-    return (Integer) setPermissions.invoke(null, path.getAbsolutePath(), mode, -1, -1);
-  }
-
-  public static boolean recursiveChmod(File root, int mode) throws Exception {
-    boolean success = chmod(root, mode) == 0;
-    for (File path : root.listFiles()) {
-      if (path.isDirectory()) {
-        success = recursiveChmod(path, mode);
-      }
-      success &= (chmod(path, mode) == 0);
+    private FileUtils() {
+        // Utility class.
     }
-    return success;
-  }
 
-  public static boolean delete(File path) {
-    boolean result = true;
-    if (path.exists()) {
-      if (path.isDirectory()) {
-        for (File child : path.listFiles()) {
-          result &= delete(child);
+    static public boolean externalStorageMounted() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state)
+                || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
+    }
+
+    public static int chmod(File path, int mode) throws Exception {
+        Class<?> fileUtils = Class.forName("android.os.FileUtils");
+        Method setPermissions =
+                fileUtils.getMethod("setPermissions", String.class, int.class, int.class, int.class);
+        return (Integer) setPermissions.invoke(null, path.getAbsolutePath(), mode, -1, -1);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void setPermission(File file) throws IOException {
+        Set<PosixFilePermission> perms = new HashSet<>();
+        perms.add(PosixFilePermission.OWNER_READ);
+        perms.add(PosixFilePermission.OWNER_WRITE);
+        perms.add(PosixFilePermission.OWNER_EXECUTE);
+
+        perms.add(PosixFilePermission.OTHERS_READ);
+        perms.add(PosixFilePermission.OTHERS_WRITE);
+        perms.add(PosixFilePermission.OWNER_EXECUTE);
+
+        perms.add(PosixFilePermission.GROUP_READ);
+        perms.add(PosixFilePermission.GROUP_WRITE);
+        perms.add(PosixFilePermission.GROUP_EXECUTE);
+
+        Files.setPosixFilePermissions(file.toPath(), perms);
+    }
+
+    public static boolean recursiveChmod(File root, int mode) throws Exception {
+        boolean success = chmod(root, mode) == 0;
+        for (File path : root.listFiles()) {
+            if (path.isDirectory()) {
+                success = recursiveChmod(path, mode);
+            }
+            success &= (chmod(path, mode) == 0);
         }
-        result &= path.delete(); // Delete empty directory.
-      }
-      if (path.isFile()) {
-        result &= path.delete();
-      }
-      if (!result) {
-        Log.e(TAG,"Delete failed;");
-      }
-      return result;
-    } else {
-      Log.e(TAG,"File does not exist.");
-      return false;
+        return success;
     }
-  }
 
-  public static File copyFromStream(String name, InputStream input) {
-    if (name == null || name.length() == 0) {
-      Log.e(TAG,"No script name specified.");
-      return null;
+    public static boolean delete(File path) {
+        boolean result = true;
+        if (path.exists()) {
+            if (path.isDirectory()) {
+                for (File child : path.listFiles()) {
+                    result &= delete(child);
+                }
+                result &= path.delete(); // Delete empty directory.
+            }
+            if (path.isFile()) {
+                result &= path.delete();
+            }
+            if (!result) {
+                Log.e(TAG, "Delete failed;");
+            }
+            return result;
+        } else {
+            Log.e(TAG, "File does not exist.");
+            return false;
+        }
     }
-    File file = new File(name);
-    if (!makeDirectories(file.getParentFile(), 0755)) {
-      return null;
-    }
-    try {
-      OutputStream output = new FileOutputStream(file);
-      IoUtils.copy(input, output);
-    } catch (Exception e) {
-      Log.e(TAG,e);
-      return null;
-    }
-    return file;
-  }
 
-  public static boolean makeDirectories(File directory, int mode) {
-    File parent = directory;
-    while (parent.getParentFile() != null && !parent.exists()) {
-      parent = parent.getParentFile();
+    public static File copyFromStream(String name, InputStream input) {
+        if (name == null || name.length() == 0) {
+            Log.e(TAG, "No script name specified.");
+            return null;
+        }
+        File file = new File(name);
+        if (!makeDirectories(file.getParentFile(), 0755)) {
+            return null;
+        }
+        try {
+            OutputStream output = new FileOutputStream(file);
+            IoUtils.copy(input, output);
+        } catch (Exception e) {
+            Log.e(TAG, e);
+            return null;
+        }
+        return file;
     }
-    if (!directory.exists()) {
-      Log.d(TAG, "Creating directory: " + directory.getName());
-      if (!directory.mkdirs()) {
-        Log.e(TAG,"Failed to create directory.");
-        return false;
-      }
-    }
-    try {
-      recursiveChmod(parent, mode);
-    } catch (Exception e) {
-      Log.e(TAG,e);
-      return false;
-    }
-    return true;
-  }
 
-  public static File getExternalDownload() {
-    try {
-      Class<?> c = Class.forName("android.os.Environment");
-      Method m = c.getDeclaredMethod("getExternalStoragePublicDirectory", String.class);
-      String download = c.getDeclaredField("DIRECTORY_DOWNLOADS").get(null).toString();
-      return (File) m.invoke(null, download);
-    } catch (Exception e) {
-      return new File(Environment.getExternalStorageDirectory(), "Download");
+    public static boolean makeDirectories(File directory, int mode) {
+        File parent = directory;
+        while (parent.getParentFile() != null && !parent.exists()) {
+            parent = parent.getParentFile();
+        }
+        if (!directory.exists()) {
+            Log.d(TAG, "Creating directory: " + directory.getName());
+            if (!directory.mkdirs()) {
+                Log.e(TAG, "Failed to create directory.");
+                return false;
+            }
+        }
+        try {
+            recursiveChmod(parent, mode);
+        } catch (Exception e) {
+            Log.e(TAG, e);
+            return false;
+        }
+        return true;
     }
-  }
 
-  public static boolean rename(File file, String name) {
-    return file.renameTo(new File(file.getParent(), name));
-  }
+    public static File getExternalDownload() {
+        try {
+            Class<?> c = Class.forName("android.os.Environment");
+            Method m = c.getDeclaredMethod("getExternalStoragePublicDirectory", String.class);
+            String download = c.getDeclaredField("DIRECTORY_DOWNLOADS").get(null).toString();
+            return (File) m.invoke(null, download);
+        } catch (Exception e) {
+            return new File(Environment.getExternalStorageDirectory(), "Download");
+        }
+    }
 
-  public static String readToString(File file) throws IOException {
-    if (file == null || !file.exists()) {
-      return null;
+    public static boolean rename(File file, String name) {
+        return file.renameTo(new File(file.getParent(), name));
     }
-    FileReader reader = new FileReader(file);
-    StringBuilder out = new StringBuilder();
-    char[] buffer = new char[1024 * 4];
-    int numRead = 0;
-    while ((numRead = reader.read(buffer)) > -1) {
-      out.append(String.valueOf(buffer, 0, numRead));
-    }
-    reader.close();
-    return out.toString();
-  }
 
-  public static String readFromAssetsFile(Context context, String name) throws IOException {
-    AssetManager am = context.getAssets();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(am.open(name)));
-    String line;
-    StringBuilder builder = new StringBuilder();
-    while ((line = reader.readLine()) != null) {
-      builder.append(line);
+    public static String readToString(File file) throws IOException {
+        if (file == null || !file.exists()) {
+            return null;
+        }
+        FileReader reader = new FileReader(file);
+        StringBuilder out = new StringBuilder();
+        char[] buffer = new char[1024 * 4];
+        int numRead = 0;
+        while ((numRead = reader.read(buffer)) > -1) {
+            out.append(String.valueOf(buffer, 0, numRead));
+        }
+        reader.close();
+        return out.toString();
     }
-    reader.close();
-    return builder.toString();
-  }
+
+    public static String readFromAssetsFile(Context context, String name) throws IOException {
+        AssetManager am = context.getAssets();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(am.open(name)));
+        String line;
+        StringBuilder builder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            builder.append(line);
+        }
+        reader.close();
+        return builder.toString();
+    }
 
 }
