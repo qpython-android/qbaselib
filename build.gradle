@@ -47,6 +47,8 @@ dependencies {
     compile 'org.apache.httpcomponents:httpcore:4.4.2'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile files('libs/qaysnchttplib.jar')
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     compile rootProject.ext.libSupportCardView
     compile rootProject.ext.libSupportV4
 }
