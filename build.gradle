@@ -45,6 +45,7 @@ dependencies {
     //compile files('libs/libGoogleAnalytics.jar')
     //compile files('libs/mint-5.0.0.jar')
     compile 'org.apache.httpcomponents:httpcore:4.4.2'
+    compile 'org.greenrobot:eventbus:3.0.0'
     compile files('libs/qaysnchttplib.jar')
     compile rootProject.ext.libSupportCardView
     compile rootProject.ext.libSupportV4
