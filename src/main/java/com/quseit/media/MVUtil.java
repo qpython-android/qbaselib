@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.quseit.base.MyApp;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.Base64;
 import com.quseit.util.DateTimeHelper;
 import com.quseit.util.FileHelper;
@@ -75,11 +75,11 @@ public class MVUtil {
     }
 	@SuppressWarnings("unused")
 	public static Bitmap getThumbnailWithCreator(final Uri uri, final int width, final int height) {
-		final String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+CONF.DCACHE+"/";
+		final String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+ BASE_CONF.DCACHE+"/";
     	final String imgHash = MD5.encrypByMd5(Base64.encode(uri.getPath()));
 		String imgHashPath;
 		try {
-			imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(),CONF.DCACHE)+"/"+imgHash;
+			imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(), BASE_CONF.DCACHE)+"/"+imgHash;
 	    	File imgCache = new File(imgHashPath);
 
 			Bitmap img = MVUtil.createVideoThumbnail(uri.getPath(), width, height);
@@ -113,7 +113,7 @@ public class MVUtil {
 	    	final String imgHash = MD5.encrypByMd5(Base64.encode(uri.getPath()));
 			String imgHashPath;
 			try {
-				imgHashPath = FileHelper.getBasePath(root, CONF.DCACHE)+"/"+imgHash;
+				imgHashPath = FileHelper.getBasePath(root, BASE_CONF.DCACHE)+"/"+imgHash;
 		    	File imgCache = new File(imgHashPath);
 	
 		    	if (imgCache.canRead()) {
@@ -132,11 +132,11 @@ public class MVUtil {
     	if (img != null) {
     		return img;
     	} else {
-    		final String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+CONF.DCACHE+"/";
+    		final String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+ BASE_CONF.DCACHE+"/";
 	    	final String imgHash = MD5.encrypByMd5(Base64.encode(uri.getPath()));
 			String imgHashPath;
 			try {
-				imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(), CONF.DCACHE)+"/"+imgHash;
+				imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(), BASE_CONF.DCACHE)+"/"+imgHash;
 		    	File imgCache = new File(imgHashPath);
 
 		    	if (imgCache.canRead()) {

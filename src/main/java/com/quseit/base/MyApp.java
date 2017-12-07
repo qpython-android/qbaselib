@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.FileHelper;
 import com.quseit.util.NAction;
 import com.quseit.util.NUtil;
@@ -54,11 +54,11 @@ public class MyApp extends Application {
     }  
 //    public Context getContext() {
 //    	if (activityList.size()>0) {
-//    		if (CONF.DEBUG) Log.d(TAG, "get Context ok");
+//    		if (BASE_CONF.DEBUG) Log.d(TAG, "get Context ok");
 //    		Activity act = (Activity) activityList.get(0);
 //    		return act.getApplicationContext();
 //    	} else {
-//    		if (CONF.DEBUG) Log.d(TAG, "get Context null");
+//    		if (BASE_CONF.DEBUG) Log.d(TAG, "get Context null");
 //
 //    		return null;
 //    	}
@@ -112,7 +112,7 @@ public class MyApp extends Application {
                         //filename = file.getName();
                         if (file.isDirectory()) {
                             filesCount = checkMvNums(fullfn);
-                            if (CONF.DEBUG) Log.d(TAG, "cache: fullfn:"+fullfn+"-count:"+filesCount);
+                            if (BASE_CONF.DEBUG) Log.d(TAG, "cache: fullfn:"+fullfn+"-count:"+filesCount);
                             movieDirs.put(fullfn, filesCount);
                         }
                     }
@@ -152,11 +152,11 @@ public class MyApp extends Application {
                     }  else {
                         String ext = FileHelper.getExt(filename.toLowerCase(),"").toLowerCase();
                         if (this.isMvMode) {
-	                        if (!ext.equals("") && CONF.MVEXT.contains("#"+ext+"#")) {
+	                        if (!ext.equals("") && BASE_CONF.MVEXT.contains("#"+ext+"#")) {
 	                        	return 1;
 	                        }
                         } else {
-	                        if (!ext.equals("") && CONF.MUEXT.contains("#"+ext+"#")) {
+	                        if (!ext.equals("") && BASE_CONF.MUEXT.contains("#"+ext+"#")) {
 	                        	return 1;
 	                        }
                         }
@@ -174,7 +174,7 @@ public class MyApp extends Application {
     	//String root = NStorage.getSP(this.getContext(), "global.root");
     	//Log.d(TAG, "getRoot:"+root);
     	if (root == null) {
-    		return CONF.DEFAULT_ROOT;
+    		return BASE_CONF.DEFAULT_ROOT;
     	} else {
     		return root;
     	}
@@ -185,7 +185,7 @@ public class MyApp extends Application {
 	        String root = NAction.getDefaultRoot(context);
 	        String rootDir;
 			if (root.equals("")) {
-                rootDir = new File(FileHelper.getBasePath(CONF.DEFAULT_ROOT, "Quseit"),"").getAbsolutePath();
+                rootDir = new File(FileHelper.getBasePath(BASE_CONF.DEFAULT_ROOT, "Quseit"),"").getAbsolutePath();
 
 			} else {
 				rootDir = root;

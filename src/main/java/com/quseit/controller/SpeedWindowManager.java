@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 
 import com.quseit.android.R;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.PreferenceUtil;
 import com.quseit.view.SmallWindowView;
 import com.quseit.view.WindowView;
@@ -51,7 +51,7 @@ public class SpeedWindowManager  {
     }
 
     public void createWindow(final Context context) {
-        createWindow(context, CONF.SMALL_WINDOW_TYPE);
+        createWindow(context, BASE_CONF.SMALL_WINDOW_TYPE);
     }
 
     private void createWindow(final Context context, int type) {
@@ -65,10 +65,10 @@ public class SpeedWindowManager  {
                     mSmallWindowView = new SmallWindowView(context);
                     Drawable background = getCurrentBgDrawable(context);
                     setViewBg(background);
-                    if (PreferenceUtil.getSingleton(context).getBoolean(CONF.SP_LOC)) {
-                        setOnTouchListener(context, mSmallWindowView, CONF.BIG_WINDOW_TYPE);
+                    if (PreferenceUtil.getSingleton(context).getBoolean(BASE_CONF.SP_LOC)) {
+                        setOnTouchListener(context, mSmallWindowView, BASE_CONF.BIG_WINDOW_TYPE);
                     } else {
-                        setOnTouchListener(windowManager, context, mSmallWindowView, CONF.BIG_WINDOW_TYPE);
+                        setOnTouchListener(windowManager, context, mSmallWindowView, BASE_CONF.BIG_WINDOW_TYPE);
                     }
                     windowManager.addView(mSmallWindowView, windowParams);
                 }
@@ -81,7 +81,7 @@ public class SpeedWindowManager  {
     private Drawable getCurrentBgDrawable(Context context) {
         Drawable background;
         int bgId;
-        if (PreferenceUtil.getSingleton(context).getBoolean(CONF.SP_BG, false)) {
+        if (PreferenceUtil.getSingleton(context).getBoolean(BASE_CONF.SP_BG, false)) {
             bgId = R.drawable.trans_bg;
         } else {
             bgId = R.drawable.float_bg;
@@ -118,8 +118,8 @@ public class SpeedWindowManager  {
         windowParams.gravity = Gravity.START | Gravity.TOP;
         windowParams.width = LayoutParams.WRAP_CONTENT;
         windowParams.height = LayoutParams.WRAP_CONTENT;
-        int x = PreferenceUtil.getSingleton(context).getInt(CONF.SP_X, -1);
-        int y = PreferenceUtil.getSingleton(context).getInt(CONF.SP_Y, -1);
+        int x = PreferenceUtil.getSingleton(context).getInt(BASE_CONF.SP_X, -1);
+        int y = PreferenceUtil.getSingleton(context).getInt(BASE_CONF.SP_Y, -1);
         if (x == -1 || y == -1) {
             x = screenWidth/2;
             y = 0;
@@ -152,7 +152,7 @@ public class SpeedWindowManager  {
                         windowManager.updateViewLayout(windowView, windowParams);
                         return true;
                     case MotionEvent.ACTION_UP:
-                        if ((System.currentTimeMillis() - exitTime) < CONF.CHANGE_DELAY) {
+                        if ((System.currentTimeMillis() - exitTime) < BASE_CONF.CHANGE_DELAY) {
                             createWindow(context, type);
                             return true;
                         } else {
@@ -174,7 +174,7 @@ public class SpeedWindowManager  {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_UP:
-                        if ((System.currentTimeMillis() - exitTime) < CONF.CHANGE_DELAY) {
+                        if ((System.currentTimeMillis() - exitTime) < BASE_CONF.CHANGE_DELAY) {
                             createWindow(context, type);
                             return true;
                         } else {
@@ -219,7 +219,7 @@ public class SpeedWindowManager  {
         long tempSum = TrafficStats.getTotalRxBytes()
                 + TrafficStats.getTotalTxBytes();
         long rxtxLast = tempSum - rxtxTotal;
-        double totalSpeed = rxtxLast * 1000 / CONF.TIME_SPAN;
+        double totalSpeed = rxtxLast * 1000 / BASE_CONF.TIME_SPAN;
         rxtxTotal = tempSum;
         long tempMobileRx = TrafficStats.getMobileRxBytes();
         long tempMobileTx = TrafficStats.getMobileTxBytes();
@@ -229,10 +229,10 @@ public class SpeedWindowManager  {
         long mobileLastSend = tempMobileTx - mobileSendSum;
         long wlanLastRecv = tempWlanRx - wlanRecvSum;
         long wlanLastSend = tempWlanTx - wlanSendSum;
-        double mobileRecvSpeed = mobileLastRecv * 1000 / CONF.TIME_SPAN;
-        double mobileSendSpeed = mobileLastSend * 1000 / CONF.TIME_SPAN;
-        double wlanRecvSpeed = wlanLastRecv * 1000 / CONF.TIME_SPAN;
-        double wlanSendSpeed = wlanLastSend * 1000 / CONF.TIME_SPAN;
+        double mobileRecvSpeed = mobileLastRecv * 1000 / BASE_CONF.TIME_SPAN;
+        double mobileSendSpeed = mobileLastSend * 1000 / BASE_CONF.TIME_SPAN;
+        double wlanRecvSpeed = wlanLastRecv * 1000 / BASE_CONF.TIME_SPAN;
+        double wlanSendSpeed = wlanLastSend * 1000 / BASE_CONF.TIME_SPAN;
         mobileRecvSum = tempMobileRx;
         mobileSendSum = tempMobileTx;
         wlanRecvSum = tempWlanRx;
@@ -289,9 +289,9 @@ public class SpeedWindowManager  {
 
     public void fixWindow(Context context, boolean yes) {
         if (yes) {
-            setOnTouchListener(context, mSmallWindowView == null ? mBigWindowView : mSmallWindowView, mSmallWindowView == null ? CONF.SMALL_WINDOW_TYPE : CONF.BIG_WINDOW_TYPE);
+            setOnTouchListener(context, mSmallWindowView == null ? mBigWindowView : mSmallWindowView, mSmallWindowView == null ? BASE_CONF.SMALL_WINDOW_TYPE : BASE_CONF.BIG_WINDOW_TYPE);
         } else {
-            setOnTouchListener(getWindowManager(context), context, mSmallWindowView == null ? mBigWindowView : mSmallWindowView, mSmallWindowView == null ? CONF.SMALL_WINDOW_TYPE : CONF.BIG_WINDOW_TYPE);
+            setOnTouchListener(getWindowManager(context), context, mSmallWindowView == null ? mBigWindowView : mSmallWindowView, mSmallWindowView == null ? BASE_CONF.SMALL_WINDOW_TYPE : BASE_CONF.BIG_WINDOW_TYPE);
         }
     }
 

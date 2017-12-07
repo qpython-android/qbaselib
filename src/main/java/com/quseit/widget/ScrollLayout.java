@@ -1,5 +1,5 @@
 package com.quseit.widget;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 
 import android.content.Context;  
 import android.util.AttributeSet;  
@@ -65,7 +65,7 @@ import android.widget.Scroller;
         @SuppressWarnings("unused")
 		@Override    
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {     
-            if (CONF.DEBUG) Log.e(TAG, "onMeasure");  
+            if (BASE_CONF.DEBUG) Log.e(TAG, "onMeasure");
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);     
         
             final int width = MeasureSpec.getSize(widthMeasureSpec);     
@@ -144,7 +144,7 @@ import android.widget.Scroller;
               
             switch (action) {  
             case MotionEvent.ACTION_DOWN:  
-                if (CONF.DEBUG) Log.e(TAG, "event down!");  
+                if (BASE_CONF.DEBUG) Log.e(TAG, "event down!");
                 if (!mScroller.isFinished()){  
                     mScroller.abortAnimation();  
                 }  
@@ -159,21 +159,21 @@ import android.widget.Scroller;
                 break;  
                   
             case MotionEvent.ACTION_UP:  
-                if (CONF.DEBUG) Log.e(TAG, "event : up");     
+                if (BASE_CONF.DEBUG) Log.e(TAG, "event : up");
                 // if (mTouchState == TOUCH_STATE_SCROLLING) {     
                 final VelocityTracker velocityTracker = mVelocityTracker;     
                 velocityTracker.computeCurrentVelocity(1000);     
                 int velocityX = (int) velocityTracker.getXVelocity();     
-                if (CONF.DEBUG) Log.e(TAG, "velocityX:"+velocityX);   
+                if (BASE_CONF.DEBUG) Log.e(TAG, "velocityX:"+velocityX);
                   
                 if (velocityX > SNAP_VELOCITY && mCurScreen > 0) {     
                     // Fling enough to move left     
-                    if (CONF.DEBUG) Log.e(TAG, "snap left");  
+                    if (BASE_CONF.DEBUG) Log.e(TAG, "snap left");
                     snapToScreen(mCurScreen - 1);     
                 } else if (velocityX < -SNAP_VELOCITY     
                         && mCurScreen < getChildCount() - 1) {     
                     // Fling enough to move right     
-                    if (CONF.DEBUG) Log.e(TAG, "snap right");  
+                    if (BASE_CONF.DEBUG) Log.e(TAG, "snap right");
                     snapToScreen(mCurScreen + 1);     
                 } else {     
                     snapToDestination();     
@@ -195,7 +195,7 @@ import android.widget.Scroller;
         @Override  
         public boolean onInterceptTouchEvent(MotionEvent ev) {  
             // TODO Auto-generated method stub  
-            if (CONF.DEBUG) Log.e(TAG, "onInterceptTouchEvent-slop:"+mTouchSlop);  
+            if (BASE_CONF.DEBUG) Log.e(TAG, "onInterceptTouchEvent-slop:"+mTouchSlop);
               
             final int action = ev.getAction();  
             if ((action == MotionEvent.ACTION_MOVE) &&   

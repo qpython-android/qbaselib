@@ -12,7 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -284,7 +284,7 @@ public class ImageUtil {
          * @return 圆角图片
          */
         public static Bitmap toRoundCorner(Bitmap bitmap) {
-        	return ImageUtil.toRoundCorner(bitmap, CONF.ROUND_PIX);
+        	return ImageUtil.toRoundCorner(bitmap, BASE_CONF.ROUND_PIX);
         }
         public static Bitmap toRoundCorner(Bitmap bitmap, int pixels) {
         	if (pixels == 0) 

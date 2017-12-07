@@ -32,7 +32,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 
 import org.apache.http.conn.util.InetAddressUtils;
 
@@ -463,7 +463,7 @@ public class NUtil {
 		for(int i=0;i<apps.size();i++) {  
 		    PackageInfo pinfo = apps.get(i);  
 		    if (pinfo.applicationInfo.packageName.equals(packageName)) {
-		    	if (CONF.DEBUG) Log.d(TAG, "packaged installed:"+packageName);
+		    	if (BASE_CONF.DEBUG) Log.d(TAG, "packaged installed:"+packageName);
 		    	return true;
 		    }
 		}
@@ -650,7 +650,7 @@ public class NUtil {
         return out;
     }
     public static boolean isEmulator(Context context) {
-    	if (CONF.DEBUG) Log.d(TAG, "isEmulator");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "isEmulator");
     	TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE); 
     	if (tm != null) {
     		//String number = tm.getLine1Number();
@@ -660,7 +660,7 @@ public class NUtil {
     		//Log.d(TAG, "strSubId:"+strSubId);
     		//tm.getCellLocation();
     		String deviceid = tm.getDeviceId();
-    		if (CONF.DEBUG) Log.d(TAG, "deviceid:"+deviceid);
+    		if (BASE_CONF.DEBUG) Log.d(TAG, "deviceid:"+deviceid);
     		
     		if (deviceid==null || deviceid.equals("000000000000000")) {
     			return true;
@@ -696,16 +696,16 @@ public class NUtil {
             ConnectivityManager nInfo = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             nInfo.getActiveNetworkInfo().isConnectedOrConnecting();
 
-            if (CONF.DEBUG)  Log.d(TAG, "Net avail:"
+            if (BASE_CONF.DEBUG)  Log.d(TAG, "Net avail:"
                     + nInfo.getActiveNetworkInfo().isConnectedOrConnecting());
 
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            	if (CONF.DEBUG) Log.d(TAG, "Network available:true");
+            	if (BASE_CONF.DEBUG) Log.d(TAG, "Network available:true");
                 return true;
             } else {
-            	if (CONF.DEBUG) Log.d(TAG, "Network available:false");
+            	if (BASE_CONF.DEBUG) Log.d(TAG, "Network available:false");
                 return false;
             }
 
@@ -859,7 +859,7 @@ public class NUtil {
 			String val = dis.readUTF();
 			return val;
         } catch (FileNotFoundException e) {
-        	if (CONF.DEBUG) Log.d(TAG, "secGet file not found");
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "secGet file not found");
 			//e.printStackTrace();
 
         	return "";

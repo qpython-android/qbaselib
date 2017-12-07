@@ -7,9 +7,8 @@ import java.io.RandomAccessFile;
 
 //import greendroid.image.ImageProcessor;
 
-import com.quseit.android.R;
 import com.quseit.base.MyApp;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.Base64;
 import com.quseit.util.DateTimeHelper;
 import com.quseit.util.FileHelper;
@@ -22,7 +21,6 @@ import com.quseit.util.NAction;
 //import greendroid.util.GDUtils;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
@@ -263,7 +261,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 //            if (Config.GD_INFO_LOGS_ENABLED) {
 //                Log.i(LOG_TAG, "Cache miss. Starting to load the image at the given URL");
 //            }
-            if (CONF.DEBUG) Log.d("AsyncImageView", "refetch:"+mUrl);
+            if (BASE_CONF.DEBUG) Log.d("AsyncImageView", "refetch:"+mUrl);
 
             setDefaultImage();
 //            mRequest = new ImageRequest(mUrl, this, mImageProcessor, mOptions);
@@ -304,7 +302,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     public void setUrl(String url) {
     	// cache
     	if (url!=null) {
-    		String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+CONF.DCACHE+"/";
+    		String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+ BASE_CONF.DCACHE+"/";
 
 	    	String imgHash = MD5.encrypByMd5(Base64.encode(url));
 	    	File imgCache = new File(cacheDir+imgHash);
@@ -324,11 +322,11 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 	    		//setImageBitmap(ImageUtil.toRoundCorner(mBitmap));
 	    		//RIVER ADDED
 	    		//mBitmap.recycle();
-	    		if (CONF.DEBUG) Log.d(LOG_TAG, "get image from cache("+url+"):"+imgCache.getAbsolutePath());
+	    		if (BASE_CONF.DEBUG) Log.d(LOG_TAG, "get image from cache("+url+"):"+imgCache.getAbsolutePath());
 	    		return;
 	    	}
     	}
-		if (CONF.DEBUG) Log.d(LOG_TAG, "NO image cache:"+url);
+		if (BASE_CONF.DEBUG) Log.d(LOG_TAG, "NO image cache:"+url);
 
         // Check the url has changed
         if (mBitmap != null && url != null && url.equals(mUrl)) {
@@ -363,7 +361,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
                 	}
                     return;
                 } else {
-                    if (CONF.DEBUG) Log.d("AsyncImageView", "default");
+                    if (BASE_CONF.DEBUG) Log.d("AsyncImageView", "default");
 
                     setDefaultImage();
                 }
@@ -612,12 +610,12 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     	 * CACHE TODO
     	 */
     	if (mUrl!=null) {
-			//String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+CONF.DCACHE+"/";
+			//String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+BASE_CONF.DCACHE+"/";
 	    	String imgHash = MD5.encrypByMd5(Base64.encode(mUrl));
 	    	byte[] bmpb = ImageUtil.Bitmap2Bytes(image);
 	    	String imgHashPath;
 			try {
-				imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(), CONF.DCACHE)+"/"+imgHash;
+				imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(), BASE_CONF.DCACHE)+"/"+imgHash;
 
 		    	try {
 			    	File imgCache = new File(imgHashPath);
@@ -630,19 +628,19 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 					accessFile.seek(0);
 					accessFile.write(bmpb, 0, bmpb.length);
 					accessFile.close();
-					if (CONF.DEBUG) Log.d(LOG_TAG, "save image ("+mUrl+")to cache:"+imgCache.getAbsolutePath());
+					if (BASE_CONF.DEBUG) Log.d(LOG_TAG, "save image ("+mUrl+")to cache:"+imgCache.getAbsolutePath());
 		    	} catch (FileNotFoundException e) {
-					if (CONF.DEBUG) Log.d(LOG_TAG, "FileNotFoundException save image ("+mUrl+")to cache:"+imgHashPath);
+					if (BASE_CONF.DEBUG) Log.d(LOG_TAG, "FileNotFoundException save image ("+mUrl+")to cache:"+imgHashPath);
 
 					e.printStackTrace();
 				} catch (IOException e) {
-					if (CONF.DEBUG) Log.d(LOG_TAG, "IOException save image ("+mUrl+")to cache:"+imgHashPath);
+					if (BASE_CONF.DEBUG) Log.d(LOG_TAG, "IOException save image ("+mUrl+")to cache:"+imgHashPath);
 
 					e.printStackTrace();
 				}
 
 			} catch (IOException e1) {
-				if (CONF.DEBUG) Log.d(LOG_TAG, "IOException save image ("+mUrl+")");
+				if (BASE_CONF.DEBUG) Log.d(LOG_TAG, "IOException save image ("+mUrl+")");
 				e1.printStackTrace();
 			} catch (NullPointerException e3) {
 				Log.d(LOG_TAG, "NullPointerException save image ("+mUrl+")");

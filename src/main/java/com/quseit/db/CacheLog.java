@@ -1,6 +1,6 @@
 package com.quseit.db;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.DateTimeHelper;
 
 import android.content.Context;
@@ -39,7 +39,7 @@ public class CacheLog {
 	        	} else {
 	        		isExpired = "0";
 	        	}
-	        	if (CONF.DEBUG)  Log.d(TAG, "found:"+key+"["+value+"]");
+	        	if (BASE_CONF.DEBUG)  Log.d(TAG, "found:"+key+"["+value+"]");
 	
 	        }
 	        cursor.close();
@@ -66,7 +66,7 @@ public class CacheLog {
     	}
         dbHelper.close();
 
-    	if (CONF.DEBUG) Log.d(TAG, "get: key("+key+")type:"+type+")expired("+expired+")");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "get: key("+key+")type:"+type+")expired("+expired+")");
 
         String[] ret =  {value, isExpired};
         return ret;
@@ -77,7 +77,7 @@ public class CacheLog {
 
     	long now = DateTimeHelper.getNowTime();
     	try {
-	    	if (CONF.DEBUG) Log.d(TAG, "set: key("+key+")type"+type+")now("+now+")expired("+expired+")value("+val+")");
+	    	if (BASE_CONF.DEBUG) Log.d(TAG, "set: key("+key+")type"+type+")now("+now+")expired("+expired+")value("+val+")");
 	
 	        SQLiteDatabase database = dbHelper.getWritableDatabase();
 	        database.delete("cache", "key=? AND type=?", new String[] { key, ""+type });

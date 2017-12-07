@@ -1,7 +1,7 @@
 package com.quseit.db;
 import java.util.ArrayList;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.DateTimeHelper;
 import com.quseit.util.VeDate;
 
@@ -62,7 +62,7 @@ public class FavoriteLog {
         // 创建一个新的数据库
         @Override
         public void onCreate(SQLiteDatabase db) {
-        	if (CONF.DEBUG) Log.d(TAG, "db create"+DATABASE_CREATE1);
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "db create"+DATABASE_CREATE1);
             db.execSQL(DATABASE_CREATE1);
             //db.execSQL(DATABASE_CREATE2);
 
@@ -83,14 +83,14 @@ public class FavoriteLog {
  
     // ---打开数据库---
     /*public FavoriteLog open() throws SQLException {
-    	if (CONF.DEBUG) Log.d(TAG, "db open");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "db open");
         db = DBHelper.getWritableDatabase();
         return this;
     }*/
  
     // ---关闭数据库---
    /* public void close() {
-    	if (CONF.DEBUG) Log.d(TAG, "db close");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "db close");
         DBHelper.close();
     }*/
     
@@ -98,7 +98,7 @@ public class FavoriteLog {
      * 获得最后需要播放的歌曲
      */
     public String[] getLogByPath(String path) { 
-    	if (CONF.DEBUG) Log.d(TAG, "getLastNewLog");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "getLastNewLog");
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
     	SQLiteDatabase db = DBHelper.getReadableDatabase();
@@ -130,7 +130,7 @@ public class FavoriteLog {
     public String[] getLogById(String rowId) { 
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG) Log.d(TAG, "getLastNewLog");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "getLastNewLog");
     	SQLiteDatabase db = DBHelper.getReadableDatabase();
 
         Cursor mCursor = db.query(DATABASE_TABLE, new String[] {
@@ -170,14 +170,14 @@ public class FavoriteLog {
         	//if (closeDb)
     		db.close();
     		DBHelper.close();
-        	if (CONF.DEBUG) Log.d(TAG, "checkLogPlayedByPath-yes:"+path);
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "checkLogPlayedByPath-yes:"+path);
 
         	return true;
         } else {
         	//if (closeDb)
     		db.close();
     		DBHelper.close();
-        	if (CONF.DEBUG) Log.d(TAG, "checkLogPlayedByPath-no:"+path);
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "checkLogPlayedByPath-no:"+path);
 
         	return false;
         }    	
@@ -186,7 +186,7 @@ public class FavoriteLog {
     public String[] getLastNewLog() { 
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG) Log.d(TAG, "getLastNewLog");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "getLastNewLog");
     	SQLiteDatabase db = DBHelper.getReadableDatabase();
 
         Cursor mCursor = db.query(DATABASE_TABLE, new String[] {
@@ -234,7 +234,7 @@ public class FavoriteLog {
     public boolean updateLogType(long rowId, String type) {
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
 
     	SQLiteDatabase db = DBHelper.getWritableDatabase();
         ContentValues args = new ContentValues();
@@ -249,7 +249,7 @@ public class FavoriteLog {
     public boolean updateLogStat(long rowId, String stat) {
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
 
     	SQLiteDatabase db = DBHelper.getWritableDatabase();
         ContentValues args = new ContentValues();
@@ -266,7 +266,7 @@ public class FavoriteLog {
     public boolean deleteLog(long rowId) {
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG)  Log.d(TAG, "deleLog:"+rowId);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "deleLog:"+rowId);
 
     	SQLiteDatabase db = DBHelper.getWritableDatabase();
         //ContentValues args = new ContentValues();
@@ -280,7 +280,7 @@ public class FavoriteLog {
     
     // 插入信息
     public long insertNewLog(String title, String artist, String catelog, String type, String path, String desc, String thumbnail) {
-    	if (CONF.DEBUG)  Log.d(TAG, "insertNewLog:"+title+"-type:"+type+"-path:"+path);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "insertNewLog:"+title+"-type:"+type+"-path:"+path);
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
     	try {

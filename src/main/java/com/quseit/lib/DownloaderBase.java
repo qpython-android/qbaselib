@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.quseit.android.R;
 import com.quseit.base.MyApp;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.db.DownloadLog;
 import com.quseit.db.UserLog;
 import com.quseit.util.FileHelper;
@@ -28,7 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -52,7 +51,7 @@ public abstract class DownloaderBase extends Service {
     private final int DOWN_ERROR = 5; // 出错的
     private final int DOWN_CONTINUE = 5; // 继续 对 暂停
     private final int EXCEPTION_FILE_NOTFOUND = 6;//链接失效
-    final private int THREADCOUNT = CONF.THREA_STAT.length;
+    final private int THREADCOUNT = BASE_CONF.THREA_STAT.length;
     public boolean showToast = false;
     protected String DOWNLOADLINK;
     protected String mTitle;
@@ -234,7 +233,7 @@ public abstract class DownloaderBase extends Service {
         Log.e(TAG, "onStartCommand<<===");
         String play = null;
         if (intent != null) {
-            play = intent.getStringExtra(CONF.EXTRA_CONTENT_URL6);
+            play = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL6);
 
             if (NAction.isThreadsStop(getApplicationContext()) || (play != null && play.equals("1"))) {
                 Log.e(TAG, "onStartCommand===>");
@@ -246,7 +245,7 @@ public abstract class DownloaderBase extends Service {
 
     public void startDownloadTask(Intent intent) {
         showToast = true;
-        NotifyIndex = CONF.DOWNLOAD_NOTIFY_INDEX;
+        NotifyIndex = BASE_CONF.DOWNLOAD_NOTIFY_INDEX;
 
         mCompletedSize = 0;
         if (intent == null) {
@@ -257,26 +256,26 @@ public abstract class DownloaderBase extends Service {
 
             stopSelf();
         } else {
-            rootPath = intent.getStringExtra(CONF.EXTRA_CONTENT_URL0);
-            DOWNLOADLINK = intent.getStringExtra(CONF.EXTRA_CONTENT_URL2);
+            rootPath = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL0);
+            DOWNLOADLINK = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL2);
 
             mTitle = NUtil.sescape(intent
-                    .getStringExtra(CONF.EXTRA_CONTENT_URL3));
+                    .getStringExtra(BASE_CONF.EXTRA_CONTENT_URL3));
             mArtist = NUtil.sescape(intent
-                    .getStringExtra(CONF.EXTRA_CONTENT_URL4));
+                    .getStringExtra(BASE_CONF.EXTRA_CONTENT_URL4));
             mAlbum = NUtil.sescape(intent
-                    .getStringExtra(CONF.EXTRA_CONTENT_URL5));
+                    .getStringExtra(BASE_CONF.EXTRA_CONTENT_URL5));
 
-            mExt = intent.getStringExtra(CONF.EXTRA_CONTENT_URL6);
+            mExt = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL6);
 
-            referCookie = intent.getStringExtra(CONF.EXTRA_CONTENT_URL7);
-            referUrl = intent.getStringExtra(CONF.EXTRA_CONTENT_URL8);
-            referUa = intent.getStringExtra(CONF.EXTRA_CONTENT_URL9);
+            referCookie = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL7);
+            referUrl = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL8);
+            referUa = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL9);
 
-            service_stat = intent.getIntExtra(CONF.EXTRA_CONTENT_URL10, 0);
-            service_json = intent.getStringExtra(CONF.EXTRA_CONTENT_URL11);
+            service_stat = intent.getIntExtra(BASE_CONF.EXTRA_CONTENT_URL10, 0);
+            service_json = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL11);
 
-            if (CONF.DEBUG)
+            if (BASE_CONF.DEBUG)
                 Log.d(TAG, "onStartCommand[title:" + mTitle + ",artist:"
                         + mArtist + ",album:" + mAlbum + ",completedSize:"
                         + mCompletedSize + "]");

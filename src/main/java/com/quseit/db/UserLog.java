@@ -1,5 +1,5 @@
 package com.quseit.db;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.DateTimeHelper;
 import com.quseit.util.NUtil;
 import com.quseit.util.VeDate;
@@ -57,7 +57,7 @@ public class UserLog {
         // 创建一个新的数据库
         @Override
         public void onCreate(SQLiteDatabase db) {
-        	if (CONF.DEBUG) Log.d(TAG, "db create"+DATABASE_CREATE1);
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "db create"+DATABASE_CREATE1);
             db.execSQL(DATABASE_CREATE1);
             //db.execSQL(DATABASE_CREATE2);
 
@@ -78,14 +78,14 @@ public class UserLog {
  
     // ---打开数据库---
     /*public UserLog open() throws SQLException {
-    	if (CONF.DEBUG) Log.d(TAG, "db open");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "db open");
         db = DBHelper.getWritableDatabase();
         return this;
     }
  
     // ---关闭数据库---
     public void close() {
-    	if (CONF.DEBUG) Log.d(TAG, "db close");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "db close");
         DBHelper.close();
     }*/
     
@@ -95,7 +95,7 @@ public class UserLog {
     public String[] getLogByPath(String path) { 
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG) Log.d(TAG, "getLastNewLog");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "getLastNewLog");
     	SQLiteDatabase db = DBHelper.getReadableDatabase();
 
         Cursor mCursor = db.query(DATABASE_TABLE, new String[] {
@@ -124,7 +124,7 @@ public class UserLog {
     public String[] getLogById(String rowId) { 
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG) Log.d(TAG, "getLastNewLog");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "getLastNewLog");
     	SQLiteDatabase db = DBHelper.getReadableDatabase();
 
         Cursor mCursor = db.query(DATABASE_TABLE, new String[] {
@@ -167,14 +167,14 @@ public class UserLog {
         	db.close();
             DBHelper.close();
 
-        	if (CONF.DEBUG) Log.d(TAG, "checkLogPlayedByPath-yes:"+path);
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "checkLogPlayedByPath-yes:"+path);
 
         	return true;
         } else {
         	db.close();
             DBHelper.close();
 
-        	if (CONF.DEBUG) Log.d(TAG, "checkLogPlayedByPath-no:"+path);
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "checkLogPlayedByPath-no:"+path);
 
         	return false;
         }    	
@@ -192,7 +192,7 @@ public class UserLog {
 	        	cursor.close();
 	            DBHelper.close();
 	            
-	        	if (!CONF.DEBUG) Log.d(TAG, "checkIfLogExists-yes:"+artist);
+	        	if (!BASE_CONF.DEBUG) Log.d(TAG, "checkIfLogExists-yes:"+artist);
 	
 	        	return true;
 	
@@ -200,7 +200,7 @@ public class UserLog {
 	           	db.close();
 	            DBHelper.close();
 	
-	        	if (!CONF.DEBUG) Log.d(TAG, "checkIfLogExists-no:"+artist);
+	        	if (!BASE_CONF.DEBUG) Log.d(TAG, "checkIfLogExists-no:"+artist);
 	
 	        	return false;
 	 
@@ -221,14 +221,14 @@ public class UserLog {
         	db.close();
             DBHelper.close();
 
-        	if (!CONF.DEBUG) Log.d(TAG, "checkIfLogExists-yes:"+artist);
+        	if (!BASE_CONF.DEBUG) Log.d(TAG, "checkIfLogExists-yes:"+artist);
 
         	return true;
         } else {
         	db.close();
             DBHelper.close();
 
-        	if (!CONF.DEBUG) Log.d(TAG, "checkIfLogExists-no:"+artist);
+        	if (!BASE_CONF.DEBUG) Log.d(TAG, "checkIfLogExists-no:"+artist);
 
         	return false;
         }   */ 	
@@ -238,7 +238,7 @@ public class UserLog {
     public String[] getLastNewLog() { 
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG) Log.d(TAG, "getLastNewLog");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "getLastNewLog");
     	SQLiteDatabase db = DBHelper.getReadableDatabase();
 
         Cursor mCursor = db.query(DATABASE_TABLE, new String[] {
@@ -284,7 +284,7 @@ public class UserLog {
     }
     
     public boolean updateLogType(long rowId, String type) {
-    	if (CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
     	SQLiteDatabase db = DBHelper.getWritableDatabase();
@@ -299,7 +299,7 @@ public class UserLog {
     }      
     
     public boolean updateLogStat(long rowId, String stat) {
-    	if (CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
     	SQLiteDatabase db = DBHelper.getWritableDatabase();
@@ -314,7 +314,7 @@ public class UserLog {
     }
     
     public boolean deleteLog(long rowId) {
-    	if (CONF.DEBUG)  Log.d(TAG, "deleLog:"+rowId);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "deleLog:"+rowId);
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
     	SQLiteDatabase db = DBHelper.getWritableDatabase();
@@ -328,7 +328,7 @@ public class UserLog {
     }
     
     public boolean deleteAllStat_0_Log() {
-    	if (CONF.DEBUG)  Log.d(TAG, "deleteAllStat_0_Log");
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "deleteAllStat_0_Log");
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
     	SQLiteDatabase db = DBHelper.getWritableDatabase();
@@ -343,7 +343,7 @@ public class UserLog {
     
     // 插入信息
     public long insertNewLog(String title, String artist, String catelog, String type, String path, int stat) {
-    	if (CONF.DEBUG)  Log.d(TAG, "insertNewLog:"+title+"-type:"+type+"-path:"+path);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "insertNewLog:"+title+"-type:"+type+"-path:"+path);
         DatabaseHelper DBHelper = new DatabaseHelper(context);
 
     	try {
@@ -417,7 +417,7 @@ public class UserLog {
 					String stat = result.getString(7);
 	
 	
-					if (CONF.DEBUG) Log.d(TAG, "UPLOAD:"+ id+"|"+title+"|"+artist+"|"+type+"|"+path+"|"+time+"|"+time2+"|"+stat);
+					if (BASE_CONF.DEBUG) Log.d(TAG, "UPLOAD:"+ id+"|"+title+"|"+artist+"|"+type+"|"+path+"|"+time+"|"+time2+"|"+stat);
 		
 					//feeds += id+"#"+title+"#"+artist+"#"+type+"#"+path+"#"+time+"#"+time2+"#"+stat+"\n";
 					if (uStat == 1) {
@@ -441,7 +441,7 @@ public class UserLog {
 		        db.update(DATABASE_TABLE, args, KEY_STAT + "=" + 0, null);
 	
 			}*/
-			if (CONF.DEBUG)  Log.d(TAG, "db getAllNewLog:"+feeds);
+			if (BASE_CONF.DEBUG)  Log.d(TAG, "db getAllNewLog:"+feeds);
 	
 			db.close();
         } catch (Exception e) {

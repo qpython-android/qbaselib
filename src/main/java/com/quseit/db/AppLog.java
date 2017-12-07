@@ -1,7 +1,7 @@
 package com.quseit.db;
 import java.util.ArrayList;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.VeDate;
 
 import android.content.ContentValues;
@@ -60,7 +60,7 @@ public class AppLog {
         // 创建一个新的数据库
         @Override
         public void onCreate(SQLiteDatabase db) {
-        	if (CONF.DEBUG) Log.d(TAG, "db create"+DATABASE_CREATE1);
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "db create"+DATABASE_CREATE1);
             db.execSQL(DATABASE_CREATE1);
             //db.execSQL(DATABASE_CREATE2);
 
@@ -81,14 +81,14 @@ public class AppLog {
  
     // ---打开数据库---
     /*public AppLog open() throws SQLException {
-    	if (CONF.DEBUG) Log.d(TAG, "db open");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "db open");
         db = DBHelper.getWritableDatabase();
         return this;
     }
  
     // ---关闭数据库---
     public void close() {
-    	if (CONF.DEBUG) Log.d(TAG, "db close");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "db close");
         DBHelper.close();
     }*/
     
@@ -96,7 +96,7 @@ public class AppLog {
     public boolean ifLogExists( String ver, String data) { 
     	DatabaseHelper DBHelper = new DatabaseHelper(context);
     	
-    	if (CONF.DEBUG) Log.d(TAG, "ifLogExists");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "ifLogExists");
     	try {
 	    	SQLiteDatabase database = DBHelper.getReadableDatabase();
 	
@@ -129,7 +129,7 @@ public class AppLog {
     boolean updateLogStat(long rowId, String stat) {
     	DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
 
     	SQLiteDatabase db = DBHelper.getWritableDatabase();
         ContentValues args = new ContentValues();
@@ -145,7 +145,7 @@ public class AppLog {
     public boolean deleteLog(long rowId) {
     	DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG)  Log.d(TAG, "deleLog:"+rowId);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "deleLog:"+rowId);
     	try {
 
 	    	SQLiteDatabase db = DBHelper.getWritableDatabase();
@@ -169,7 +169,7 @@ public class AppLog {
     public long insertNewLog(String title, String ver,String uid, String desc) {
     	DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (CONF.DEBUG)  Log.d(TAG, "insertNewLog:"+title+"-type:"+ver);
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "insertNewLog:"+title+"-type:"+ver);
     	try {
 	    	SQLiteDatabase db = DBHelper.getWritableDatabase();
 	

@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.util.*;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -128,6 +129,13 @@ public class FileHelper {
 
     public static void writeToFile(String filePath, String data) {
         try {
+            File file = new File(filePath);
+            if (!file.exists()) {
+                if (!file.createNewFile()) {
+                    return;
+                }
+            }
+
             FileOutputStream fOut = new FileOutputStream(filePath);
             fOut.write(data.getBytes());
             fOut.flush();
@@ -274,7 +282,7 @@ public class FileHelper {
 
     /*public static File getBasePath(String subdir) throws IOException {
         File basePath = new File(Environment.getExternalStorageDirectory(),
-                CONF.BASE_PATH);
+                BASE_CONF.BASE_PATH);
 
         if (!basePath.exists()) {
             if (!basePath.mkdirs()) {
@@ -285,7 +293,7 @@ public class FileHelper {
         File subPath = null;
         if (!subdir.equals("")) {
             subPath = new File(Environment.getExternalStorageDirectory(),
-                    CONF.BASE_PATH+"/"+subdir);
+                    BASE_CONF.BASE_PATH+"/"+subdir);
             if (!subPath.exists()) {
                 if (!subPath.mkdirs()) {
                     throw new IOException(String.format("%s cannot be created!",
@@ -450,9 +458,10 @@ public class FileHelper {
      * @return The main file to be found in dir
      */
     public static File getMainFileByType(File dir) {
-        File xx  = new File(dir.getAbsolutePath()+"/main.py");
+        File xx = new File(dir.getAbsolutePath() + "/main.py");
         return xx.exists() ? xx : null;
     }
+
     /**
      * Filter Files by type
      *
@@ -500,7 +509,7 @@ public class FileHelper {
             }
             file.delete();
         } else {
-            copyFile(file,outputPath+"/"+file.getName());
+            copyFile(file, outputPath + "/" + file.getName());
             file.delete();
         }
     }

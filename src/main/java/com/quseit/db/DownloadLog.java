@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Handler;
 import android.util.Log;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.lib.DownloadInfo;
 
 
@@ -130,7 +130,7 @@ public class DownloadLog {
 	 * 保存 下载的具体信息
 	 */
 	public void saveInfos(final List<DownloadInfo> infos, final int count) {
-		if (count < CONF.TRY_COUNT) {
+		if (count < BASE_CONF.TRY_COUNT) {
 
 			DBHelper dbHelper = new DBHelper(context);
 			try {
@@ -145,7 +145,7 @@ public class DownloadLog {
 							info.getArtist(), info.getAlbum(),
 							info.getService_stat() };
 					database.execSQL(sql, bindArgs);
-					/*if (!CONF.DEBUG)
+					/*if (!BASE_CONF.DEBUG)
 						Log.d(TAG, "saveInfos:path(" + info.getPath()
 								+ ")orgLink:(" + info.getOrgLink()
 								+ ")quality:(" + info.getQuality() + ")url("
@@ -163,7 +163,7 @@ public class DownloadLog {
 						saveInfos(infos, count + 1);
 					}
 
-				}, CONF.TRY_DELAY);
+				}, BASE_CONF.TRY_DELAY);
 			}
 			dbHelper.close();
 		}
@@ -187,7 +187,7 @@ public class DownloadLog {
 					cursor.getString(6), cursor.getInt(7), cursor.getInt(8),
 					cursor.getString(9), cursor.getString(10),
 					cursor.getString(11));
-			if (CONF.DEBUG)
+			if (BASE_CONF.DEBUG)
 				Log.d(TAG, "getInfos info:" + info.toString());
 			list.add(info);
 		}
@@ -212,7 +212,7 @@ public class DownloadLog {
 						cursor.getString(6), cursor.getInt(7),
 						cursor.getInt(8), cursor.getString(9),
 						cursor.getString(10), cursor.getString(11));
-				if (CONF.DEBUG)
+				if (BASE_CONF.DEBUG)
 					Log.d(TAG, "getInfos info:" + info.toString());
 
 				list.add(info);
@@ -243,7 +243,7 @@ public class DownloadLog {
 					c.getString(6), c.getInt(7), c.getInt(8), c.getString(9),
 					c.getString(10), c.getString(11), c.getInt(12),
 					c.getString(13));
-			if (CONF.DEBUG)
+			if (BASE_CONF.DEBUG)
 				Log.d(TAG, "getInfos info:" + info.toString());
 
 			list.add(info);
@@ -260,7 +260,7 @@ public class DownloadLog {
 	public void updataStatAndUrlByPath(final String path, final String url,
 			final int stat, final int count) {
 
-		if (count < CONF.TRY_COUNT) {
+		if (count < BASE_CONF.TRY_COUNT) {
 			DBHelper dbHelper = new DBHelper(context);
 
 			try {
@@ -278,19 +278,19 @@ public class DownloadLog {
 						updataStatAndUrlByPath(path, url, stat, count + 1);
 					}
 
-				}, CONF.TRY_DELAY);
+				}, BASE_CONF.TRY_DELAY);
 			}
 
 			dbHelper.close();
 		}
-		if (CONF.DEBUG)
+		if (BASE_CONF.DEBUG)
 			Log.d(TAG, "updataStatByPath-path(" + path + ")stat:(" + stat + ")");
 
 	}
 
 	public void updataStatByPath(final String path, final int stat,
 			final int count) {
-		if (count < CONF.TRY_COUNT) {
+		if (count < BASE_CONF.TRY_COUNT) {
 			DBHelper dbHelper = new DBHelper(context);
 
 			try {
@@ -299,7 +299,7 @@ public class DownloadLog {
 				Object[] bindArgs = { stat, path };
 				database.execSQL(sql, bindArgs);
 				database.close();
-				if (CONF.DEBUG)
+				if (BASE_CONF.DEBUG)
 					Log.d(TAG, "updataStatByPath-path(" + path + ")stat:("
 							+ stat + ")");
 			} catch (SQLiteException e) {
@@ -312,7 +312,7 @@ public class DownloadLog {
 						updataStatByPath(path, stat, count + 1);
 					}
 
-				}, CONF.TRY_DELAY);
+				}, BASE_CONF.TRY_DELAY);
 			}
 			dbHelper.close();
 
@@ -323,7 +323,7 @@ public class DownloadLog {
 	public void updateInfos(final int threadId, final long totalSize,
 			final long compeleteSize, final String urlstr, final String path,
 			final int stat, final int count) {
-		if (count < CONF.TRY_COUNT) {
+		if (count < BASE_CONF.TRY_COUNT) {
 
 			DBHelper dbHelper = new DBHelper(context);
 			try {
@@ -343,10 +343,10 @@ public class DownloadLog {
 								path, stat, count + 1);
 					}
 
-				}, CONF.TRY_DELAY);
+				}, BASE_CONF.TRY_DELAY);
 			}
 			dbHelper.close();
-			// if (CONF.DEBUG) Log.d(TAG,
+			// if (BASE_CONF.DEBUG) Log.d(TAG,
 			// "path("+path+")totalSize:("+totalSize+")compepeteSize:("+compeleteSize+")");
 		}
 
@@ -364,7 +364,7 @@ public class DownloadLog {
 
 	public void updateInfos(final long start_pos, final long compeleteSize,
 			final String urlstr, final String path, final int count) {
-		if (count < CONF.TRY_COUNT) {
+		if (count < BASE_CONF.TRY_COUNT) {
 			DBHelper dbHelper = new DBHelper(context);
 
 			try {
@@ -383,12 +383,12 @@ public class DownloadLog {
 								count);
 					}
 
-				}, CONF.TRY_DELAY);
+				}, BASE_CONF.TRY_DELAY);
 			}
 			dbHelper.close();
 
 		}
-		if (CONF.DEBUG)
+		if (BASE_CONF.DEBUG)
 			Log.d(TAG, "path(" + path + ")compepeteSize:(" + compeleteSize
 					+ ")");
 
@@ -462,7 +462,7 @@ public class DownloadLog {
 					c.getString(6), c.getInt(7), c.getInt(8), c.getString(9),
 					c.getString(10), c.getString(11), c.getInt(12),
 					c.getString(13));
-			if (CONF.DEBUG)
+			if (BASE_CONF.DEBUG)
 				Log.d(TAG, "getInfos info:" + info.toString());
 
 			list.add(info);
@@ -492,7 +492,7 @@ public class DownloadLog {
 
 		}
 		dbHelper.close();
-		if (CONF.DEBUG)
+		if (BASE_CONF.DEBUG)
 			Log.d(TAG, "deleteP:" + path);
 	}
 
@@ -507,7 +507,7 @@ public class DownloadLog {
 
 		}
 		dbHelper.close();
-		if (CONF.DEBUG)
+		if (BASE_CONF.DEBUG)
 			Log.d(TAG, "deleteL:" + path + "-" + orgLink);
 	}
 
@@ -519,7 +519,7 @@ public class DownloadLog {
 				url, path });
 		database.close();
 		dbHelper.close();
-		if (CONF.DEBUG)
+		if (BASE_CONF.DEBUG)
 			Log.d(TAG, "delete:" + path + "-" + url);
 
 	}

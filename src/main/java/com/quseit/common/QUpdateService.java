@@ -16,7 +16,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.quseit.android.R;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.FileHelper;
 import com.quseit.util.NAction;
 import com.quseit.util.NUtil;
@@ -60,15 +60,15 @@ public abstract class QUpdateService extends Service {
 		//NotifyIndex = VeDate.getDatemsAsInt();
 		NotifyIndex = NOTIFICATION_ID;
 		try {
-			titleId = intent.getIntExtra(CONF.EXTRA_CONTENT_URL1, 0);
+			titleId = intent.getIntExtra(BASE_CONF.EXTRA_CONTENT_URL1, 0);
 		} catch (Exception e) {
 			titleId = 0;
 		}
-	    UPDATELINK = intent.getStringExtra(CONF.EXTRA_CONTENT_URL2);
-	    type = intent.getStringExtra(CONF.EXTRA_CONTENT_URL3);
-	    dst = intent.getStringExtra(CONF.EXTRA_CONTENT_URL4);
-	    from = intent.getStringExtra(CONF.EXTRA_CONTENT_URL5);
-	    String xx = intent.getStringExtra(CONF.EXTRA_CONTENT_URL6);
+	    UPDATELINK = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL2);
+	    type = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL3);
+	    dst = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL4);
+	    from = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL5);
+	    String xx = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL6);
 	    if (xx!=null && xx.equals("0")) {
 	    	replace = false;
 	    } else {

@@ -6,7 +6,7 @@ import android.util.Log;
 import com.quseit.asihttp.AsyncHttpClient;
 import com.quseit.asihttp.AsyncHttpResponseHandler;
 import com.quseit.asihttp.RequestParams;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.db.CacheLog;
 
 import org.apache.http.HttpHost;
@@ -20,7 +20,7 @@ public class NRequest {
 
     
     public static void get2(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-    	if (!CONF.DEBUG)  Log.d(TAG, "get2:"+url+":p:"+params);
+    	if (!BASE_CONF.DEBUG)  Log.d(TAG, "get2:"+url+":p:"+params);
 		HttpHost hcProxyHost = null;
 
     	String proxyHost = NAction.getProxyHost(context);    	
@@ -51,12 +51,12 @@ public class NRequest {
     	} else {
     		responseHandler.onSuccess(content);
     		
-    		if (CONF.DEBUG) Log.d(TAG, "get2 onsucess from cache url("+url+")");
+    		if (BASE_CONF.DEBUG) Log.d(TAG, "get2 onsucess from cache url("+url+")");
     	}
     }
 
     public static void post2(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-    	if (CONF.DEBUG)  Log.d(TAG, "post:"+url+"-param:"+params.toString());
+    	if (BASE_CONF.DEBUG)  Log.d(TAG, "post:"+url+"-param:"+params.toString());
 		HttpHost hcProxyHost = null;
 
     	String proxyHost = NAction.getProxyHost(context);    	

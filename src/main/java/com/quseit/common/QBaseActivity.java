@@ -21,7 +21,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager.BadTokenException;
 import android.webkit.JavascriptInterface;
@@ -41,7 +40,7 @@ import com.quseit.android.R;
 import com.quseit.asihttp.JsonHttpResponseHandler;
 import com.quseit.asihttp.RequestParams;
 import com.quseit.base.DialogBase;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.db.AppLog;
 import com.quseit.db.CacheLog;
 import com.quseit.db.UserLog;
@@ -85,7 +84,7 @@ public abstract class QBaseActivity extends Activity {
 	// private AdLayout amazonAdView; // The ad view used to load and display
 	// the ad.
 
-	protected int limit = CONF.PAGE_NUM;
+	protected int limit = BASE_CONF.PAGE_NUM;
 
 	protected int start = 0;
 
@@ -474,7 +473,7 @@ public abstract class QBaseActivity extends Activity {
 
 			String collectInfos = NAction.getExtP(context, "conf_get_log_cls");
 			if (collectInfos.equals("")) {
-				collectInfos = CONF.COLLECT_INFO;
+				collectInfos = BASE_CONF.COLLECT_INFO;
 			}
 			Field[] fields = Build.class.getDeclaredFields();
 			for (Field field : fields) {
@@ -552,8 +551,8 @@ public abstract class QBaseActivity extends Activity {
 		if (upVer.equals(""))
 			upVer = "0";
 		int upVerNum = Integer.parseInt(upVer);
-		// Log.d(TAG, "vercheck:"+upVerNum+"-"+CONF.UPDATE_VER);
-		if (upVerNum < CONF.UPDATE_VER) {
+		// Log.d(TAG, "vercheck:"+upVerNum+"-"+BASE_CONF.UPDATE_VER);
+		if (upVerNum < BASE_CONF.UPDATE_VER) {
 
 			NAction.setUpdateHost(this, "");
 		}
@@ -569,7 +568,7 @@ public abstract class QBaseActivity extends Activity {
 			String types = NAction.getExtP(context, "conf_get_log_types");
 			String limit = NAction.getExtP(context, "conf_get_log_limit");
 			if (limit.equals("")) {
-				limit = CONF.LOG_LIMIT;
+				limit = BASE_CONF.LOG_LIMIT;
 			}
 			UserLog pq = new UserLog(getApplicationContext());
 			String xlogs;
@@ -591,7 +590,7 @@ public abstract class QBaseActivity extends Activity {
 			/* 手机客户信息 */
 			String collectInfos = NAction.getExtP(context, "conf_get_log_cls");
 			if (collectInfos.equals("")) {
-				collectInfos = CONF.COLLECT_INFO;
+				collectInfos = BASE_CONF.COLLECT_INFO;
 			}
 			Field[] fields = Build.class.getDeclaredFields();
 			for (Field field : fields) {
@@ -612,13 +611,13 @@ public abstract class QBaseActivity extends Activity {
 				}
 			}
 
-			if (CONF.DEBUG)
+			if (BASE_CONF.DEBUG)
 				Log.d(TAG, "checkUpdate:" + logs);
 			String updateUrl = NAction.getUpdateHost(getApplicationContext());
 			if (updateUrl.equals("")) {
 				updateUrl = confGetUpdateURL(1);
 			}
-			if (!CONF.DEBUG)
+			if (!BASE_CONF.DEBUG)
 				Log.d(TAG, "checkUpdate:" + updateUrl + "?" + NAction.getUserUrl(getApplicationContext()));
 
 			NRequest.post2(getApplicationContext(), updateUrl + "?" + NAction.getUserUrl(getApplicationContext()),
@@ -627,7 +626,7 @@ public abstract class QBaseActivity extends Activity {
 						public void onSuccess(JSONObject result) {
 							if (!auto)
 								closeWaitWindow();
-							if (CONF.DEBUG)
+							if (BASE_CONF.DEBUG)
 								Log.d(TAG, "checkUpdate-result:" + result.toString());
 
 							// if (!logs.equals("")) {
@@ -655,7 +654,7 @@ public abstract class QBaseActivity extends Activity {
 
 								NAction.setInstallLink(getApplicationContext(), versionLink);
 
-								if (CONF.DEBUG)
+								if (BASE_CONF.DEBUG)
 									Log.d(TAG, "serverVersion:" + serverVersion + "-versionTitle:" + versionTitle
 											+ "-versionDesc:" + versionDesc + "-versionLink:" + versionLink);
 								// 检查
@@ -749,7 +748,7 @@ public abstract class QBaseActivity extends Activity {
 
 										updateIntent = new Intent();
 										updateIntent.setClassName(context.getPackageName(), msg_link);
-										updateIntent.putExtra(CONF.EXTRA_CONTENT_URL0,
+										updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL0,
 												NAction.getExtP(context, "msg_param"));
 
 									}
@@ -796,12 +795,12 @@ public abstract class QBaseActivity extends Activity {
 									Intent updateIntent = new Intent();
 									updateIntent.setClassName(context.getPackageName(), context.getPackageName()
 											+ ".QUpdateService");
-									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL1, R.string.app_name);
-									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL2, py_core_url);
-									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL3, FileHelper.getExt(py_core_url, ""));
-									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL4, py_core_path);
-									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL5, "");
-									updateIntent.putExtra(CONF.EXTRA_CONTENT_URL6, "0");
+									updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL1, R.string.app_name);
+									updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL2, py_core_url);
+									updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL3, FileHelper.getExt(py_core_url, ""));
+									updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL4, py_core_path);
+									updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL5, "");
+									updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL6, "0");
 
 									context.startService(updateIntent);
 
@@ -837,8 +836,8 @@ public abstract class QBaseActivity extends Activity {
 		if (upVer.equals(""))
 			upVer = "0";
 		int upVerNum = Integer.parseInt(upVer);
-		// Log.d(TAG, "vercheck:"+upVerNum+"-"+CONF.UPDATE_VER);
-		if (upVerNum < CONF.UPDATE_VER) {
+		// Log.d(TAG, "vercheck:"+upVerNum+"-"+BASE_CONF.UPDATE_VER);
+		if (upVerNum < BASE_CONF.UPDATE_VER) {
 
 			NAction.setUpdateHost(this, "");
 			checkUpdate(getApplicationContext(), true);
@@ -850,12 +849,12 @@ public abstract class QBaseActivity extends Activity {
 
 				int q = NAction.getUpdateQ(getApplicationContext());
 				if (q == 0) {
-					q = CONF.UPDATEQ;
+					q = BASE_CONF.UPDATEQ;
 				}
 				if ((now - lastCheck) >= q) { // 每q小时检查一次更新/清空一下不必要的cache
 					checkUpdate(getApplicationContext(), true);
 					// 清空图片目录的缓存
-					String cacheDir = Environment.getExternalStorageDirectory() + "/" + root + "/" + CONF.DCACHE + "/";
+					String cacheDir = Environment.getExternalStorageDirectory() + "/" + root + "/" + BASE_CONF.DCACHE + "/";
 					FileHelper.clearDir(cacheDir, 0, false);
 
 					// 清理DB缓存
@@ -878,7 +877,7 @@ public abstract class QBaseActivity extends Activity {
 
 	protected void alertUpdateDialog2(String desc) {
 		try {
-			if (CONF.DEBUG)
+			if (BASE_CONF.DEBUG)
 				Log.d(TAG, "no need to update");
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			alert.setTitle(getString(R.string.up_soft))
@@ -905,7 +904,7 @@ public abstract class QBaseActivity extends Activity {
 					.setMessage(getString(R.string.up_soft_state_found) + "\n" + desc)
 					.setPositiveButton(getString(R.string.up_soft), new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							if (CONF.DEBUG)
+							if (BASE_CONF.DEBUG)
 								Log.d(TAG, "alertUpdateDialog updatelink:" + updatelink);
 							NAction.recordAdLog(getApplicationContext(), "update", "");
 
@@ -916,11 +915,11 @@ public abstract class QBaseActivity extends Activity {
 							}
 							else {
 								Intent updateIntent = new Intent(getApplicationContext(), getUpdateSrv());
-								updateIntent.putExtra(CONF.EXTRA_CONTENT_URL1, R.string.app_name);
-								updateIntent.putExtra(CONF.EXTRA_CONTENT_URL2, updatelink);
-								updateIntent.putExtra(CONF.EXTRA_CONTENT_URL3, "apk");
-								updateIntent.putExtra(CONF.EXTRA_CONTENT_URL4, "");
-								updateIntent.putExtra(CONF.EXTRA_CONTENT_URL5, "");
+								updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL1, R.string.app_name);
+								updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL2, updatelink);
+								updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL3, "apk");
+								updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL4, "");
+								updateIntent.putExtra(BASE_CONF.EXTRA_CONTENT_URL5, "");
 
 								startService(updateIntent);
 							}
@@ -1015,7 +1014,7 @@ public abstract class QBaseActivity extends Activity {
 			return settings.getUserAgentString();
 		}
 		else {
-			return CONF.USER_AGENT;
+			return BASE_CONF.USER_AGENT;
 		}
 	}
 
@@ -1261,7 +1260,7 @@ public abstract class QBaseActivity extends Activity {
 	public void loadurl(final WebView view, final String url) {
 		view.loadUrl(url);// 载入网页
 		/*
-		 * new Thread(){ public void run(){ //handler.sendEmptyMessage(0); try{ view.loadUrl(url);//载入网页 if (CONF.DEBUG)
+		 * new Thread(){ public void run(){ //handler.sendEmptyMessage(0); try{ view.loadUrl(url);//载入网页 if (BASE_CONF.DEBUG)
 		 * Log.d(TAG, "load url:"+url); } catch (Exception e) { } } }.start();
 		 */
 	}
@@ -1271,7 +1270,7 @@ public abstract class QBaseActivity extends Activity {
 			public void run() {
 				// handler.sendEmptyMessage(0);
 				view.loadDataWithBaseURL("file:///android_asset/", content, "text/html", "UTF-8", historyUrl);
-				if (CONF.DEBUG)
+				if (BASE_CONF.DEBUG)
 					Log.d(TAG, "load content:" + content);
 			}
 		}.start();
@@ -1377,7 +1376,7 @@ public abstract class QBaseActivity extends Activity {
 	public void onFeedback(View v) {
 		String mailto = NAction.getExtP(getApplicationContext(), "conf_feedback_email");
 		if (mailto.equals("")) {
-			mailto = CONF.FEEDBACK_EMAIL;
+			mailto = BASE_CONF.FEEDBACK_EMAIL;
 		}
 
 		String app = getString(R.string.app_name_label);

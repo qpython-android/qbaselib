@@ -1,7 +1,6 @@
 package com.quseit.util;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 
 import com.quseit.android.R;
 import com.quseit.cache.ACache;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.db.UserLog;
 
 import org.json.JSONException;
@@ -160,7 +159,7 @@ public class NAction {
 				return a.getString(key);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				if (CONF.DEBUG) Log.d(TAG, "getExtP:"+key+"-not found");
+				if (BASE_CONF.DEBUG) Log.d(TAG, "getExtP:"+key+"-not found");
 				//e.printStackTrace();
 				return "";
 			}
@@ -177,7 +176,7 @@ public class NAction {
 				return a.getString(key);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				if (CONF.DEBUG) Log.d(TAG, "getExtAdP:"+key+"-not found");
+				if (BASE_CONF.DEBUG) Log.d(TAG, "getExtAdP:"+key+"-not found");
 				//e.printStackTrace();
 				return "";
 			}
@@ -291,7 +290,7 @@ public class NAction {
 		     return fileTotalSize;
 
 		} catch (IOException e) {
-			if (CONF.DEBUG) Log.d(TAG, "getRemouteSize IOException:"+e.getMessage());
+			if (BASE_CONF.DEBUG) Log.d(TAG, "getRemouteSize IOException:"+e.getMessage());
 			e.printStackTrace();
 		}
 	     return -1;
@@ -401,7 +400,7 @@ public class NAction {
 	
 	public static int getUpdateQ(Context context) {
 		String seq = NStorage.getSP(context, "app.update_seq");
-		if (CONF.DEBUG) Log.d(TAG, "getUpdateQ:"+seq);
+		if (BASE_CONF.DEBUG) Log.d(TAG, "getUpdateQ:"+seq);
 		if (seq.equals("")) {
 			return 0;
 		} else {
@@ -427,7 +426,7 @@ public class NAction {
 
 		String[] ret = {val1, val2, val3, val4, val5, val6};
 
-		if (CONF.DEBUG)  Log.d(TAG, "ad:["+val1+"]-banner:["+val2+"]-link:["+val3+"]"+"key["+val4+"]");
+		if (BASE_CONF.DEBUG)  Log.d(TAG, "ad:["+val1+"]-banner:["+val2+"]-link:["+val3+"]"+"key["+val4+"]");
 		return ret;
 	}
 
@@ -600,7 +599,7 @@ public class NAction {
 	public static void setLocation(Context context, double latitude, double longitude) {
 		String ola = NStorage.getSP(context, "position.latitude");
 		String olo = NStorage.getSP(context, "position.longitude");
-		if (CONF.DEBUG)  Log.d(TAG, "setLocation:"+latitude+"("+ola+")-"+longitude+"("+olo+")");
+		if (BASE_CONF.DEBUG)  Log.d(TAG, "setLocation:"+latitude+"("+ola+")-"+longitude+"("+olo+")");
 
 		NStorage.setSP(context, "position.latitude_old", String.valueOf(latitude));
 		NStorage.setSP(context, "position.longitude_old", String.valueOf(longitude));
@@ -718,7 +717,7 @@ public class NAction {
 	}
 
 	public static void setHiFoundSrvStat(Context context, String stat) {
-		if (CONF.DEBUG)  Log.d(TAG, "setHiFoundSrvStat:"+stat);
+		if (BASE_CONF.DEBUG)  Log.d(TAG, "setHiFoundSrvStat:"+stat);
 		NStorage.setSP(context, "hi_opt.hifoundsrv", stat);
 	}
 
@@ -1019,7 +1018,7 @@ public class NAction {
 
   	static public boolean isThreadsStop(Context context) {
   		boolean st = true;
-  		for (int i=1;i<=CONF.THREA_STAT.length;i++) {
+  		for (int i = 1; i<= BASE_CONF.THREA_STAT.length; i++) {
   			int j = NStorage.getIntSP(context, "thread_stat_"+i);
   			Log.d(TAG, "isThreadsStop i:"+i+"-j:"+j);
   			if (j == 1) {
@@ -1031,7 +1030,7 @@ public class NAction {
   	}
 
   	static public void clearThreadsStat(Context context) {
-  		for (int i=1;i<=CONF.THREA_STAT.length;i++) {
+  		for (int i = 1; i<= BASE_CONF.THREA_STAT.length; i++) {
   			NStorage.setIntSP(context, "thread_stat_"+i,0);
   		}
   	}

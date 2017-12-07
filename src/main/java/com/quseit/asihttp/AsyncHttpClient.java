@@ -66,7 +66,7 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.SyncBasicHttpContext;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 
 import android.content.Context;
 
@@ -128,7 +128,7 @@ public class AsyncHttpClient {
         HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
         //HttpProtocolParams.setUserAgent(httpParams, String.format("android-async-http/%s (http://loopj.com/android-async-http)", VERSION));
         //HttpProtocolParams.setUserAgent(httpParams, "Mozilla/5.0 (Linux; U; Android 2.3.7; en-us; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1");
-        HttpProtocolParams.setUserAgent(httpParams, String.format(CONF.USER_AGENT));
+        HttpProtocolParams.setUserAgent(httpParams, String.format(BASE_CONF.USER_AGENT));
 
         
 

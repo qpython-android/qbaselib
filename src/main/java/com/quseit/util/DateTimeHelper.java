@@ -204,7 +204,7 @@ public class DateTimeHelper {
 		//long hour1=between%(24*3600)/3600;
 		//long minute1=between%3600/60;
 		//long second1=between%60/60;
-		//String dateAt = String.valueOf(begin.getYear())+CONF.T_Y+String.valueOf(begin.getMonth())+CONF.T_M+String.valueOf(begin.getDay())+CONF.T_D;
+		//String dateAt = String.valueOf(begin.getYear())+BASE_CONF.T_Y+String.valueOf(begin.getMonth())+BASE_CONF.T_M+String.valueOf(begin.getDay())+BASE_CONF.T_D;
 		String x1 = String.valueOf(begin.getHours());
 		if (x1.length()==1) {
 			x1 = "0"+x1;
