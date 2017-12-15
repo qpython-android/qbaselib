@@ -520,15 +520,19 @@ public class FileHelper {
      */
     public static List<File> filterDir(File file) {
         List<File> files = new ArrayList<>();
-        for (File file1 : file.listFiles()) {
-            if (!file1.isDirectory()) {
-                files.add(file1);
-            } else if (!file1.getName().startsWith(".")) {
-                files.addAll(filterDir(file1));
+        File[] subFile = file.listFiles();
+        if (subFile != null) {
+            for (File file1 : subFile) {
+                if (!file1.isDirectory()) {
+                    files.add(file1);
+                } else if (!file1.getName().startsWith(".")) {
+                    files.addAll(filterDir(file1));
+                }
             }
         }
         return files;
     }
+
 
 
     public static List<File> filterExt(File dir, String[] exts, int[] size) {
