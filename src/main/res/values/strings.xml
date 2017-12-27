@@ -117,7 +117,8 @@
     <string name="cat_watch_on_mobile">Watch on mobile</string>
     <string name="plugin_setting">Setting</string>
     <string name="plugin_ftp">FTP Service</string>
-    <string name="plugin_noadd">Upgrade to Pro version</string>
+    <string name="plugin_noadd">Upgrade to Python3.6 version</string>
+
     <string name="plugin_script_extend_1">Script Plugin</string>
     <string name="proxy_setting">Proxy Setting</string>
     <string name="proxy_host">Proxy host</string>
@@ -269,11 +270,15 @@
     <string name="permission_result">Please allow the permission</string>
     <string name="string_setting_fix">Please enable the float window</string>
 
-    <string name="private1_version">1347438570.05</string>
-    <string name="private2_version">1347438570.05</string>
-    <string name="private3_version">1347438550.05</string>
+    <string name="private1_version">1347438580.05</string>
+    <string name="private2_version">1347438580.05</string>
+    <string name="private3_version">1347438560.05</string>
     <string name="private_version">1347438520.05</string>
     <string name="public_version">1347438500.05</string>
     <string name="public3_version">1347438550.05</string>
+
+    <string name="private31_version" translatable="false">1347438531.05</string>
+    <string name="private32_version" translatable="false">1347438543.05</string>
+    <string name="private33_version" translatable="false">1347438520.05</string>
 
 </resources>

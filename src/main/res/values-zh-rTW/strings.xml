@@ -113,7 +113,7 @@
 <string name="cat_watch_on_mobile">在移動設備中觀看</string>
 <string name="plugin_setting">設置</string>
 <string name="plugin_ftp">FTP 服務</string>
-<string name="plugin_noadd">升級為專業版</string>
+<string name="plugin_noadd">升級為Python3.6版</string>
 <string name="plugin_script_extend_1">腳本插件</string>
 <string name="proxy_setting">代理設置</string>
 <string name="proxy_host">代理主機</string>

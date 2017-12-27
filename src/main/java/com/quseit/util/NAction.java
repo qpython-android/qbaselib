@@ -886,9 +886,10 @@ public class NAction {
 			return false;
 		}
 	}
+
 	public static String getQPyInterpreter(Context context) {
 		String qpyInterVal = NStorage.getSP(context, "conf.default_qpy_interpreter");
-        if (!qpyInterVal.equals("3.x")) {
+        if (!qpyInterVal.equals("python3.6")) {
         	qpyInterVal = "2.x";
         }
         
