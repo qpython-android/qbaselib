@@ -535,7 +535,7 @@ public class FileHelper {
 
 
 
-    public static List<File> filterExt(File dir, String[] exts, int[] size) {
+    public static List<File> filterExt(File dir, String[] exts, int size) {
         List<File> filtered = new ArrayList<>();
         List<File> files = filterDir(dir);
         for (File file : files) {
@@ -549,7 +549,7 @@ public class FileHelper {
             for (String s : exts) {
                 if (s.equals(ext)) {
                     filtered.add(file);
-                    size[0] += 1;
+                    size += 1;
                 }
             }
         }
