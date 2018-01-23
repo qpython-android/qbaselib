@@ -19,9 +19,9 @@ public class Blur {
 	}
 
 	@SuppressLint("NewApi")
-	public static Bitmap apply(Context context, Bitmap sentBitmap, int radius) {
+	public static Bitmap apply(Context context, Bitmap sentBitmap, float radius) {
 
-        Bitmap bitmap = Bitmap.createScaledBitmap(sentBitmap, sentBitmap.getWidth()/15, sentBitmap.getHeight()/15, false);
+        Bitmap bitmap = Bitmap.createScaledBitmap(sentBitmap, sentBitmap.getWidth()/5, sentBitmap.getHeight()/5, false);
 
 		if (VERSION.SDK_INT > 16) {
 			final RenderScript rs = RenderScript.create(context);
@@ -68,7 +68,7 @@ public class Blur {
 		if (radius < 1) {
 			return (null);
 		}
-
+		int intRadius = Math.round(radius);
 		int w = bitmap.getWidth();
 		int h = bitmap.getHeight();
 
@@ -78,7 +78,7 @@ public class Blur {
 		int wm = w - 1;
 		int hm = h - 1;
 		int wh = w * h;
-		int div = radius + radius + 1;
+		int div = intRadius + intRadius + 1;
 
 		int r[] = new int[wh];
 		int g[] = new int[wh];
@@ -100,15 +100,15 @@ public class Blur {
 		int stackstart;
 		int[] sir;
 		int rbs;
-		int r1 = radius + 1;
+		int r1 = intRadius + 1;
 		int routsum, goutsum, boutsum;
 		int rinsum, ginsum, binsum;
 
 		for (y = 0; y < h; y++) {
 			rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = 0;
-			for (i = -radius; i <= radius; i++) {
+			for (i = -intRadius; i <= intRadius; i++) {
 				p = pix[yi + Math.min(wm, Math.max(i, 0))];
-				sir = stack[i + radius];
+				sir = stack[i + intRadius];
 				sir[0] = (p & 0xff0000) >> 16;
 				sir[1] = (p & 0x00ff00) >> 8;
 				sir[2] = (p & 0x0000ff);
@@ -126,7 +126,7 @@ public class Blur {
 					boutsum += sir[2];
 				}
 			}
-			stackpointer = radius;
+			stackpointer = intRadius;
 
 			for (x = 0; x < w; x++) {
 
@@ -138,7 +138,7 @@ public class Blur {
 				gsum -= goutsum;
 				bsum -= boutsum;
 
-				stackstart = stackpointer - radius + div;
+				stackstart = stackpointer - intRadius + div;
 				sir = stack[stackstart % div];
 
 				routsum -= sir[0];
@@ -146,7 +146,7 @@ public class Blur {
 				boutsum -= sir[2];
 
 				if (y == 0) {
-					vmin[x] = Math.min(x + radius + 1, wm);
+					vmin[x] = Math.min(x + intRadius + 1, wm);
 				}
 				p = pix[yw + vmin[x]];
 
@@ -179,11 +179,11 @@ public class Blur {
 		}
 		for (x = 0; x < w; x++) {
 			rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = 0;
-			yp = -radius * w;
-			for (i = -radius; i <= radius; i++) {
+			yp = -intRadius * w;
+			for (i = -intRadius; i <= radius; i++) {
 				yi = Math.max(0, yp) + x;
 
-				sir = stack[i + radius];
+				sir = stack[i + intRadius];
 
 				sir[0] = r[yi];
 				sir[1] = g[yi];
@@ -210,7 +210,7 @@ public class Blur {
 				}
 			}
 			yi = x;
-			stackpointer = radius;
+			stackpointer = intRadius;
 			for (y = 0; y < h; y++) {
 				// Preserve alpha channel: ( 0xff000000 & pix[yi] )
 				pix[yi] = (0xff000000 & pix[yi]) | (dv[rsum] << 16) | (dv[gsum] << 8) | dv[bsum];
@@ -219,7 +219,7 @@ public class Blur {
 				gsum -= goutsum;
 				bsum -= boutsum;
 
-				stackstart = stackpointer - radius + div;
+				stackstart = stackpointer - intRadius + div;
 				sir = stack[stackstart % div];
 
 				routsum -= sir[0];

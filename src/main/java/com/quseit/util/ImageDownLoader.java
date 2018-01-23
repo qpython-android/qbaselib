@@ -73,6 +73,27 @@ public class ImageDownLoader {
 
     }
 
+    public static void setBlurImageFromUrl(Context context, final ImageView imageView, String url) {
+        ImageDownLoader loader = new ImageDownLoader(context);
+        Bitmap bitmap = loader.getBitmapCache(url);
+        if (bitmap != null) {
+            bitmap = Blur.apply(context, bitmap,1);
+            imageView.setImageBitmap(bitmap);
+        } else {
+            if (loader.getTaskCollection().containsKey(url)) {
+                return;
+            }
+            loader.loadImage(url, imageView.getWidth(), imageView.getHeight(), new AsyncImageLoaderListener() {
+                @Override
+                public void onImageLoader(Bitmap bitmap) {
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap);
+                    }
+                }
+            });
+        }
+    }
+
     @SuppressLint("NewApi")
     private void addLruCache(String key, Bitmap bitmap) {
         if (getBitmapFromMemCache(key) == null && bitmap != null) {
