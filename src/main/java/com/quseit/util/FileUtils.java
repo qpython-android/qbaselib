@@ -21,9 +21,12 @@ import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
+import android.system.ErrnoException;
+import android.system.Os;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -31,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.HashSet;
@@ -192,6 +196,21 @@ public class FileUtils {
         }
         reader.close();
         return builder.toString();
+    }
+
+    public static void lnOrcopy(File src, File dst, int sdk) throws IOException, ErrnoException {
+
+        if (sdk>=21) {
+            Os.symlink(src.getAbsolutePath(), dst.getAbsolutePath());
+        } else {
+            FileInputStream inStream = new FileInputStream(src);
+            FileOutputStream outStream = new FileOutputStream(dst);
+            FileChannel inChannel = inStream.getChannel();
+            FileChannel outChannel = outStream.getChannel();
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+            inStream.close();
+            outStream.close();
+        }
     }
 
 }
