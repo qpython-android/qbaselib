@@ -1,8 +1,9 @@
 package com.quseit.config;
 
 public interface BASE_CONF {
+    boolean DEBUG = true;
     String UPDATER_URL="http://dl.qpy.io/update.json";
-	String BA_SITE2 = "apu.quseit.com";
+	String BA_SITE2 = DEBUG?"apu.quseit.com:10001":"apu.quseit.com";
 	String FR_SITE = "play.quseit.com";
     int TRY_COUNT = 3;
     long TRY_DELAY = 1000;
@@ -31,7 +32,6 @@ public interface BASE_CONF {
     String EXTRA_CONTENT_URL11 = "com.quseit.common.extra.CONTENT_URL11";
     String USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.36 Safari/525.19";
 	int PAGE_NUM = 10;
-	boolean DEBUG = true;
 	String FEEDBACK_EMAIL = "support@quseit.com";
     String DEFAULT_ROOT = "Quseit";
     String EXT_PLG = "com.hipipal.qpyplus";
