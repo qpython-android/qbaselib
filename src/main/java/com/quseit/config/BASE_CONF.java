@@ -1,7 +1,7 @@
 package com.quseit.config;
 
 public interface BASE_CONF {
-    boolean DEBUG = true;
+    boolean DEBUG = false;
     String UPDATER_URL="http://dl.qpy.io/update.json";
 	String BA_SITE2 = DEBUG?"apu.quseit.com:10001":"apu.quseit.com";
 	String FR_SITE = "play.quseit.com";
