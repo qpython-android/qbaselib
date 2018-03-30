@@ -38,7 +38,7 @@ public class DateTimeHelper {
             timeStr = timeGap / 60 + timeLabels[3];
         } else {
             //1秒钟-59秒钟
-            timeStr = timeLabels[4];
+            timeStr = timeGap + timeLabels[4];
         }
         return timeStr;
     }
