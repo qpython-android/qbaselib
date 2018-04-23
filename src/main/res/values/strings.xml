@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_label">QApplication</string>
-    <string name="app_url">http://quseit.com/</string>
+    <string name="app_name_label">QPY</string>
+    <string name="app_url">http://qpython.com/</string>
     <string name="omenu_update">Check for new version</string>
     <string name="up_soft">Update</string>
     <string name="up_soft_state_found">New version found</string>
