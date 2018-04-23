@@ -111,7 +111,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             			Toast.makeText(mContext, R.string.err_caught, Toast.LENGTH_LONG).show();
                         Looper.loop();
                 	} catch (InflateException e) {
-
+						Log.e(TAG, "error : ", e);
                 	}
                 }
 			}.start();
