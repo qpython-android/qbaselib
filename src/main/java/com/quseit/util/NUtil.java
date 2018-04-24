@@ -67,6 +67,16 @@ import java.util.regex.Pattern;
 
 public class NUtil {
 
+	public static boolean isNumeric(String str) {
+		try {
+			double d = Double.parseDouble(str);
+
+		} catch(NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+
 	// 返回a到b之間(包括a,b)的任意一個自然数,如果a > b || a < 0，返回-1
 	public static int getRandomInt(int min, int max) {
 		if (min > max || min < 0)
