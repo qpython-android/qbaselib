@@ -469,6 +469,9 @@ public class FileHelper {
      * @return
      */
     public static File[] getFilesByType(File dir) {
+        if (dir==null) {
+            return null;
+        }
         typeFiles = new ArrayList<>();
         addFile(dir);
         return typeFiles.toArray(new File[0]);
