@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.os.IBinder;
 
 
-import com.quseit.controller.SpeedWindowManager;
-
 import java.util.Timer;
 import java.util.TimerTask;
 

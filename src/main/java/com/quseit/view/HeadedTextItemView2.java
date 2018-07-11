@@ -10,7 +10,7 @@
 //import android.widget.TextView;
 //
 //import com.quseit.android.R;
-//import com.quseit.item.HeadedTextItem2;
+//import HeadedTextItem2;
 //import com.quseit.widget.AsyncImageView;
 //
 ////import greendroid.widget.item.Item;

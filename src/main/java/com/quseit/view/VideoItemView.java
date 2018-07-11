@@ -5,7 +5,7 @@ package com.quseit.view;
 //import com.quseit.widget.AsyncImageView;
 //import com.quseit.android.R;
 //import com.quseit.config.CONF;
-//import com.quseit.item.VideoItem;
+//import VideoItem;
 
 //import greendroid.widget.AsyncImageView;
 //import greendroid.widget.item.Item;

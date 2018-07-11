@@ -33,7 +33,7 @@ public interface BASE_CONF {
     String USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.36 Safari/525.19";
 	int PAGE_NUM = 10;
 	String FEEDBACK_EMAIL = "support@quseit.com";
-    String DEFAULT_ROOT = "Quseit";
+    String DEFAULT_ROOT = "qpython";
     String EXT_PLG = "com.hipipal.qpyplus";
     String EXT_PLG_3 = "org.qpython.qpy3";
     String EXT_PLG_URL = "http://"+FR_SITE+"/qpython.html";

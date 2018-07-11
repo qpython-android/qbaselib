@@ -14,9 +14,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.quseit.android.R;
-import com.quseit.cache.ACache;
+import com.quseit.service.ACache;
 import com.quseit.config.BASE_CONF;
-import com.quseit.db.UserLog;
+import com.quseit.common.db.UserLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;

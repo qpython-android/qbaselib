@@ -23,7 +23,6 @@ android {
         }
     }
     useLibrary 'org.apache.http.legacy'
-
 }
 
 dependencies {
@@ -31,11 +30,10 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
 
     compile project(':qftplib')
-    compile files('libs/jsr305-2.0.1.jar')
-    compile files('libs/qaysnchttplib.jar')
+    compile files('libs/android-async-http-1.4.8.jar')
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugCompile rootProject.ext.leakcanaryDebug
+    releaseCompile rootProject.ext.leakcanaryRelease
     compile rootProject.ext.libSupportCardView
     compile rootProject.ext.libSupportV4
 }

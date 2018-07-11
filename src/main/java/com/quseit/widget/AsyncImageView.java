@@ -7,7 +7,7 @@ import java.io.RandomAccessFile;
 
 //import greendroid.image.ImageProcessor;
 
-import com.quseit.base.MyApp;
+import com.quseit.base.QBaseApp;
 import com.quseit.config.BASE_CONF;
 import com.quseit.util.Base64;
 import com.quseit.util.DateTimeHelper;
@@ -283,7 +283,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     public void setUrl(String url) {
     	// cache
     	if (url!=null) {
-    		String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+ BASE_CONF.DCACHE+"/";
+    		String cacheDir = QBaseApp.getInstance().getOrCreateRoot(BASE_CONF.DCACHE);
 
 	    	String imgHash = MD5.encrypByMd5(Base64.encode(url));
 	    	File imgCache = new File(cacheDir+imgHash);
@@ -591,12 +591,12 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     	 * CACHE TODO
     	 */
     	if (mUrl!=null) {
-			//String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+BASE_CONF.DCACHE+"/";
+			//String cacheDir = Environment.getExternalStorageDirectory()+"/"+QBaseApp.getInstance().getRoot()+"/"+BASE_CONF.DCACHE+"/";
 	    	String imgHash = MD5.encrypByMd5(Base64.encode(mUrl));
 	    	byte[] bmpb = ImageUtil.Bitmap2Bytes(image);
 	    	String imgHashPath;
 			try {
-				imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(), BASE_CONF.DCACHE)+"/"+imgHash;
+				imgHashPath = QBaseApp.getInstance().getOrCreateRoot(BASE_CONF.DCACHE) + "/" + imgHash;
 
 		    	try {
 			    	File imgCache = new File(imgHashPath);
@@ -620,9 +620,6 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 					e.printStackTrace();
 				}
 
-			} catch (IOException e1) {
-				if (BASE_CONF.DEBUG) Log.d(LOG_TAG, "IOException save image ("+mUrl+")");
-				e1.printStackTrace();
 			} catch (NullPointerException e3) {
 				Log.d(LOG_TAG, "NullPointerException save image ("+mUrl+")");
 				e3.printStackTrace();

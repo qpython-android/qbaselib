@@ -10,17 +10,17 @@ import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
+import org.apache.http.client.methods.HttpGet;
 
 import java.io.File;
 import java.util.Hashtable;
@@ -150,7 +150,7 @@ public class ImageDownLoader {
 
     private Bitmap downloadImage(String url, int width, int height) {
         Bitmap bitmap = null;
-        HttpClient httpClient = new DefaultHttpClient();
+        DefaultHttpClient httpClient = new DefaultHttpClient();
         try {
             httpClient.getParams().setParameter(
                     CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -163,15 +163,9 @@ public class ImageDownLoader {
                 bmpFactoryOptions.inJustDecodeBounds = true;
                 BitmapFactory.decodeByteArray(byteIn, 0, byteIn.length,
                         bmpFactoryOptions);
+
                 Log.d("ImageDownLoader", "downloadImage:" + bmpFactoryOptions.outHeight + "|" + height + "|" + bmpFactoryOptions.outWidth + "|" + width);
-                /*int heightRatio = (int) Math.ceil(bmpFactoryOptions.outHeight
-                        / height);
-                int widthRatio = (int) Math.ceil(bmpFactoryOptions.outWidth
-                        / width);
-                if (heightRatio > 1 && widthRatio > 1) {
-                    bmpFactoryOptions.inSampleSize = heightRatio > widthRatio ? heightRatio
-                            : widthRatio;
-                }*/
+
                 bmpFactoryOptions.inJustDecodeBounds = false;
                 bitmap = BitmapFactory.decodeByteArray(byteIn, 0,
                         byteIn.length, bmpFactoryOptions);
@@ -231,4 +225,3 @@ public class ImageDownLoader {
         }
     }
 }
-

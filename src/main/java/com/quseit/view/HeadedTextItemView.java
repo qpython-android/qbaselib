@@ -16,7 +16,7 @@
 //package com.quseit.view;
 //
 //import com.quseit.android.R;
-//import com.quseit.item.HeadedTextItem;
+//import HeadedTextItem;
 //
 ////import greendroid.widget.AsyncImageView;
 ////import greendroid.widget.item.Item;

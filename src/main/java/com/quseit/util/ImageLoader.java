@@ -109,7 +109,7 @@ public class ImageLoader {
                     inputStream = sAssetManager.open(mUrl.replaceFirst("file:///android_asset/", ""));
                 } else {
 
-        			//NAction.userProxy(MyApp.getInstance().getContext());
+        			//NAction.userProxy(QBaseApp.getInstance().getContext());
 
                     inputStream = new URL(mUrl).openStream();
                 }

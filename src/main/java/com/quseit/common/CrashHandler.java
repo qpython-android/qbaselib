@@ -9,7 +9,7 @@ import android.view.InflateException;
 import android.widget.Toast;
 
 import com.quseit.android.R;
-import com.quseit.db.AppLog;
+import com.quseit.common.db.AppLog;
 import com.quseit.util.NAction;
 import com.quseit.util.NUtil;
 
