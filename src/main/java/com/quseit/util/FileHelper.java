@@ -479,11 +479,13 @@ public class FileHelper {
 
     private static void addFile(File dir) {
         File[] dirFiles = dir.listFiles();
-        for (File file : dirFiles) {
-            if (file.isDirectory() && !file.getAbsolutePath().contains("/.")) {
-                addFile(file);
-            } else if (file.getName().contains(".py") && !file.getName().substring(0, 1).equals(".")) {
-                typeFiles.add(file);
+        if (dirFiles!=null) {
+            for (File file : dirFiles) {
+                if (file.isDirectory() && !file.getAbsolutePath().contains("/.")) {
+                    addFile(file);
+                } else if (file.getName().contains(".py") && !file.getName().substring(0, 1).equals(".")) {
+                    typeFiles.add(file);
+                }
             }
         }
     }

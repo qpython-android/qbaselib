@@ -41,13 +41,9 @@ public class CustomEditText extends EditText
       rBounds = dRight.getBounds();
       final int x = (int)event.getX();
       final int y = (int)event.getY();
-      //System.out.println("x:/y: "+x+"/"+y);
-      //System.out.println("bounds: "+bounds.left+"/"+bounds.right+"/"+bounds.top+"/"+bounds.bottom);
-      //check to make sure the touch event was within the bounds of the drawable
       if(x>=(this.getRight()-rBounds.width()) && x<=(this.getRight()-this.getPaddingRight())
           && y>=this.getPaddingTop() && y<=(this.getHeight()-this.getPaddingBottom()))
       {
-        //System.out.println("touch");
         this.setText("");
         event.setAction(MotionEvent.ACTION_CANCEL);//use this to prevent the keyboard from coming up
       }

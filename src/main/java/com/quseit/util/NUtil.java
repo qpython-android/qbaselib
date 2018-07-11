@@ -282,7 +282,13 @@ public class NUtil {
 			return "";
 		}
 	}
-	
+
+	public static String getFileFromUrl(String url) {
+		String path = getPathFromUrl(url);
+		String xx[] = path.split("/");
+		return xx[xx.length-1];
+	}
+
 	public static String getPathFromUrl(String url) {
 		URL iurl;
 		try {

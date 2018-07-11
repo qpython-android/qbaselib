@@ -65,12 +65,14 @@ public class CrashHandler implements UncaughtExceptionHandler {
 				outStream = new FileOutputStream(log);
 				outStream.write(datas);
 				outStream.close();
+			} catch (FileNotFoundException e) {
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 
-    	}
+		}
     	//appDB.close();
     	/*
     	FileOutputStream fOut = null;

@@ -111,7 +111,6 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
 
     private Bitmap mBitmap;
     private OnImageViewLoadListener mOnImageViewLoadListener;
-//    private ImageProcessor mImageProcessor;
     private BitmapFactory.Options mOptions;
 
     public AsyncImageView(Context context) {
@@ -126,24 +125,6 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
         super(context, attrs, defStyle);
 
         initializeDefaultValues();
-
-//        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AsyncImageView, defStyle, 0);
-//		try {
-//	        Drawable d = a.getDrawable(R.styleable.AsyncImageView_defaultSrc);
-//	        if (d != null) {
-//	            setDefaultImageDrawable(d);
-//	        }
-//		} catch (OutOfMemoryError e) {
-//
-//		}
-//        final int inDensity = a.getInt(R.styleable.AsyncImageView_inDensity, -1);
-//        if (inDensity != -1) {
-//            setInDensity(inDensity);
-//        }
-//
-//        setUrl(a.getString(R.styleable.AsyncImageView_url));
-//
-//        a.recycle();
     }
 
     private void initializeDefaultValues() {
