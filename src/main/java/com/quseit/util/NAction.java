@@ -1,6 +1,7 @@
 package com.quseit.util;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -10,6 +11,7 @@ import android.content.pm.ConfigurationInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -944,7 +946,7 @@ public class NAction {
 			return true;
 		}
 
-		if (NAction.getQPyInterpreter(context).equals("3.x")) {
+		if (NAction.getQPyInterpreter(context).startsWith("3.")) {
 			return true;
 		} else {
 			return false;
@@ -953,7 +955,7 @@ public class NAction {
 
 	public static String getQPyInterpreter(Context context) {
 		String qpyInterVal = NStorage.getSP(context, "conf.default_qpy_interpreter");
-        if (!qpyInterVal.equals("3.x")) {
+        if (!qpyInterVal.startsWith("3.")) {
         	qpyInterVal = "2.x";
         }
 
@@ -1084,6 +1086,20 @@ public class NAction {
 		} catch (Exception e) {
 			return 0;
 		}
+	}
+
+	public static void startInstalledAppDetailsActivity(final Activity context) {
+		if (context == null) {
+			return;
+		}
+		final Intent i = new Intent();
+		i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+		i.addCategory(Intent.CATEGORY_DEFAULT);
+		i.setData(Uri.parse("package:" + context.getPackageName()));
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+		context.startActivity(i);
 	}
 	
 }
