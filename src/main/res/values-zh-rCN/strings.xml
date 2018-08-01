@@ -63,7 +63,7 @@
     <string name="about_other">更多</string>
     <string name="check_update">检查新版本</string>
     <string name="plugin_script_enable">脚本插件</string>
-    <string name="err_caught">发生一个异常， 要重新启动</string>
+    <string name="err_caught">发生异常，已生成错误报告 {0} </string>
     <string name="plugin_player">优化播放器编解码器</string>
     <string name="exception_try_again">发生错误，请重试</string>
     <string name="plugin_sl4a">SL4A 服务</string>

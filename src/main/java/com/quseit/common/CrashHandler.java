@@ -22,6 +22,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Field;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,8 +55,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 	    		Log.d(TAG, "WriteSettings exits");
 	    	}
 
-	    	String code = NAction.getCode(context);
-	    	File log = new File(Environment.getExternalStorageDirectory()+"/"+code+"_last_err.log");
+	    	File log = new File(Environment.getExternalStorageDirectory()+"/"+NAction.getCode(context)+"_last_err.log");
 	    	if (log.exists()) {
 	    		log.delete();
 	    	}
@@ -70,7 +70,6 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 
 		}
     	//appDB.close();
@@ -104,13 +103,17 @@ public class CrashHandler implements UncaughtExceptionHandler {
 		if (!handleException(ex) && mDefaultHandler != null) {
 			//如果用户没有处理则让系统默认的异常处理器来处理
 			mDefaultHandler.uncaughtException(thread, ex);
+			//退出程序
+			android.os.Process.killProcess(android.os.Process.myPid());
+			System.exit(1);
+
 		} else {
 			new Thread() {
                 @Override
                 public void run() {
                 	try {
                         Looper.prepare();
-            			Toast.makeText(mContext, R.string.err_caught, Toast.LENGTH_LONG).show();
+            			Toast.makeText(mContext, MessageFormat.format(mContext.getString(R.string.err_caught), Environment.getExternalStorageDirectory()+"/"+NAction.getCode(mContext)+"_last_err.log"), Toast.LENGTH_LONG).show();
                         Looper.loop();
                 	} catch (InflateException e) {
 						Log.e(TAG, "error : ", e);

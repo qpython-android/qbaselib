@@ -60,7 +60,6 @@
 <string name="about_other">更多</string>
 <string name="check_update">檢查新版本</string>
     <string name="plugin_script_enable">腳本插件</string>
-    <string name="err_caught">發生一個異常， 要重新啟動</string>
 <string name="plugin_player">優化播放器編解碼器</string>
     <string name="exception_try_again">發生錯誤，請重試</string>
     <string name="plugin_sl4a">SL4A 服務</string>

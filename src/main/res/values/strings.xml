@@ -62,7 +62,7 @@
     <string name="about_other">More</string>
     <string name="check_update">Check for update</string>
     <string name="plugin_script_enable">Script Plugin</string>
-    <string name="err_caught">Catch an exception, it will restart</string>
+    <string name="err_caught">An exception occured, error report {0} is genereated</string>
     <string name="plugin_player">Optimized Player Codec</string>
     <string name="exception_try_again">Error occurred, try again</string>
     <string name="plugin_sl4a">SL4A Service</string>
