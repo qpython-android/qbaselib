@@ -1,5 +1,5 @@
 /**
- * Copyright 2010 Xeus Technologies 
+ * Copyright 2012 Kamran Zafar 
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -25,262 +25,256 @@ import java.util.Date;
  * 
  */
 public class TarEntry {
-    protected File file;
-    protected TarHeader header;
+	protected File file;
+	protected TarHeader header;
 
-    private TarEntry() {
-        this.file = null;
-        this.header = new TarHeader();
-    }
+	private TarEntry() {
+		this.file = null;
+		header = new TarHeader();
+	}
 
-    public TarEntry(File file, String entryName) {
-        this();
-        this.file = file;
-        this.extractTarHeader( entryName );
-    }
+	public TarEntry(File file, String entryName) {
+		this();
+		this.file = file;
+		this.extractTarHeader(entryName);
+	}
 
-    public TarEntry(byte[] headerBuf) {
-        this();
-        this.parseTarHeader( headerBuf );
-    }
+	public TarEntry(byte[] headerBuf) {
+		this();
+		this.parseTarHeader(headerBuf);
+	}
 
-    public boolean equals(TarEntry it) {
-        return this.header.name.toString().equals( it.header.name.toString() );
-    }
+	/**
+	 * Constructor to create an entry from an existing TarHeader object.
+	 * 
+	 * This method is useful to add new entries programmatically (e.g. for
+	 * adding files or directories that do not exist in the file system).
+	 */
+	public TarEntry(TarHeader header) {
+		this.file = null;
+		this.header = header;
+	}
 
-    public boolean isDescendent(TarEntry desc) {
-        return desc.header.name.toString().startsWith( this.header.name.toString() );
-    }
+	@Override
+	public boolean equals(Object it) {
+		if (!(it instanceof TarEntry)) {
+			return false;
+		}
+		return header.name.toString().equals(
+				((TarEntry) it).header.name.toString());
+	}
 
-    public TarHeader getHeader() {
-        return this.header;
-    }
+	@Override
+	public int hashCode() {
+		return header.name.hashCode();
+	}
 
-    public String getName() {
-        return this.header.name.toString();
-    }
+	public boolean isDescendent(TarEntry desc) {
+		return desc.header.name.toString().startsWith(header.name.toString());
+	}
 
-    public void setName(String name) {
-        this.header.name = new StringBuffer( name );
-    }
+	public TarHeader getHeader() {
+		return header;
+	}
 
-    public int getUserId() {
-        return this.header.userId;
-    }
+	public String getName() {
+		String name = header.name.toString();
+		if (header.namePrefix != null && !header.namePrefix.toString().equals("")) {
+			name = header.namePrefix.toString() + "/" + name;
+		}
 
-    public void setUserId(int userId) {
-        this.header.userId = userId;
-    }
+		return name;
+	}
 
-    public int getGroupId() {
-        return this.header.groupId;
-    }
+	public void setName(String name) {
+		header.name = new StringBuffer(name);
+	}
 
-    public void setGroupId(int groupId) {
-        this.header.groupId = groupId;
-    }
+	public int getUserId() {
+		return header.userId;
+	}
 
-    public String getUserName() {
-        return this.header.userName.toString();
-    }
+	public void setUserId(int userId) {
+		header.userId = userId;
+	}
 
-    public void setUserName(String userName) {
-        this.header.userName = new StringBuffer( userName );
-    }
+	public int getGroupId() {
+		return header.groupId;
+	}
 
-    public String getGroupName() {
-        return this.header.groupName.toString();
-    }
+	public void setGroupId(int groupId) {
+		header.groupId = groupId;
+	}
 
-    public void setGroupName(String groupName) {
-        this.header.groupName = new StringBuffer( groupName );
-    }
+	public String getUserName() {
+		return header.userName.toString();
+	}
 
-    public void setIds(int userId, int groupId) {
-        this.setUserId( userId );
-        this.setGroupId( groupId );
-    }
+	public void setUserName(String userName) {
+		header.userName = new StringBuffer(userName);
+	}
 
-    public void setModTime(long time) {
-        this.header.modTime = time / 1000;
-    }
+	public String getGroupName() {
+		return header.groupName.toString();
+	}
 
-    public void setModTime(Date time) {
-        this.header.modTime = time.getTime() / 1000;
-    }
+	public void setGroupName(String groupName) {
+		header.groupName = new StringBuffer(groupName);
+	}
 
-    public Date getModTime() {
-        return new Date( this.header.modTime * 1000 );
-    }
+	public void setIds(int userId, int groupId) {
+		this.setUserId(userId);
+		this.setGroupId(groupId);
+	}
 
-    public File getFile() {
-        return this.file;
-    }
+	public void setModTime(long time) {
+		header.modTime = time / 1000;
+	}
 
-    public long getSize() {
-        return this.header.size;
-    }
+	public void setModTime(Date time) {
+		header.modTime = time.getTime() / 1000;
+	}
 
-    public void setSize(long size) {
-        this.header.size = size;
-    }
+	public Date getModTime() {
+		return new Date(header.modTime * 1000);
+	}
 
-    /**
-     * Checks if the org.xeustechnologies.jtar entry is a directory
-     * 
-     * @return
-     */
-    public boolean isDirectory() {
-        if( this.file != null )
-            return this.file.isDirectory();
+	public File getFile() {
+		return this.file;
+	}
 
-        if( this.header != null ) {
-            if( this.header.linkFlag == TarHeader.LF_DIR )
-                return true;
+	public long getSize() {
+		return header.size;
+	}
 
-            if( this.header.name.toString().endsWith( "/" ) )
-                return true;
-        }
+	public void setSize(long size) {
+		header.size = size;
+	}
 
-        return false;
-    }
+	/**
+	 * Checks if the org.kamrazafar.jtar entry is a directory
+	 */
+	public boolean isDirectory() {
+		if (this.file != null)
+			return this.file.isDirectory();
 
-    /**
-     * Extract header from File
-     * 
-     * @param entryName
-     */
-    public void extractTarHeader(String entryName) {
-        String name = entryName;
+		if (header != null) {
+			if (header.linkFlag == TarHeader.LF_DIR)
+				return true;
 
-        name = name.replace( File.separatorChar, '/' );
+			if (header.name.toString().endsWith("/"))
+				return true;
+		}
 
-        if( name.startsWith( "/" ) )
-            name = name.substring( 1 );
+		return false;
+	}
 
-        header.linkName = new StringBuffer( "" );
+	/**
+	 * Extract header from File
+	 */
+	public void extractTarHeader(String entryName) {
+		int permissions = PermissionUtils.permissions(file);
+		header = TarHeader.createHeader(entryName, file.length(), file.lastModified() / 1000, file.isDirectory(), permissions);
+	}
 
-        header.name = new StringBuffer( name );
+	/**
+	 * Calculate checksum
+	 */
+	public long computeCheckSum(byte[] buf) {
+		long sum = 0;
 
-        if( file.isDirectory() ) {
-            header.mode = 040755;
-            header.linkFlag = TarHeader.LF_DIR;
-            if( header.name.charAt( header.name.length() - 1 ) != '/' )
-                header.name.append( "/" );
-        } else {
-            header.mode = 0100644;
-            header.linkFlag = TarHeader.LF_NORMAL;
-        }
+		for (int i = 0; i < buf.length; ++i) {
+			sum += 255 & buf[i];
+		}
 
-        header.size = file.length();
-        header.modTime = file.lastModified() / 1000;
-        header.checkSum = 0;
-        header.devMajor = 0;
-        header.devMinor = 0;
-    }
+		return sum;
+	}
 
-    /**
-     * Calculate checksum
-     * 
-     * @param buf
-     * @return
-     */
-    public long computeCheckSum(byte[] buf) {
-        long sum = 0;
+	/**
+	 * Writes the header to the byte buffer
+	 */
+	public void writeEntryHeader(byte[] outbuf) {
+		int offset = 0;
 
-        for( int i = 0; i < buf.length; ++i ) {
-            sum += 255 & buf[i];
-        }
+		offset = TarHeader.getNameBytes(header.name, outbuf, offset, TarHeader.NAMELEN);
+		offset = Octal.getOctalBytes(header.mode, outbuf, offset, TarHeader.MODELEN);
+		offset = Octal.getOctalBytes(header.userId, outbuf, offset, TarHeader.UIDLEN);
+		offset = Octal.getOctalBytes(header.groupId, outbuf, offset, TarHeader.GIDLEN);
 
-        return sum;
-    }
+		long size = header.size;
 
-    /**
-     * Writes the header to the byte buffer
-     * 
-     * @param outbuf
-     */
-    public void writeEntryHeader(byte[] outbuf) {
-        int offset = 0;
+		offset = Octal.getLongOctalBytes(size, outbuf, offset, TarHeader.SIZELEN);
+		offset = Octal.getLongOctalBytes(header.modTime, outbuf, offset, TarHeader.MODTIMELEN);
 
-        offset = TarHeader.getNameBytes( this.header.name, outbuf, offset, TarHeader.NAMELEN );
-        offset = Octal.getOctalBytes( this.header.mode, outbuf, offset, TarHeader.MODELEN );
-        offset = Octal.getOctalBytes( this.header.userId, outbuf, offset, TarHeader.UIDLEN );
-        offset = Octal.getOctalBytes( this.header.groupId, outbuf, offset, TarHeader.GIDLEN );
+		int csOffset = offset;
+		for (int c = 0; c < TarHeader.CHKSUMLEN; ++c)
+			outbuf[offset++] = (byte) ' ';
 
-        long size = this.header.size;
+		outbuf[offset++] = header.linkFlag;
 
-        offset = Octal.getLongOctalBytes( size, outbuf, offset, TarHeader.SIZELEN );
-        offset = Octal.getLongOctalBytes( this.header.modTime, outbuf, offset, TarHeader.MODTIMELEN );
+		offset = TarHeader.getNameBytes(header.linkName, outbuf, offset, TarHeader.NAMELEN);
+		offset = TarHeader.getNameBytes(header.magic, outbuf, offset, TarHeader.USTAR_MAGICLEN);
+		offset = TarHeader.getNameBytes(header.userName, outbuf, offset, TarHeader.USTAR_USER_NAMELEN);
+		offset = TarHeader.getNameBytes(header.groupName, outbuf, offset, TarHeader.USTAR_GROUP_NAMELEN);
+		offset = Octal.getOctalBytes(header.devMajor, outbuf, offset, TarHeader.USTAR_DEVLEN);
+		offset = Octal.getOctalBytes(header.devMinor, outbuf, offset, TarHeader.USTAR_DEVLEN);
+		offset = TarHeader.getNameBytes(header.namePrefix, outbuf, offset, TarHeader.USTAR_FILENAME_PREFIX);
 
-        int csOffset = offset;
-        for( int c = 0; c < TarHeader.CHKSUMLEN; ++c )
-            outbuf[offset++] = (byte) ' ';
+		for (; offset < outbuf.length;)
+			outbuf[offset++] = 0;
 
-        outbuf[offset++] = this.header.linkFlag;
+		long checkSum = this.computeCheckSum(outbuf);
 
-        offset = TarHeader.getNameBytes( this.header.linkName, outbuf, offset, TarHeader.NAMELEN );
-        offset = TarHeader.getNameBytes( this.header.magic, outbuf, offset, TarHeader.MAGICLEN );
-        offset = TarHeader.getNameBytes( this.header.userName, outbuf, offset, TarHeader.UNAMELEN );
-        offset = TarHeader.getNameBytes( this.header.groupName, outbuf, offset, TarHeader.GNAMELEN );
-        offset = Octal.getOctalBytes( this.header.devMajor, outbuf, offset, TarHeader.DEVLEN );
-        offset = Octal.getOctalBytes( this.header.devMinor, outbuf, offset, TarHeader.DEVLEN );
+		Octal.getCheckSumOctalBytes(checkSum, outbuf, csOffset, TarHeader.CHKSUMLEN);
+	}
 
-        for( ; offset < outbuf.length; )
-            outbuf[offset++] = 0;
+	/**
+	 * Parses the tar header to the byte buffer
+	 */
+	public void parseTarHeader(byte[] bh) {
+		int offset = 0;
 
-        long checkSum = this.computeCheckSum( outbuf );
+		header.name = TarHeader.parseName(bh, offset, TarHeader.NAMELEN);
+		offset += TarHeader.NAMELEN;
 
-        Octal.getCheckSumOctalBytes( checkSum, outbuf, csOffset, TarHeader.CHKSUMLEN );
-    }
+		header.mode = (int) Octal.parseOctal(bh, offset, TarHeader.MODELEN);
+		offset += TarHeader.MODELEN;
 
-    /**
-     * Parses the tar header to the byte buffer
-     * 
-     * @param header
-     * @param bh
-     */
-    public void parseTarHeader(byte[] bh) {
-        int offset = 0;
+		header.userId = (int) Octal.parseOctal(bh, offset, TarHeader.UIDLEN);
+		offset += TarHeader.UIDLEN;
 
-        header.name = TarHeader.parseName( bh, offset, TarHeader.NAMELEN );
-        offset += TarHeader.NAMELEN;
+		header.groupId = (int) Octal.parseOctal(bh, offset, TarHeader.GIDLEN);
+		offset += TarHeader.GIDLEN;
 
-        header.mode = (int) Octal.parseOctal( bh, offset, TarHeader.MODELEN );
-        offset += TarHeader.MODELEN;
+		header.size = Octal.parseOctal(bh, offset, TarHeader.SIZELEN);
+		offset += TarHeader.SIZELEN;
 
-        header.userId = (int) Octal.parseOctal( bh, offset, TarHeader.UIDLEN );
-        offset += TarHeader.UIDLEN;
+		header.modTime = Octal.parseOctal(bh, offset, TarHeader.MODTIMELEN);
+		offset += TarHeader.MODTIMELEN;
 
-        header.groupId = (int) Octal.parseOctal( bh, offset, TarHeader.GIDLEN );
-        offset += TarHeader.GIDLEN;
+		header.checkSum = (int) Octal.parseOctal(bh, offset, TarHeader.CHKSUMLEN);
+		offset += TarHeader.CHKSUMLEN;
 
-        header.size = Octal.parseOctal( bh, offset, TarHeader.SIZELEN );
-        offset += TarHeader.SIZELEN;
+		header.linkFlag = bh[offset++];
 
-        header.modTime = Octal.parseOctal( bh, offset, TarHeader.MODTIMELEN );
-        offset += TarHeader.MODTIMELEN;
+		header.linkName = TarHeader.parseName(bh, offset, TarHeader.NAMELEN);
+		offset += TarHeader.NAMELEN;
 
-        header.checkSum = (int) Octal.parseOctal( bh, offset, TarHeader.CHKSUMLEN );
-        offset += TarHeader.CHKSUMLEN;
+		header.magic = TarHeader.parseName(bh, offset, TarHeader.USTAR_MAGICLEN);
+		offset += TarHeader.USTAR_MAGICLEN;
 
-        header.linkFlag = bh[offset++];
+		header.userName = TarHeader.parseName(bh, offset, TarHeader.USTAR_USER_NAMELEN);
+		offset += TarHeader.USTAR_USER_NAMELEN;
 
-        header.linkName = TarHeader.parseName( bh, offset, TarHeader.NAMELEN );
-        offset += TarHeader.NAMELEN;
+		header.groupName = TarHeader.parseName(bh, offset, TarHeader.USTAR_GROUP_NAMELEN);
+		offset += TarHeader.USTAR_GROUP_NAMELEN;
 
-        header.magic = TarHeader.parseName( bh, offset, TarHeader.MAGICLEN );
-        offset += TarHeader.MAGICLEN;
+		header.devMajor = (int) Octal.parseOctal(bh, offset, TarHeader.USTAR_DEVLEN);
+		offset += TarHeader.USTAR_DEVLEN;
 
-        header.userName = TarHeader.parseName( bh, offset, TarHeader.UNAMELEN );
-        offset += TarHeader.UNAMELEN;
+		header.devMinor = (int) Octal.parseOctal(bh, offset, TarHeader.USTAR_DEVLEN);
+		offset += TarHeader.USTAR_DEVLEN;
 
-        header.groupName = TarHeader.parseName( bh, offset, TarHeader.GNAMELEN );
-        offset += TarHeader.GNAMELEN;
-
-        header.devMajor = (int) Octal.parseOctal( bh, offset, TarHeader.DEVLEN );
-        offset += TarHeader.DEVLEN;
-
-        header.devMinor = (int) Octal.parseOctal( bh, offset, TarHeader.DEVLEN );
-    }
+		header.namePrefix = TarHeader.parseName(bh, offset, TarHeader.USTAR_FILENAME_PREFIX);
+	}
 }

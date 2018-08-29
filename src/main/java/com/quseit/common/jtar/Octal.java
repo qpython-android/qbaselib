@@ -1,5 +1,5 @@
 /**
- * Copyright 2010 Xeus Technologies 
+ * Copyright 2012 Kamran Zafar 
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -41,15 +41,15 @@ public class Octal {
         boolean stillPadding = true;
 
         int end = offset + length;
-        for( int i = offset; i < end; ++i ) {
-            if( header[i] == 0 )
+        for (int i = offset; i < end; ++i) {
+            if (header[i] == 0)
                 break;
 
-            if( header[i] == (byte) ' ' || header[i] == '0' ) {
-                if( stillPadding )
+            if (header[i] == (byte) ' ' || header[i] == '0') {
+                if (stillPadding)
                     continue;
 
-                if( header[i] == (byte) ' ' )
+                if (header[i] == (byte) ' ')
                     break;
             }
 
@@ -62,9 +62,10 @@ public class Octal {
     }
 
     /**
-     * Parse an octal integer from a header buffer.
+     * Write an octal integer to a header buffer.
      * 
      * @param value
+     *            The value to write.
      * @param buf
      *            The header buffer from which to parse.
      * @param offset
@@ -82,17 +83,17 @@ public class Octal {
         buf[offset + idx] = (byte) ' ';
         --idx;
 
-        if( value == 0 ) {
+        if (value == 0) {
             buf[offset + idx] = (byte) '0';
             --idx;
         } else {
-            for( long val = value; idx >= 0 && val > 0; --idx ) {
+            for (long val = value; idx >= 0 && val > 0; --idx) {
                 buf[offset + idx] = (byte) ( (byte) '0' + (byte) ( val & 7 ) );
                 val = val >> 3;
             }
         }
 
-        for( ; idx >= 0; --idx ) {
+        for (; idx >= 0; --idx) {
             buf[offset + idx] = (byte) ' ';
         }
 
@@ -100,9 +101,10 @@ public class Octal {
     }
 
     /**
-     * Parse the checksum octal integer from a header buffer.
-     * 
+     * Write the checksum octal integer to a header buffer.
+     *
      * @param value
+     *            The value to write.
      * @param buf
      *            The header buffer from which to parse.
      * @param offset
@@ -119,9 +121,10 @@ public class Octal {
     }
 
     /**
-     * Parse an octal long integer from a header buffer.
+     * Write an octal long integer to a header buffer.
      * 
      * @param value
+     *            The value to write.
      * @param buf
      *            The header buffer from which to parse.
      * @param offset
