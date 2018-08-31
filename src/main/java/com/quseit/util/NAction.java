@@ -1101,5 +1101,8 @@ public class NAction {
 		i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 		context.startActivity(i);
 	}
-	
+
+	public static String getPyVer(Context context) {
+		return isQPy3(context)?"3":"2";
+	}
 }
