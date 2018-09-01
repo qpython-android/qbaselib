@@ -363,12 +363,17 @@ public class NUtil {
 		URL iurl;
 		try {
 			iurl = new URL(url);
-			return iurl.getPath();
+			try {
+				return java.net.URLDecoder.decode(iurl.getPath(), "UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				return iurl.getPath();
+
+			}
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "";
+			return "unkown.dat";
 		}
 	}
 	
