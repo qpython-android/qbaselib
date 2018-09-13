@@ -1,6 +1,5 @@
 package com.quseit.base;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,8 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager.BadTokenException;
@@ -64,19 +61,6 @@ public abstract class QBaseActivity extends Activity {
 		}
 	}
 
-
-	@SuppressLint("HandlerLeak")
-	public Handler progressHandler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			try {
-				pDialog.dismiss();
-			}
-			catch (IllegalArgumentException e) {
-
-			}
-		}
-	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

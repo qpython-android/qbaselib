@@ -5,7 +5,6 @@ import android.os.Environment;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.quseit.config.BASE_CONF;
-import com.quseit.util.NStorage;
 
 import java.io.File;
 

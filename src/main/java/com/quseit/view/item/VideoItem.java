@@ -16,7 +16,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 
-public class VideoItem{
+public class VideoItem {
 	private static final String TAG = "VideoItem";
 
     public String headerText;

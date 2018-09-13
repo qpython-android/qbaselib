@@ -120,7 +120,4 @@ public class CacheLog {
     	}
     }
     
-    /*public void closeDb() {
-    	dbHelper.close();
-    }*/
 }

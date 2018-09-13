@@ -1,4 +1,5 @@
 package com.quseit.common.db;
+
 import java.util.ArrayList;
 
 import com.quseit.config.BASE_CONF;
@@ -38,9 +39,6 @@ public class AppLog {
     		+ "m_time date,"
             + "stat int(1));";
     
-    /*private static final String DATABASE_CREATE2 = "create table download_info(_id integer PRIMARY KEY AUTOINCREMENT, thread_id integer, "
-    		+ "start_pos integer, end_pos integer, compelete_size integer,url char)";
-	*/
     private final Context context;
     //private DatabaseHelper DBHelper;
  
@@ -79,21 +77,7 @@ public class AppLog {
         }
     }
  
-    // ---打开数据库---
-    /*public AppLog open() throws SQLException {
-    	if (BASE_CONF.DEBUG) Log.d(TAG, "db open");
-        db = DBHelper.getWritableDatabase();
-        return this;
-    }
- 
-    // ---关闭数据库---
-    public void close() {
-    	if (BASE_CONF.DEBUG) Log.d(TAG, "db close");
-        DBHelper.close();
-    }*/
-    
-    
-    public boolean ifLogExists( String ver, String data) { 
+    public boolean ifLogExists( String ver, String data) {
     	DatabaseHelper DBHelper = new DatabaseHelper(context);
     	
     	if (BASE_CONF.DEBUG) Log.d(TAG, "ifLogExists");
@@ -125,23 +109,7 @@ public class AppLog {
 		}
     	return false;
     }
-    
-    boolean updateLogStat(long rowId, String stat) {
-    	DatabaseHelper DBHelper = new DatabaseHelper(context);
 
-    	if (BASE_CONF.DEBUG)  Log.d(TAG, "updateLogStat:"+rowId);
-
-    	SQLiteDatabase db = DBHelper.getWritableDatabase();
-        ContentValues args = new ContentValues();
-        args.put(KEY_STAT, stat); 
-
-        boolean ret = (db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0);
-        db.close();
-        DBHelper.close();
-
-        return ret;
-    }
-    
     public boolean deleteLog(long rowId) {
     	DatabaseHelper DBHelper = new DatabaseHelper(context);
 
@@ -250,7 +218,4 @@ public class AppLog {
     		return feeds;
     	}
     }
-    /*public void closeDb() {
-    	DBHelper.close();
-    }*/
 }

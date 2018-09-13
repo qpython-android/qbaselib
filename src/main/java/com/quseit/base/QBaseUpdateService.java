@@ -282,13 +282,10 @@ public abstract class QBaseUpdateService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	public abstract Intent getSrvUpdateRet();
 	public abstract String getDst();
 	public abstract Class<?> getSelf();
-
-
 }

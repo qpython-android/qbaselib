@@ -15,7 +15,6 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.quseit.android.R;
-import com.quseit.service.ACache;
 import com.quseit.config.BASE_CONF;
 import com.quseit.common.db.UserLog;
 

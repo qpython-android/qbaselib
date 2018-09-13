@@ -9,8 +9,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -23,7 +21,6 @@ import android.widget.Toast;
 import com.quseit.android.R;
 
 import java.util.Calendar;
-import java.util.HashMap;
 
 
 public class QBaseDialog {
@@ -47,8 +44,6 @@ public class QBaseDialog {
     public static final int MAX_PROGRESS = 100;
     
     public ProgressDialog mProgressDialog;
-    public int mProgress;
-    public Handler mProgressHandler;
 
     int dialogIcon;
     String dialogTitle;
@@ -65,15 +60,10 @@ public class QBaseDialog {
     String dialogVal;
     String dialogVal2;
     String dialogVal3;
-   // private AudioManager AM;
-    
+
     private Context mContext;
     private Activity mActivity;
-    
-    SoundPool mySoundpool;  
-    HashMap<Integer,Integer> soundPoolMap;  
-    public MediaPlayer myMediaplayer;  
-    
+
     DialogInterface.OnClickListener dialogObj;
     DialogInterface.OnMultiChoiceClickListener dialogObj2;
     DialogInterface.OnClickListener dialogOkObj;
