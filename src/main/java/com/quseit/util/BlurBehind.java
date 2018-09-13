@@ -8,8 +8,6 @@ import android.os.AsyncTask;
 import android.util.LruCache;
 import android.view.View;
 
-import com.quseit.util.OnBlurCompleteListener;
-
 
 public class BlurBehind {
 
@@ -116,4 +114,10 @@ public class BlurBehind {
             mState = State.READY;
         }
     }
+
+    public interface OnBlurCompleteListener {
+
+        public void onBlurComplete();
+    }
+
 }

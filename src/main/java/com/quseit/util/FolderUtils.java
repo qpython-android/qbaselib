@@ -3,7 +3,7 @@ package com.quseit.util;
 import java.io.File;
 import java.util.Comparator;
 
-public class FolderUtil {
+public class FolderUtils {
     public static final Comparator<File> sortTypeByName = new Comparator<File>() {
         @Override
         public int compare(File arg00, File arg11) {
