@@ -60,6 +60,10 @@ public class AdSlidShowView extends FrameLayout {
         startPlay();
     }
 
+    public void stop() {
+        stopPlay();
+    }
+
     public void setOnUrlBackCall(urlBackcall callBack) {
         adBackCall = callBack;
     }
