@@ -118,6 +118,7 @@
     <string name="plugin_setting">Setting</string>
     <string name="plugin_ftp">FTP Service</string>
     <string name="plugin_noadd">Upgrade to Python3.6 version</string>
+    <string name="plugin_pip">PIP Console</string>
 
     <string name="plugin_script_extend_1">Script Plugin</string>
     <string name="proxy_setting">Proxy Setting</string>
@@ -250,7 +251,7 @@
     <string name="plugin_defaultqpy">Default Program</string>
     <string name="ad_free">Upgrade to Pro edition</string>
     <string name="resource_not_available">Resource are not available</string>
-    <string name="plugin_resetprivate">Reset private space</string>
+    <string name="plugin_resetprivate">Reset private storage</string>
     <string name="confirm_reset">Confirm reset</string>
     <string name="confirm_reset_desc">This action will empty the private space, you need to reinstall some plugins, continue? </string>
     <string name="port_hint">port</string>
