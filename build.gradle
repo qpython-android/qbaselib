@@ -26,14 +26,15 @@ android {
 }
 
 dependencies {
-    compile 'org.apache.httpcomponents:httpcore:4.4.2'
-    compile 'org.greenrobot:eventbus:3.0.0'
+    api 'org.apache.httpcomponents:httpcore:4.4.2'
+    api 'org.greenrobot:eventbus:3.0.0'
 
-    compile project(':qftplib')
-    compile files('libs/android-async-http-1.4.8.jar')
+    api project(':qftplib')
+    api files('libs/android-async-http-1.4.8.jar')
 
-    debugCompile rootProject.ext.leakcanaryDebug
-    releaseCompile rootProject.ext.leakcanaryRelease
-    compile rootProject.ext.libSupportCardView
-    compile rootProject.ext.libSupportV4
+    debugApi rootProject.ext.leakcanaryDebug
+    releaseApi rootProject.ext.leakcanaryRelease
+    api rootProject.ext.libSupportCardView
+    api rootProject.ext.libSupportV4
+    api rootProject.ext.libSupportV4Design
 }
