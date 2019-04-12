@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 
-
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -22,15 +21,23 @@ android {
 
         }
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
     useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
     api 'org.apache.httpcomponents:httpcore:4.4.2'
     api 'org.greenrobot:eventbus:3.0.0'
+    //compile 'com.loopj.android:android-async-http:1.4.8'
 
     api project(':qftplib')
-    api files('libs/android-async-http-1.4.8.jar')
+    api files('libs/android-async-http-1.4.8.aar')
+    //api 'com.loopj.android:android-async-http:1.4.8'
 
     debugApi rootProject.ext.leakcanaryDebug
     releaseApi rootProject.ext.leakcanaryRelease
