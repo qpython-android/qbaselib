@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ConfigurationInfo;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
@@ -36,7 +39,27 @@ public class NAction {
 
 	public static Notification getNotification(Context context, String contentTitle, String contentText, PendingIntent intent,
 										int smallIconId, Bitmap largeIconId, int flags) {
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+			NotificationChannel chan = new NotificationChannel(context.getPackageName(), contentTitle, NotificationManager.IMPORTANCE_NONE);
+
+			chan.setLightColor(Color.BLUE);
+			chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+			NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+			assert manager != null;
+			manager.createNotificationChannel(chan);
+
+			Notification notification = new Notification.Builder(context, context.getPackageName()) //new Notification(icon, tickerText, when);
+					.setTicker(contentTitle)
+					.setContentTitle(contentTitle)
+					.setContentText(contentText)
+					.setSmallIcon(smallIconId)
+					.setLargeIcon(largeIconId)
+					.setAutoCancel(true)
+					.setContentIntent(intent)
+					.build();
+
+			return notification;
+		} else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			Notification notification = new Notification.Builder(context) //new Notification(icon, tickerText, when);
 					.setTicker(contentTitle)
 					.setContentTitle(contentTitle)
@@ -889,8 +912,8 @@ public class NAction {
 
 	public static String getQPyInterpreter(Context context) {
 		String qpyInterVal = NStorage.getSP(context, "conf.default_qpy_interpreter");
-        if (!qpyInterVal.equals("python3.6")) {
-        	qpyInterVal = "2.x";
+        if (qpyInterVal.equals("")) {
+        	qpyInterVal = "python3.6";
         }
         
         return qpyInterVal;
