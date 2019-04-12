@@ -681,8 +681,12 @@ public abstract class QBaseActivity extends GDActivity {
                 checkConfUpdate(getApplicationContext());
 
                 // 清空图片目录的缓存
-                String cacheDir = Environment.getExternalStorageDirectory() + "/" + root + "/" + CONF.DCACHE + "/";
-                FileHelper.clearDir(cacheDir, 0, false);
+//                try {
+//                    String cacheDir = Environment.getExternalStorageDirectory() + "/" + root + "/" + CONF.DCACHE + "/";
+//                    FileHelper.clearDir(cacheDir, 0, false);
+//                } catch (Exception e) {
+//
+//                }
 
             }
         }
