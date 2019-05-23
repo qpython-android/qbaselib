@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android">
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"				
+	xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="fill_parent" android:layout_weight="1.0"  android:layout_width="fill_parent" android:orientation="vertical">
+
 <include android:id="@+id/search_div" layout="@layout/v_tubebook_wrap" />  
 <WebView android:id="@+id/wv"
 	android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_x="0.0dip"
-    android:layout_y="0.0dip"
-    android:layout_weight="1.0" 
+    android:layout_weight="1.0"
+	android:layout_x="0.0dip"
+	android:layout_y="0.0dip"
 />
-</LinearLayout>	
+</LinearLayout>

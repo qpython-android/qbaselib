@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,7 +21,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager.BadTokenException;
+import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -66,6 +69,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
@@ -940,19 +944,19 @@ public abstract class QBaseActivity extends GDActivity {
 
     }
 
-    class QPyLib {
-        public QPyLib(Context context) {
-        }
-
-        @JavascriptInterface
-        public void processHTML(String cookie, String data) {
-            // Log.d(TAG, "processHTML called(cookie):"+cookie);
-            // Log.d(TAG, "processHTML called(data):"+data);
-            wvCookie = cookie;
-            wvDocument = data;
-
-        }
-    }
+//    class QPyLib {
+//        public QPyLib(Context context) {
+//        }
+//
+//        @JavascriptInterface
+//        public void processHTML(String cookie, String data) {
+//            // Log.d(TAG, "processHTML called(cookie):"+cookie);
+//            // Log.d(TAG, "processHTML called(data):"+data);
+//            wvCookie = cookie;
+//            wvDocument = data;
+//
+//        }
+//    }
 
     protected ValueCallback<Uri> mUploadMessage;
 
@@ -961,6 +965,13 @@ public abstract class QBaseActivity extends GDActivity {
     // webview
     @TargetApi(7)
     public void initWebView() {// 初始化
+        Log.d(TAG, "initWebView");
+        CookieManager.getInstance().setAcceptCookie(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+            CookieManager.getInstance().setAcceptFileSchemeCookies(true);
+        }
+        CookieManager.getInstance().acceptCookie();
+
         useProxyInWebView();
         if (wvProgressBar == null) {
             wvProgressBar = (ProgressBar) findViewById(R.id.WebViewProgress);
@@ -971,96 +982,35 @@ public abstract class QBaseActivity extends GDActivity {
         if (wv == null) {
             wv = (WebView) findViewById(R.id.wv);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().setAcceptThirdPartyCookies(wv, true);
+        }
+
         // wv = new WebView(this);
-        wv.getSettings().setJavaScriptEnabled(true);// 可用JS
-        wv.addJavascriptInterface(new QPyLib(this), "qpylib");
-        wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);// 滚动条风格，为0就是不给滚动条留空间，滚动条覆盖在网页上
-        wv.getSettings().setRenderPriority(RenderPriority.HIGH);
-        wv.getSettings().setBlockNetworkImage(false);
+        wv.setInitialScale(1);
         wv.getSettings().setAllowFileAccess(true);
-		/*
-		 * try { wv.getSettings().setPluginsEnabled(true); } catch (Exception e) { }
-		 */
-        wv.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
-                Log.d(TAG, "setWebViewClient URL:" + url);
-                loadurl(view, url);// 载入网页
-                return true;
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Log.d(TAG, "errcode:" + errorCode + "-desc:" + description + "-url:" + failingUrl);
-                // loadurl(wv,
-                // "file:///android_asset/mbox/md3.html?act=err&info="+description+"&"+NAction.getUserUrl(getApplicationContext()));
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                //view.loadUrl("javascript:window.qpylib.processHTML(document.cookie, document.getElementsByTagName('html')[0].innerHTML);");
-                // view.loadUrl("javascript:(function(){document.getElementById('snapNSendBtn').onclick=function(){var bean=window.bean;var title=bean.getTitle();alert(title);}})()");
-            }
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                wv.requestFocus();
-                EditText et = (EditText) findViewById(R.id.url_input);
-                if (et != null) {
-                    et.setText(url);
-                }
-            }
-
-        });
-
-        wv.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {// 载入进度改变而触发
-                if (progress == 100) {
-                    // handler.sendEmptyMessage(1);//如果全部载入,隐藏进度对话框
-                    // wvProgressBar.setVisibility(View.GONE);
-                }
-                if (wvProgressBar != null)
-                    wvProgressBar.setProgress(wv.getProgress());
-                super.onProgressChanged(view, progress);
-            }
-
-        });
-
-//		wv.setOnLongClickListener(new OnLongClickListener() {
-//			@Override
-//			public boolean onLongClick(View v) {
-//				// Log.d(TAG, "click detected");
-//				return true;
-//			}
-//		});
-        // wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        // wv.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
+        wv.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
         wv.getSettings().setLoadWithOverviewMode(true);
-        // wv.getSettings().setJavaScriptEnabled(true);
-
-        // wv.addJavascriptInterface(new JavascriptInterface(MSearchAct.this),
-        // "bean");
-        // registerForContextMenu(wv);
-        // openWaitWindow();
-
-        wv.getSettings().setJavaScriptEnabled(true);// 可用JS
-        wv.addJavascriptInterface(new QPyLib(this), "qpylib");
-
+        wv.getSettings().setUseWideViewPort(true);
         wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);// 滚动条风格，为0就是不给滚动条留空间，滚动条覆盖在网页上
-        wv.getSettings().setRenderPriority(RenderPriority.HIGH);
+        wv.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         wv.getSettings().setBlockNetworkImage(false);
         wv.getSettings().setAllowFileAccess(true);
-        // wv.getSettings().setBuiltInZoomControls(true);// 设置支持缩放
+        wv.getSettings().setDomStorageEnabled(true);
 
-        String ua = wv.getSettings().getUserAgentString();
-        wv.getSettings().setUserAgentString(ua + " :QUSEIT");
-		/*
-		 * try { wv.getSettings().setPluginsEnabled(true); } catch (Exception e) { }
-		 */
+        wv.getSettings().setJavaScriptEnabled(true);// 可用JS
+        //wv.addJavascriptInterface(new QPyLib(this), "qpylib");
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            wv.getSettings().setAllowFileAccessFromFileURLs(true);
+        }
+
+
         wv.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
                 Log.d(TAG, "setWebViewClient URL:" + url);
-                loadurl(view, url);// 载入网页
+                wv.loadUrl(url);// 载入网页
                 return true;
             }
 
@@ -1073,19 +1023,27 @@ public abstract class QBaseActivity extends GDActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                Log.d(TAG, "onPageFinished:"+url);
                 super.onPageFinished(view, url);
-                view.loadUrl("javascript:window.qpylib.processHTML(document.cookie, document.getElementsByTagName('html')[0].innerHTML);");
+                //view.loadUrl("javascript:window.alert('ok')");
                 // view.loadUrl("javascript:(function(){document.getElementById('snapNSendBtn').onclick=function(){var bean=window.bean;var title=bean.getTitle();alert(title);}})()");
+            }
+
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
+                handler.proceed();
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                Log.d(TAG, "onPageStarted");
+
                 wv.requestFocus();
                 EditText et = (EditText) findViewById(R.id.url_input);
                 if (et != null) {
                     et.setText(url);
                 }
             }
+
         });
 
         wv.setWebChromeClient(new WebChromeClient() {
@@ -1131,17 +1089,7 @@ public abstract class QBaseActivity extends GDActivity {
                 startActivityForResult(Intent.createChooser(i, "File Chooser"), FILECHOOSER_RESULTCODE);
 
             }
-
         });
-
-        // wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        // wv.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        wv.getSettings().setLoadWithOverviewMode(true);
-        // wv.getSettings().setJavaScriptEnabled(true);
-
-        // wv.addJavascriptInterface(new JavascriptInterface(MSearchAct.this), "bean");
-        // registerForContextMenu(wv);
-        // openWaitWindow();
     }
 
     Handler wvHandler = new Handler() {
@@ -1160,13 +1108,7 @@ public abstract class QBaseActivity extends GDActivity {
         }
     };
 
-    public void loadurl(final WebView view, final String url) {
-        view.loadUrl(url);// 载入网页
-		/*
-		 * new Thread(){ public void run(){ //handler.sendEmptyMessage(0); try{ view.loadUrl(url);//载入网页 if (CONF.DEBUG)
-		 * Log.d(TAG, "load url:"+url); } catch (Exception e) { } } }.start();
-		 */
-    }
+
 
     public void loadContent(final WebView view, final String content, final String historyUrl) {
         new Thread() {
