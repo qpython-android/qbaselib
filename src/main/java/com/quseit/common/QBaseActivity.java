@@ -55,12 +55,6 @@ import com.quseit.util.Utils;
 import com.quseit.util.VeDate;
 import com.quseit.view.AdSlidShowView;
 import com.quseit.view.AdSlidShowView.urlBackcall;
-import com.smaato.soma.AdDownloaderInterface;
-import com.smaato.soma.AdListenerInterface;
-import com.smaato.soma.BannerView;
-import com.smaato.soma.ReceivedBannerInterface;
-import com.smaato.soma.bannerutilities.constant.BannerStatus;
-
 import org.apache.http.HttpHost;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,7 +76,6 @@ import greendroid.app.GDActivity;
 import greendroid.widget.AsyncImageView;
 import greendroid.widget.item.TextItem;
 
-import static com.quseit.config.CONF.UPDATER_URL;
 
 //import greendroid.widget.QuickActionWidget;
 
@@ -91,18 +84,14 @@ import static com.quseit.config.CONF.UPDATER_URL;
 public abstract class QBaseActivity extends GDActivity {
     protected static final String TAG = "QBaseActivity";
 
-    private static int NOTIFICATION_ID = 0x20001;// 通知栏消息id
-
     // private AdLayout amazonAdView; // The ad view used to load and display
     // the ad.
 
-    protected int limit = CONF.PAGE_NUM;
 
     protected int start = 0;
 
     protected int total = 0;
 
-    protected boolean myload = true;
 
     protected ProgressDialog waitingWindow;
 
@@ -110,23 +99,11 @@ public abstract class QBaseActivity extends GDActivity {
 
     protected int dialogIndex;
 
-    // private AdView adMob = null;
-
-    // private QuickActionWidget mBar;
     public WebView wv;
 
     public ProgressBar wvProgressBar;
 
     private ProgressDialog pDialog;
-
-    // Banner Ads.
-//	boolean update_display_ad = false;
-//	protected String tapjoyErr = "";
-//
-//	protected View adView;
-
-    // MobclixMMABannerXLAdView mobClix = null;
-    // MobFoxView mobFox = null;
 
     public void progress(String title, String msg, int x) {
         pDialog = ProgressDialog.show(this, title, msg, true, false);
@@ -275,40 +252,6 @@ public abstract class QBaseActivity extends GDActivity {
         String adf = NAction.getExtP(getApplicationContext(), "adx_" + pageId);
         if (!adf.equals("")) {
             String[] xx = adf.split(Pattern.quote("|"));
-            if("smaato_banner".equals(xx[1])){
-                Log.e("tag----admine","tag");
-                try {
-                    BannerView mBanner = new BannerView(this);
-                    final LinearLayout modbanner = (LinearLayout) findViewById(R.id.modbanner_wrap);
-                    modbanner.removeAllViews();
-
-                    modbanner.addView(mBanner, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getPx(50)));
-                    String ADKEY = CONF.SMAATOBKEY;
-                    String adspaceId = NAction.getExtP(getApplicationContext(), "smaato.adspaceid");
-                    if (adspaceId.equals("")) {
-                        adspaceId = "130039156";
-                    }
-                    mBanner.getAdSettings().setPublisherId(Long.parseLong(ADKEY));
-                    mBanner.getAdSettings().setAdspaceId(Long.parseLong(adspaceId));
-                    mBanner.asyncLoadNewBanner();
-                    mBanner.addAdListener(new AdListenerInterface() {
-                        @Override
-                        public void onReceiveAd(AdDownloaderInterface arg0, ReceivedBannerInterface banner) {
-                            if (banner.getStatus() == BannerStatus.ERROR) {
-                                Log.w(TAG, "" + banner.getErrorCode() + "-" + banner.getErrorMessage());
-                            } else {
-                                modbanner.setVisibility(View.VISIBLE);
-
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-
-                } catch (NoSuchMethodError e) {
-                }
-                return;
-            }
-
             String ad = NAction.getExtAdConf(getApplicationContext());
             final List<String> ltImgLink = new ArrayList<String>();
             List<String> ltResImg = new ArrayList<String>();
@@ -1029,10 +972,6 @@ public abstract class QBaseActivity extends GDActivity {
                 // view.loadUrl("javascript:(function(){document.getElementById('snapNSendBtn').onclick=function(){var bean=window.bean;var title=bean.getTitle();alert(title);}})()");
             }
 
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
-                handler.proceed();
-            }
-
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 Log.d(TAG, "onPageStarted");
@@ -1239,6 +1178,7 @@ public abstract class QBaseActivity extends GDActivity {
 
     //
     public void unpackData(final String resource, File target) {
+        Log.d(TAG, "unpackData:"+resource);
         ResourceManager resourceManager = new ResourceManager(this);
 
         // The version of data in memory and on disk.

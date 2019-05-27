@@ -7,15 +7,12 @@ public class CONF {
     public static boolean open=false;
 
 
-    public static final String UPDATER_URL="http://www.tubebook.net/250/update.json";
-	public static final String BA_SITE2 = "conf.quseit.com";
-	public static final String FR_SITE = "play.quseit.com";
+	public static final String BA_SITE2 = "apu2.quseit.com";
     public static final int TRY_COUNT = 3;
     public static final long TRY_DELAY = 1000;
 
     public final static String SMAATOBKEY = "1100010539";
 
-    
 	public final static int ROUND_PIX = 0;	// IMAGE ROUND PIX
 	public final static int DOWNLOAD_NOTIFY_INDEX = 10001;
 
@@ -25,7 +22,6 @@ public class CONF {
 	public final static String COLLECT_INFO = "#fingerprint#model#brand#";
 
 	public final static int UPDATEQ = 6;
-	public final static int UPDATE_VER = 2;	// update backend
 
 	public final static int CACHE_TYPE_COVER = 20;
 
@@ -49,19 +45,14 @@ public class CONF {
 
     public static final String USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.36 Safari/525.19";
 
-	public static final int PAGE_NUM = 10;
-
 	public static final boolean DEBUG = false;
-	
-	public static final String FEEDBACK_EMAIL = "quseitlab@gmail.com";
 
-    public final static String DEFAULT_ROOT = "Tubebook";
-    
+	public static final String FEEDBACK_EMAIL = "support@qpython.org";
+
+    public final static String DEFAULT_ROOT = "qpython";
+
     public static final String EXT_PLG = "org.qpython.qpy";
     public static final String EXT_PLG3 = "org.qpython.qpy3";
-    
-    public static final String EXT_PLG_URL = "http://"+FR_SITE+"/qpython.html";
-    public static final String EXT_PLG_URL3 = "http://"+FR_SITE+"/qpython3.html";
 
 
 	public static int[] THREA_STAT = {0,0,0};	//FIXME DOWNLOAD STATUS
@@ -76,12 +67,10 @@ public class CONF {
     public static final String PLUGIN_KEY="plugins";
 
      //speed
-
     public static double TIME_SPAN = 2000d;
     public static long CHANGE_DELAY = 300;
     public static int SMALL_WINDOW_TYPE = 0;
     public static int BIG_WINDOW_TYPE = 1;
-    public static int OVERLAY_PERMISSION_REQ_CODE = 11;
     public static String SP_BOOT = "SP_BOOT";
     public static String SP_BG = "SP_BG";
     public static String SP_LOC = "SP_LOC";
@@ -89,8 +78,10 @@ public class CONF {
     public static String SP_Y = "SP_Y";
     public static String SP_STATUSBAR_HEIGHT = "SP_STATUSBAR_HEIGHT";
 
-    public static int CODE_FOR_WRITE_PERMISSION=10000;
 
-
+    public final static String BASE_PATH = "qpython";
+    public final static String CACHE_DIR = "cache";
+    public final static String TMP_DIR = "tmp";
+    public final static String LIB_DIR = "lib";
 
 }

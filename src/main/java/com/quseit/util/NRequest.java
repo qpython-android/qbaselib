@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class NRequest {
 	private static final String TAG = "NRequest";
 
-    
     public static void get2(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
     	if (!CONF.DEBUG)  Log.d(TAG, "get2:"+url+":p:"+params);
 		HttpHost hcProxyHost = null;
@@ -75,41 +74,5 @@ public class NRequest {
         client.post(url, params, responseHandler);
     }
 
-    
-    public static Boolean isLinkable(String link){
-	  HttpURLConnection urlConnection = null;  
-	  try {  
-	    URL url = new URL(link);  
-	    urlConnection = (HttpURLConnection) url.openConnection();  
-	    urlConnection.setRequestMethod("HEAD");  
-	    urlConnection.setConnectTimeout(10000); /* timeout after 5s if can't connect */  
-	    urlConnection.setReadTimeout(10000); /* timeout after 5s if the page is too slow */  
-	    urlConnection.connect();  
-	    String redirectLink = urlConnection.getHeaderField("Location");  
-	    if (redirectLink != null && !link.equals(redirectLink)) {  
-	      return isLinkable(redirectLink);  
-	    } else {  
-	      return urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK;  
-	    }  
-	  } catch (Exception e) {  
-	    return false;  
-	  } finally {  
-	    if (urlConnection != null) {  
-	      urlConnection.disconnect();  
-	    }  
-	  }  
-    }
-    
-    public static String filterUrl(ArrayList<String> links){
-    	Log.d(TAG, "here!"+links.size());
-		for (int i=0;i<links.size();i++) {
-			Log.d(TAG, "is checking " + links.get(i));
-			if( isLinkable(links.get(i))) {
-				Log.d(TAG, links.get(i) + " is good");
-				return (String) links.get(i);
-			}
-		}
-		return "";
-    }
 }
 

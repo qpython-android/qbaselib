@@ -158,8 +158,7 @@ public abstract class DownloaderBase extends Service {
             // 创建文件
             if (NUtil.isExternalStorageExists()) {
                 try {
-                    downloadFile = new File(FileHelper.getBasePath(MyApp
-                            .getInstance().getRoot(), "tmp"), mArtist + "_"
+                    downloadFile = new File(FileHelper.getBasePath(CONF.BASE_PATH, CONF.TMP_DIR), mArtist + "_"
                             + mTitle + mExt);
                 } catch (NotFoundException e) {
                     e.printStackTrace();
@@ -434,8 +433,7 @@ public abstract class DownloaderBase extends Service {
                                 dstFile = new File(FileHelper.getABSPath(root + "/"
                                         + mArtist + "/"), mTitle + ext);
                             } else {
-                                dstFile = new File(FileHelper.getBasePath(MyApp
-                                        .getInstance().getFullRoot() + "/", mArtist
+                                dstFile = new File(FileHelper.getBasePath(CONF.BASE_PATH + "/", mArtist
                                         + "/"), mTitle + ext);
                             }
                         }
@@ -664,8 +662,7 @@ public abstract class DownloaderBase extends Service {
             // 创建文件
             if (NUtil.isExternalStorageExists()) {
                 try {
-                    downloadFile = new File(FileHelper.getBasePath(MyApp
-                            .getInstance().getRoot(), "tmp"), info.getPath());
+                    downloadFile = new File(FileHelper.getBasePath(CONF.BASE_PATH, CONF.TMP_DIR), info.getPath());
                 } catch (NotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

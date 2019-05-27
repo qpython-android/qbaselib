@@ -304,7 +304,7 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     public void setUrl(String url) {
     	// cache
     	if (url!=null) {
-    		String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+CONF.DCACHE+"/";
+    		String cacheDir = Environment.getExternalStorageDirectory()+"/"+CONF.DCACHE+"/";
     	
 	    	String imgHash = MD5.encrypByMd5(Base64.encode(url));
 	    	File imgCache = new File(cacheDir+imgHash);
@@ -612,12 +612,11 @@ public class AsyncImageView extends ImageView implements ImageRequestCallback {
     	 * CACHE TODO
     	 */
     	if (mUrl!=null) {
-			//String cacheDir = Environment.getExternalStorageDirectory()+"/"+MyApp.getInstance().getRoot()+"/"+CONF.DCACHE+"/";
 	    	String imgHash = MD5.encrypByMd5(Base64.encode(mUrl));
 	    	byte[] bmpb = ImageUtil.Bitmap2Bytes(image);
 	    	String imgHashPath;
 			try {
-				imgHashPath = FileHelper.getBasePath(MyApp.getInstance().getRoot(), CONF.DCACHE)+"/"+imgHash;
+				imgHashPath = FileHelper.getBasePath(Environment.getExternalStorageDirectory().toString(), CONF.DCACHE)+"/"+imgHash;
 				
 		    	try {
 			    	File imgCache = new File(imgHashPath);
