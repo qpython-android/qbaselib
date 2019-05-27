@@ -1228,7 +1228,7 @@ public abstract class QBaseActivity extends GDActivity {
 
             AssetExtract ae = new AssetExtract(this);
             if (!ae.extractTar(resource + ".mp3", target.getAbsolutePath())) {
-                Toast.makeText(this, "Could not extract " + resource + " data.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Could not extract " + resource + " data.", Toast.LENGTH_SHORT).show();
             }
 
             try {
@@ -1244,7 +1244,7 @@ public abstract class QBaseActivity extends GDActivity {
                 os.close();
             } catch (Exception e) {
                 Log.w("python", e);
-                Toast.makeText(this, "Could not extract " + resource + " data, make sure your device have enough space.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Could not extract " + resource + " data, make sure your device have enough space.", Toast.LENGTH_LONG).show();
             }
         } else {
             Log.d(TAG, "No extract:" + resource);
