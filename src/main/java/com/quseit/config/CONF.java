@@ -11,8 +11,6 @@ public class CONF {
     public static final int TRY_COUNT = 3;
     public static final long TRY_DELAY = 1000;
 
-    public final static String SMAATOBKEY = "1100010539";
-
 	public final static int ROUND_PIX = 0;	// IMAGE ROUND PIX
 	public final static int DOWNLOAD_NOTIFY_INDEX = 10001;
 
@@ -25,7 +23,6 @@ public class CONF {
 
 	public final static int CACHE_TYPE_COVER = 20;
 
-	public final static long EXPIRED_GET2 = 3600000;	//get2 更新时间
 	public final static String DCACHE = "cache";
 	
 	public final static String LOG_LIMIT = "30";
@@ -48,8 +45,6 @@ public class CONF {
 	public static final boolean DEBUG = false;
 
 	public static final String FEEDBACK_EMAIL = "support@qpython.org";
-
-    public final static String DEFAULT_ROOT = "qpython";
 
     public static final String EXT_PLG = "org.qpython.qpy";
     public static final String EXT_PLG3 = "org.qpython.qpy3";
