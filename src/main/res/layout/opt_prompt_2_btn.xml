@@ -23,7 +23,6 @@
 				android:layout_width="fill_parent"
 				android:scaleType="centerInside"
 				android:textColor="@color/cwhite"
-				android:onClick="onExitPrompt1"
 				android:layout_height="wrap_content"
 				/>
  
@@ -48,7 +47,6 @@
 				android:layout_width="fill_parent"
 				android:scaleType="centerInside"
 				android:textColor="@color/cwhite"
-				android:onClick="onExitPrompt2"
 				android:layout_height="wrap_content"
 				/>
 				
@@ -74,7 +72,6 @@
 				android:layout_width="fill_parent"
 				android:scaleType="centerInside"
 				android:textColor="@color/cwhite"
-				android:onClick="onExitPrompt3"
 				android:layout_height="wrap_content"
 				/>				
          
