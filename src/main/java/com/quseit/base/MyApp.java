@@ -18,20 +18,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-  
-public class MyApp extends Application {  
+
+import greendroid.app.GDApplication;
+
+public class MyApp extends GDApplication {
 	private static final String TAG = "MyApp";
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ArrayList<Object> taskQueue = new ArrayList();
 
-    private static MyApp instance;  
+    private static MyApp instance;
 
-    public ArrayList<Object> getTaskQueue() {
+
+	public ArrayList<Object> getTaskQueue() {
     	return taskQueue;
     }
     
-    private MyApp() {  
+    protected MyApp() {
     }  
     public static MyApp getInstance() {
 	    if(null == instance) {  
