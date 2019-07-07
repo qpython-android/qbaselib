@@ -88,11 +88,10 @@
 				android:paddingLeft="20dp"
 				android:text="@string/privacy_url"
 				android:textColor="@color/link"
-				android:maxLines="1"
-				android:ellipsize="middle" 
+				android:ellipsize="middle"
 				android:autoLink="web"
 				android:textStyle="bold"
-				/>	
+				android:singleLine="true" />
 				
 				<!--update-->
 				<TextView 
@@ -168,6 +167,7 @@
 		android:layout_width="fill_parent"
 		android:background="@color/cgrey6"
 		android:layout_height="wrap_content"
+		android:visibility="gone"
 		>			
 		
 		<ImageButton

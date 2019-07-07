@@ -84,11 +84,13 @@ public class AdSlidShowView extends FrameLayout {
 		LayoutInflater.from(context).inflate(R.layout.ad_viewpage_view, this);
 		int[] resimg = new int[] {  };
 		adlistImage = new ArrayList<ImageView>();
+		if (resimg.length>0) {
 
-		for (int i = 0; i < resimg.length; i++) {
-			ImageView imgView = new ImageView(context);
-			imgView.setBackgroundResource(resimg[i]);
-			adlistImage.add(imgView);
+			for (int i = 0; i < resimg.length; i++) {
+				ImageView imgView = new ImageView(context);
+				imgView.setBackgroundResource(resimg[i]);
+				adlistImage.add(imgView);
+			}
 		}
 
 	}

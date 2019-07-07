@@ -8,13 +8,6 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
 
-
-//        ndk {
-//            moduleName "sdlsufaceview"
-//            ldLibs "log"
-//            abiFilter "armeabi"
-//
-//        }
         buildTypes {
             release {
                 minifyEnabled false
@@ -31,8 +24,6 @@ android {
     }
 
 
-
-
     buildTypes {
         release {
             minifyEnabled false
@@ -47,10 +38,8 @@ dependencies {
     api project(':qgdlib')
     api project(':qpagerlib')
     api project(':qftplib')
-    api files('libs/jsr305-2.0.1.jar')
-    //api files('libs/libGoogleAnalytics.jar')
-    //compile files('libs/mint-5.0.0.jar')
     api 'org.apache.httpcomponents:httpcore:4.4.2'
     api files('libs/qaysnchttplib.jar')
-    //api files('libs/SOMAAndroidSDK4.5.0.jar')
+    api files('libs/jsr305-2.0.1.jar')
+    api rootProject.ext.libSupportV4
 }
