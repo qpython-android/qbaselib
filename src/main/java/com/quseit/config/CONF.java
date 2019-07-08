@@ -74,7 +74,7 @@ public class CONF {
     public static String SP_STATUSBAR_HEIGHT = "SP_STATUSBAR_HEIGHT";
 
 
-    public final static String BASE_PATH = "qlua5"; // qpython / qlua
+    public final static String BASE_PATH = "qpython"; // qpython / qlua
     public final static String CACHE_DIR = "cache";
     public final static String TMP_DIR = "tmp";
     public final static String LIB_DIR = "lib";

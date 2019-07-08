@@ -67,6 +67,10 @@ import java.util.regex.Pattern;
 
 public class NUtil {
 
+	public static boolean is64Bit() {
+		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.SUPPORTED_64_BIT_ABIS.length > 0);
+	}
+
 	// 返回a到b之間(包括a,b)的任意一個自然数,如果a > b || a < 0，返回-1
 	public static int getRandomInt(int min, int max) {
 		if (min > max || min < 0)
