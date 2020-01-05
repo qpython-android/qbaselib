@@ -16,7 +16,8 @@ import java.util.zip.GZIPInputStream;
 
 import android.content.res.AssetManager;
 
-import com.quseit.jtar.*;
+import com.quseit.common.jtar.TarEntry;
+import com.quseit.common.jtar.TarInputStream;
 
 public class AssetExtract {
 

@@ -32,11 +32,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 
-import org.apache.http.conn.util.InetAddressUtils;
-
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -54,6 +54,7 @@ import java.net.SocketException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +67,16 @@ import java.util.regex.Pattern;
 //import android.net.sip.SipSession.State;
 
 public class NUtil {
+
+	public static boolean isNumeric(String str) {
+		try {
+			double d = Double.parseDouble(str);
+
+		} catch(NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
 
 	// 返回a到b之間(包括a,b)的任意一個自然数,如果a > b || a < 0，返回-1
 	public static int getRandomInt(int min, int max) {
@@ -105,51 +116,120 @@ public class NUtil {
 			throw new AssertionError(ex);
 		}
 	}
-	static public String getLocalHostIp()
-	{
-		String ipaddress = "";
-		try
-		{
-			Enumeration<NetworkInterface> en = NetworkInterface
-					.getNetworkInterfaces();
-			// 遍历所用的网络接口
-			while (en.hasMoreElements())
-			{
-				NetworkInterface nif = en.nextElement();// 得到每一个网络接口绑定的所有ip
-				Enumeration<InetAddress> inet = nif.getInetAddresses();
-				// 遍历每一个接口绑定的所有ip
-				while (inet.hasMoreElements())
-				{
-					InetAddress ip = inet.nextElement();
-					if (!ip.isLoopbackAddress()
-							&& InetAddressUtils.isIPv4Address(ip
-							.getHostAddress()))
-					{
-						return ipaddress = ip.getHostAddress();
-					}
-				}
 
-			}
+	/**
+	 * Convert byte array to hex string
+	 * @param bytes toConvert
+	 * @return hexValue
+	 */
+	public static String bytesToHex(byte[] bytes) {
+		StringBuilder sbuf = new StringBuilder();
+		for(int idx=0; idx < bytes.length; idx++) {
+			int intVal = bytes[idx] & 0xff;
+			if (intVal < 0x10) sbuf.append("0");
+			sbuf.append(Integer.toHexString(intVal).toUpperCase());
 		}
-		catch (SocketException e)
-		{
-			e.printStackTrace();
-		}
-		return ipaddress;
-
+		return sbuf.toString();
 	}
 
-//	// 得到本机Mac地址
-//	public String getLocalMac(Context context)
-//	{
-//		String mac = "";
-//		// 获取wifi管理器
-//		WifiManager wifiMng = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-//		WifiInfo wifiInfor = wifiMng.getConnectionInfo();
-//		mac = "本机的mac地址是：" + wifiInfor.getMacAddress();
-//		return mac;
-//	}
+	/**
+	 * Get utf8 byte array.
+	 * @param str which to be converted
+	 * @return  array of NULL if error was found
+	 */
+	public static byte[] getUTF8Bytes(String str) {
+		try { return str.getBytes("UTF-8"); } catch (Exception ex) { return null; }
+	}
 
+	/**
+	 * Load UTF8withBOM or any ansi text file.
+	 * @param filename which to be converted to string
+	 * @return String value of File
+	 * @throws java.io.IOException if error occurs
+	 */
+	public static String loadFileAsString(String filename) throws java.io.IOException {
+		final int BUFLEN=1024;
+		BufferedInputStream is = new BufferedInputStream(new FileInputStream(filename), BUFLEN);
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream(BUFLEN);
+			byte[] bytes = new byte[BUFLEN];
+			boolean isUTF8=false;
+			int read,count=0;
+			while((read=is.read(bytes)) != -1) {
+				if (count==0 && bytes[0]==(byte)0xEF && bytes[1]==(byte)0xBB && bytes[2]==(byte)0xBF ) {
+					isUTF8=true;
+					baos.write(bytes, 3, read-3); // drop UTF8 bom marker
+				} else {
+					baos.write(bytes, 0, read);
+				}
+				count+=read;
+			}
+			return isUTF8 ? new String(baos.toByteArray(), "UTF-8") : new String(baos.toByteArray());
+		} finally {
+			try{ is.close(); } catch(Exception ignored){}
+		}
+	}
+
+	/**
+	 * Returns MAC address of the given interface name.
+	 * @param interfaceName eth0, wlan0 or NULL=use first interface
+	 * @return  mac address or empty string
+	 */
+	public static String getMACAddress(String interfaceName) {
+		try {
+			List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+			for (NetworkInterface intf : interfaces) {
+				if (interfaceName != null) {
+					if (!intf.getName().equalsIgnoreCase(interfaceName)) continue;
+				}
+				byte[] mac = intf.getHardwareAddress();
+				if (mac==null) return "";
+				StringBuilder buf = new StringBuilder();
+				for (byte aMac : mac) buf.append(String.format("%02X:",aMac));
+				if (buf.length()>0) buf.deleteCharAt(buf.length()-1);
+				return buf.toString();
+			}
+		} catch (Exception ignored) { } // for now eat exceptions
+		return "";
+        /*try {
+            // this is so Linux hack
+            return loadFileAsString("/sys/class/net/" +interfaceName + "/address").toUpperCase().trim();
+        } catch (IOException ex) {
+            return null;
+        }*/
+	}
+
+	/**
+	 * Get IP address from first non-localhost interface
+	 * @param useIPv4   true=return ipv4, false=return ipv6
+	 * @return  address or empty string
+	 */
+	public static String getIPAddress(boolean useIPv4) {
+		try {
+			List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+			for (NetworkInterface intf : interfaces) {
+				List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+				for (InetAddress addr : addrs) {
+					if (!addr.isLoopbackAddress()) {
+						String sAddr = addr.getHostAddress();
+						//boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+						boolean isIPv4 = sAddr.indexOf(':')<0;
+
+						if (useIPv4) {
+							if (isIPv4)
+								return sAddr;
+						} else {
+							if (!isIPv4) {
+								int delim = sAddr.indexOf('%'); // drop ip6 zone suffix
+								return delim<0 ? sAddr.toUpperCase() : sAddr.substring(0, delim).toUpperCase();
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception ignored) { } // for now eat exceptions
+		return "";
+	}
 
 	@SuppressLint("NewApi")
 	public static boolean checkCameraHardware(Context context) {
@@ -272,17 +352,28 @@ public class NUtil {
 			return "";
 		}
 	}
-	
+
+	public static String getFileFromUrl(String url) {
+		String path = getPathFromUrl(url);
+		String xx[] = path.split("/");
+		return xx[xx.length-1];
+	}
+
 	public static String getPathFromUrl(String url) {
 		URL iurl;
 		try {
 			iurl = new URL(url);
-			return iurl.getPath();
+			try {
+				return java.net.URLDecoder.decode(iurl.getPath(), "UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				return iurl.getPath();
+
+			}
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "";
+			return "unkown.dat";
 		}
 	}
 	
@@ -338,7 +429,7 @@ public class NUtil {
 	public static String getLocalNumber(Context context) {
 		try {
 			TelephonyManager tManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-	        String number = tManager.getLine1Number();
+	        @SuppressLint("MissingPermission") String number = tManager.getLine1Number();
 	        return number;
 		} catch (Exception e) {
 			return "x";
@@ -348,7 +439,7 @@ public class NUtil {
 	public static String getIMEI(Context context) {
 		try {
 			TelephonyManager telephonyManager=(TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-			String imei=telephonyManager.getDeviceId();
+			@SuppressLint("MissingPermission") String imei=telephonyManager.getDeviceId();
 			return imei;
 		} catch (Exception e) {
 			return "x";
@@ -358,7 +449,7 @@ public class NUtil {
 	public static String getWifiMac(Context context) {
 		try {
 			WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-			WifiInfo info = wifi.getConnectionInfo();
+			@SuppressLint("MissingPermission") WifiInfo info = wifi.getConnectionInfo();
 			return info.getMacAddress();
 		} catch (Exception e) {
 			return "x";
@@ -463,7 +554,7 @@ public class NUtil {
 		for(int i=0;i<apps.size();i++) {  
 		    PackageInfo pinfo = apps.get(i);  
 		    if (pinfo.applicationInfo.packageName.equals(packageName)) {
-		    	if (CONF.DEBUG) Log.d(TAG, "packaged installed:"+packageName);
+		    	if (BASE_CONF.DEBUG) Log.d(TAG, "packaged installed:"+packageName);
 		    	return true;
 		    }
 		}
@@ -650,7 +741,7 @@ public class NUtil {
         return out;
     }
     public static boolean isEmulator(Context context) {
-    	if (CONF.DEBUG) Log.d(TAG, "isEmulator");
+    	if (BASE_CONF.DEBUG) Log.d(TAG, "isEmulator");
     	TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE); 
     	if (tm != null) {
     		//String number = tm.getLine1Number();
@@ -659,8 +750,8 @@ public class NUtil {
     		//String strSubId = tm.getSubscriberId();
     		//Log.d(TAG, "strSubId:"+strSubId);
     		//tm.getCellLocation();
-    		String deviceid = tm.getDeviceId();
-    		if (CONF.DEBUG) Log.d(TAG, "deviceid:"+deviceid);
+    		@SuppressLint("MissingPermission") String deviceid = tm.getDeviceId();
+    		if (BASE_CONF.DEBUG) Log.d(TAG, "deviceid:"+deviceid);
     		
     		if (deviceid==null || deviceid.equals("000000000000000")) {
     			return true;
@@ -696,16 +787,16 @@ public class NUtil {
             ConnectivityManager nInfo = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             nInfo.getActiveNetworkInfo().isConnectedOrConnecting();
 
-            if (CONF.DEBUG)  Log.d(TAG, "Net avail:"
+            if (BASE_CONF.DEBUG)  Log.d(TAG, "Net avail:"
                     + nInfo.getActiveNetworkInfo().isConnectedOrConnecting());
 
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            	if (CONF.DEBUG) Log.d(TAG, "Network available:true");
+            	if (BASE_CONF.DEBUG) Log.d(TAG, "Network available:true");
                 return true;
             } else {
-            	if (CONF.DEBUG) Log.d(TAG, "Network available:false");
+            	if (BASE_CONF.DEBUG) Log.d(TAG, "Network available:false");
                 return false;
             }
 
@@ -859,7 +950,7 @@ public class NUtil {
 			String val = dis.readUTF();
 			return val;
         } catch (FileNotFoundException e) {
-        	if (CONF.DEBUG) Log.d(TAG, "secGet file not found");
+        	if (BASE_CONF.DEBUG) Log.d(TAG, "secGet file not found");
 			//e.printStackTrace();
 
         	return "";

@@ -9,12 +9,10 @@ import android.os.IBinder;
 import android.util.Log;
 
 
-import com.quseit.controller.SpeedWindowManager;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.quseit.config.CONF.TIME_SPAN;
+import static com.quseit.config.BASE_CONF.TIME_SPAN;
 
 public class FloatWindowService extends Service {
     public static boolean isOpen = false;

@@ -8,18 +8,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.util.LruCache;
+import android.widget.ImageView;
+
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
+import org.apache.http.client.methods.HttpGet;
 
 import java.io.File;
 import java.util.Hashtable;
@@ -29,16 +30,15 @@ import java.util.concurrent.Executors;
 public class ImageDownLoader {
     private static final String ImageDownLoader_Log = Utils
             .makeLogTag(ImageDownLoader.class);
-
+    private static final String DIR_CACHE                 = "imagecache";
+    private static final long   DIR_CACHE_LIMIT           = 10 * 1024 * 1024;
+    private static final int    IMAGE_DOWNLOAD_FAIL_TIMES = 2;
     private Hashtable<String, Integer> taskCollection;
-    private LruCache<String, Bitmap> lruCache;
-    private ExecutorService threadPool;
-    private File cacheFileDir;
-    private static final String DIR_CACHE = "imagecache";
-    private static final long DIR_CACHE_LIMIT = 10 * 1024 * 1024;
-    private static final int IMAGE_DOWNLOAD_FAIL_TIMES = 2;
+    private LruCache<String, Bitmap>   lruCache;
+    private ExecutorService            threadPool;
+    private File                       cacheFileDir;
 
-    @SuppressLint("NewApi") 
+    @SuppressLint("NewApi")
     public ImageDownLoader(Context context) {
         int maxMemory = (int) Runtime.getRuntime().maxMemory();
         lruCache = new LruCache<String, Bitmap>(maxMemory / 8) {
@@ -52,18 +52,62 @@ public class ImageDownLoader {
         cacheFileDir = Utils.createFileDir(context, DIR_CACHE);
     }
 
-    @SuppressLint("NewApi") private void addLruCache(String key, Bitmap bitmap) {
+    public static void setImageFromUrl(Context context, final ImageView imageView, String url) {
+        ImageDownLoader loader = new ImageDownLoader(context);
+        Bitmap bitmap = loader.getBitmapCache(url);
+        if (bitmap != null) {
+            imageView.setImageBitmap(bitmap);
+        } else {
+            if (loader.getTaskCollection().containsKey(url)) {
+                return;
+            }
+            loader.loadImage(url, imageView.getWidth(), imageView.getHeight(), new AsyncImageLoaderListener() {
+                @Override
+                public void onImageLoader(Bitmap bitmap) {
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap);
+                    }
+                }
+            });
+        }
+
+    }
+
+    public static void setBlurImageFromUrl(Context context, final ImageView imageView, String url) {
+        ImageDownLoader loader = new ImageDownLoader(context);
+        Bitmap bitmap = loader.getBitmapCache(url);
+        if (bitmap != null) {
+            bitmap = Blur.apply(context, bitmap,1);
+            imageView.setImageBitmap(bitmap);
+        } else {
+            if (loader.getTaskCollection().containsKey(url)) {
+                return;
+            }
+            loader.loadImage(url, imageView.getWidth(), imageView.getHeight(), new AsyncImageLoaderListener() {
+                @Override
+                public void onImageLoader(Bitmap bitmap) {
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap);
+                    }
+                }
+            });
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private void addLruCache(String key, Bitmap bitmap) {
         if (getBitmapFromMemCache(key) == null && bitmap != null) {
             lruCache.put(key, bitmap);
         }
     }
 
-    @SuppressLint("NewApi") private Bitmap getBitmapFromMemCache(String key) {
+    @SuppressLint("NewApi")
+    private Bitmap getBitmapFromMemCache(String key) {
         return lruCache.get(key);
     }
 
     public void loadImage(final String url, final int width, final int height,
-            AsyncImageLoaderListener listener) {
+                          AsyncImageLoaderListener listener) {
         Log.i(ImageDownLoader_Log, "loadImage:" + url);
         final ImageHandler handler = new ImageHandler(listener);
         Runnable runnable = new Runnable() {
@@ -106,7 +150,7 @@ public class ImageDownLoader {
 
     private Bitmap downloadImage(String url, int width, int height) {
         Bitmap bitmap = null;
-        HttpClient httpClient = new DefaultHttpClient();
+        DefaultHttpClient httpClient = new DefaultHttpClient();
         try {
             httpClient.getParams().setParameter(
                     CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -119,15 +163,9 @@ public class ImageDownLoader {
                 bmpFactoryOptions.inJustDecodeBounds = true;
                 BitmapFactory.decodeByteArray(byteIn, 0, byteIn.length,
                         bmpFactoryOptions);
-                Log.d("ImageDownLoader", "downloadImage:"+bmpFactoryOptions.outHeight+"|"+height+"|"+bmpFactoryOptions.outWidth+"|"+width);
-                /*int heightRatio = (int) Math.ceil(bmpFactoryOptions.outHeight
-                        / height);
-                int widthRatio = (int) Math.ceil(bmpFactoryOptions.outWidth
-                        / width);
-                if (heightRatio > 1 && widthRatio > 1) {
-                    bmpFactoryOptions.inSampleSize = heightRatio > widthRatio ? heightRatio
-                            : widthRatio;
-                }*/
+
+                Log.d("ImageDownLoader", "downloadImage:" + bmpFactoryOptions.outHeight + "|" + height + "|" + bmpFactoryOptions.outWidth + "|" + width);
+
                 bmpFactoryOptions.inJustDecodeBounds = false;
                 bitmap = BitmapFactory.decodeByteArray(byteIn, 0,
                         byteIn.length, bmpFactoryOptions);
@@ -164,7 +202,6 @@ public class ImageDownLoader {
         }
     }
 
-
     public Hashtable<String, Integer> getTaskCollection() {
         return taskCollection;
     }
@@ -188,4 +225,3 @@ public class ImageDownLoader {
         }
     }
 }
-

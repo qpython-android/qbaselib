@@ -56,6 +56,7 @@ public class Utils {
  
 	//-------------------------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 	  public static boolean unzip(InputStream inputStream, String dest, boolean replaceIfExists) {
 		  Log.d(TAG, "unzip:"+dest);
 		  final int BUFFER_SIZE = 4096;
@@ -73,31 +74,50 @@ public class Utils {
 	 	      }
 	        }
 	      } 	    	   
+=======
+	public static boolean unzip(InputStream inputStream, String dest, boolean replaceIfExists) {
+		Log.d(TAG, "unzip:"+dest);
+		final int BUFFER_SIZE = 4096;
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 
-		  try {
-		      ZipInputStream zipInputStream = new ZipInputStream(new BufferedInputStream(inputStream));
-		      ZipEntry zipEntry;
-		      
-		      while ((zipEntry = zipInputStream.getNextEntry()) != null){
-		       
-		       String zipEntryName = zipEntry.getName();
-		       String fs = dest + zipEntryName;
+		BufferedOutputStream bufferedOutputStream = null;
 
-		       if (!dest.endsWith("/")) {
-		    	   fs = dest;
-		       } 
-	 	       //Log.d(TAG, "zipEntryName:"+zipEntryName+"-file2:"+fs+"-"+fs.indexOf('/'));
+		boolean succeed = true;
+
+		if (replaceIfExists) {
+			File file2 = new File(dest);
+			if (file2.exists()) {
+				try {
+					//boolean b = deleteDir(file2);
+				} catch (Exception e) {
+				}
+			}
+		}
+
+		try {
+			ZipInputStream zipInputStream = new ZipInputStream(new BufferedInputStream(inputStream));
+			ZipEntry zipEntry;
+
+			while ((zipEntry = zipInputStream.getNextEntry()) != null){
+
+				String zipEntryName = zipEntry.getName();
+				String fs = dest + zipEntryName;
+
+				if (!dest.endsWith("/")) {
+					fs = dest;
+				}
+				//Log.d(TAG, "zipEntryName:"+zipEntryName+"-file2:"+fs+"-"+fs.indexOf('/'));
 
 //		       if(!zipEntry.isDirectory()) {
 //		 	       File fil = new File(dest + zipEntryName);
 //		 	       fil.getParent()
 //		       }
-		       
-		       // file exists ? delete ?
+
+				// file exists ? delete ?
 	 	       /*File file2 = new File(fs);
 	 	       if(file2.exists()) {
 	 		        if (replaceIfExists) {
-	 		        	
+
 	 		 	       try {
 	 		 	    	  boolean b = deleteDir(file2);
 	 		 	    		  if(!b) {
@@ -109,9 +129,10 @@ public class Utils {
 	 					} catch (Exception e) {
 	 						Log.e(TAG, "Unzip failed to delete " + dest + zipEntryName, e);
 	 					}
-	 		        } 	    	   
+	 		        }
 	 	       }*/
 
+<<<<<<< HEAD
 		       // extract
 		       File file = new File(fs);
 		       
@@ -142,12 +163,45 @@ public class Utils {
 					   bufferedOutputStream.close();
 				   }
 			   }
+=======
+				// extract
+				File file = new File(fs);
+
+				if (!replaceIfExists && file.exists()){
+					Log.d(TAG, "unzip exists");
+				} else {
+					if(zipEntry.isDirectory()){
+						file.mkdirs();
+						FileUtils.chmod(file, 0755);
+
+					}else{
+
+						// create parent file folder if not exists yet
+						if(!file.getParentFile().exists()) {
+							file.getParentFile().mkdirs();
+							FileUtils.chmod(file.getParentFile(), 0755);
+						}
+
+						byte buffer[] = new byte[BUFFER_SIZE];
+						bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file), BUFFER_SIZE);
+						int count;
+
+						while ((count = zipInputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
+							bufferedOutputStream.write(buffer, 0, count);
+						}
+
+						bufferedOutputStream.flush();
+						bufferedOutputStream.close();
+					}
+				}
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 
 				if(file.getName().endsWith(".so")) {
 					FileUtils.chmod(file, 0755);
 				}
 
 				Log.d(TAG,"Unzip extracted " + dest + zipEntryName);
+<<<<<<< HEAD
 		      }
 
 		      
@@ -163,6 +217,24 @@ public class Utils {
 		    
 		     return succeed;		     
 	  }
+=======
+			}
+
+
+			zipInputStream.close();
+
+		} catch (FileNotFoundException e) {
+			Log.e(TAG,"Unzip error, file not found", e);
+			succeed = false;
+		}catch (Exception e) {
+			Log.e(TAG,"Unzip error: ", e);
+			succeed = false;
+		}
+
+		return succeed;
+	}
+
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	  
 	  //-------------------------------------------------------------------------------------------------
 

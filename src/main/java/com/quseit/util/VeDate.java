@@ -1,4 +1,5 @@
 package com.quseit.util;
+
 import java.util.*;
 import java.text.*;
 import java.util.Calendar;
@@ -43,12 +44,14 @@ public class VeDate {
 		String dateString = formatter.format(currentTime);
 		return Integer.parseInt(dateString);
 	}
+
 	/*public static int getDatemsAsInt() {
 		Date currentTime = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("mmss");
 		String dateString = formatter.format(currentTime);
 		return Integer.parseInt(dateString);
 	}*/
+
 	public static String getStringDate() {
 		Date currentTime = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -116,7 +119,6 @@ public class VeDate {
 	 * 将短时间格式时间转换为字符串 yyyy-MM-dd
 	 * 
 	 * @param dateDate
-	 * @param k
 	 * @return
 	 */
 	public static String dateToStr(java.util.Date dateDate) {
@@ -532,7 +534,8 @@ public class VeDate {
 	
 	/**
 	 * 
-	 * @param args
+	 * @param date
+     * @return boolean
 	 */
 	public static boolean RightDate(String date) {
 		

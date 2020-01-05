@@ -1,7 +1,7 @@
 package com.quseit.util;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -11,12 +11,12 @@ import android.content.pm.ConfigurationInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.quseit.android.R;
-import com.quseit.config.CONF;
-import com.quseit.db.UserLog;
+import com.quseit.config.BASE_CONF;
+import com.quseit.common.db.UserLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +30,6 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.UUID;
 
-//import com.tapjoy.TapjoyConnect;
 
 public class NAction {
 
@@ -79,6 +78,7 @@ public class NAction {
 			return supportsEs2;
 	}
 
+<<<<<<< HEAD
 	
 	public static String getMediaCenter(Context context) {
 		return NStorage.getSP(context, "config.mediacenter");
@@ -94,13 +94,18 @@ public class NAction {
 		return NStorage.getSP(context, "config.installlink");
 
 	}
+=======
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static void setInstallLink(Context context, String link) {
 		NStorage.setSP(context, "config.installlink", link);
 	}
 
+<<<<<<< HEAD
 	public static void setDefaultRoot(Context context, String value) {
 		NStorage.setSP(context, "config.defaultroot", value);
 	}
+=======
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static String getDefaultRoot(Context context) {
 		return NStorage.getSP(context, "config.defaultroot");
 	}
@@ -131,11 +136,14 @@ public class NAction {
 	public static void setExtAdConf(Context context, String conf) {
 		NStorage.setSP(context, "config.ext_ad", conf);
 	}
+<<<<<<< HEAD
 	public static String getExtAdConf(Context context) {
 		return NStorage.getSP(context, "config.ext_ad");
 	}
 
 
+=======
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 
 	public static String getExtP(Context context, String key) {
 		String conf = NAction.getExtConf(context);
@@ -147,6 +155,7 @@ public class NAction {
 				return a.getString(key);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
+<<<<<<< HEAD
 				if (CONF.DEBUG) Log.d(TAG, "getExtP:"+key+"-not found");
 				//e.printStackTrace();
 				return "";
@@ -164,12 +173,16 @@ public class NAction {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				if (CONF.DEBUG) Log.d(TAG, "getExtAdP:"+key+"-not found");
+=======
+				if (BASE_CONF.DEBUG) Log.d(TAG, "getExtP:"+key+"-not found");
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 				//e.printStackTrace();
 				return "";
 			}  
 		}
 	}
 
+<<<<<<< HEAD
 	public static void setHtml5Index(Context context, String index) {
 		NStorage.setSP(context, "service.html5index", index);
 	}
@@ -182,6 +195,8 @@ public class NAction {
 	public static String getContentHost(Context context) {
 		return NStorage.getSP(context, "service.contenthost");
 	}
+=======
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static void setUpdateHost(Context context, String host) {
 		NStorage.setSP(context, "service.updatehost", host);
 	}
@@ -191,6 +206,7 @@ public class NAction {
 		return h;
 	}
 	
+<<<<<<< HEAD
 	public static boolean checkIfScriptExtend(Context context) {
 		String extendEnable = NAction.getExtP(context, "script_extend");
 		if (extendEnable.equals("1")) {
@@ -237,6 +253,10 @@ public class NAction {
 		NUtil.secSet(context, "iap_"+iap, "1");
 	}
 	public static long getRemouteSize(Context context, String downloadUrl, long startPos) {
+=======
+
+	public static long getRemoteFileSize(Context context, String downloadUrl, long startPos) {
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 		NAction.userProxy(context);
 
 	     try {
@@ -262,7 +282,7 @@ public class NAction {
 		     return fileTotalSize;
 
 		} catch (IOException e) {
-			if (CONF.DEBUG) Log.d(TAG, "getRemouteSize IOException:"+e.getMessage());
+			if (BASE_CONF.DEBUG) Log.d(TAG, "getRemouteSize IOException:"+e.getMessage());
 			e.printStackTrace();
 		}
 	     return -1;
@@ -358,6 +378,7 @@ public class NAction {
 	}
 	
 
+<<<<<<< HEAD
 	public static void recordUseLog(Context context, String act, String content) {
 		if (NAction.getExtP(context, "conf_log_user_enable").equals("1")) {
 			UserLog pq = new UserLog(context);
@@ -385,6 +406,9 @@ public class NAction {
 			//pq.close();
 		}
 	}
+=======
+
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static void recordAdLog(Context context, String act, String key) {
 		if (NAction.getExtP(context, "conf_log_ad_enable").equals("1")) {
 			UserLog pq = new UserLog(context);
@@ -397,7 +421,7 @@ public class NAction {
 	}
 	public static int getUpdateQ(Context context) {
 		String seq = NStorage.getSP(context, "app.update_seq");
-		if (CONF.DEBUG) Log.d(TAG, "getUpdateQ:"+seq);
+		if (BASE_CONF.DEBUG) Log.d(TAG, "getUpdateQ:"+seq);
 		if (seq.equals("")) {
 			return 0;
 		} else {
@@ -408,6 +432,7 @@ public class NAction {
 			}
 		}
 	}
+<<<<<<< HEAD
 	public static void setUpdateQ(Context context, String val) {
 		NStorage.setSP(context, "app.update_seq", val);
 	}
@@ -459,6 +484,8 @@ public class NAction {
 		//Log.d(TAG, "setAppConf:"+about+"-url:"+url+"-feed:"+feed+"-feedurl:"+feedUrl+"-selfcheck:"+check+"-selfchecktitle:"+ctitle+"-selfcheckurl:"+curl);
 
 	}
+=======
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 
 	public static void setAd(Context context, String who, String banner, String link, String key, String term, String act) {
 		NStorage.setSP(context, "ad.who", who);
@@ -467,21 +494,28 @@ public class NAction {
 		NStorage.setSP(context, "ad.key", key);
 		NStorage.setSP(context, "ad.term", term);
 		NStorage.setSP(context, "ad.act", act);
+<<<<<<< HEAD
 
 
 	}
 	public static void setProxyHost(Context context, String val) {
 		NStorage.setSP(context, "proxy.host", val);
+=======
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	}
 	public static void setProxyPort(Context context, String val) {
 		NStorage.setSP(context, "proxy.port", val);
 	}
+<<<<<<< HEAD
 	public static void setProxyUsername(Context context, String val) {
 		NStorage.setSP(context, "proxy.username", val);
 	}
 	public static void setProxyPwd(Context context, String val) {
 		NStorage.setSP(context, "proxy.pwd", val);
 	}
+=======
+
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static String getProxyHost(Context context) {
 		String val = NStorage.getSP(context, "proxy.host");
 		return val;
@@ -498,6 +532,7 @@ public class NAction {
 		String val = NStorage.getSP(context, "proxy.pwd");
 		return val;
 	}
+<<<<<<< HEAD
 	
 	public static String getAcessOauthToken(Context context) {
 		String token = NStorage.getSP(context, "oauth.access_token");
@@ -605,6 +640,10 @@ public class NAction {
 		NStorage.setSP(context, "app_opt.srv_stat", val);
 	}
 	
+=======
+
+
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static int getUpdateCheckTime(Context context) {
 		String s = NStorage.getSP(context, "tmp.update_check_time");
 		if (s.equals("")) {
@@ -613,6 +652,7 @@ public class NAction {
 			return Integer.parseInt(s);
 		}
 	}
+<<<<<<< HEAD
 	public static void setTotalEncounters(Context context, String val) {
 		NStorage.setSP(context, "app_opt.total_encounters", val);
 	}
@@ -624,10 +664,14 @@ public class NAction {
 			return Integer.parseInt(xx);
 		}
 	}
+=======
+
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static void setUpdateCheckTime(Context context) {
         NStorage.setSP(context, "tmp.update_check_time", String.valueOf(VeDate.getStringDateHourAsInt()));
 	}
 
+<<<<<<< HEAD
 	public static int getUpdateConfCheckTime(Context context){
 		String s = NStorage.getSP(context, "tmp.update_conf_check_time");
 		if (s.equals("")) {
@@ -788,12 +832,19 @@ public class NAction {
 	public static void setUID(Context context, String uid) {
 		NStorage.setSP(context, "user.uid", uid);
 	}
+=======
+	public static String getUserName(Context context) {
+		return NStorage.getSP(context, "user.username");
+	}
+
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static String getUID(Context context) {
 		return NStorage.getSP(context, "user.uid");
 	}
 	public static String getToken(Context context) {
 		return NStorage.getSP(context, "user.token");
 	}
+<<<<<<< HEAD
 	public static String getLatitude(Context context) {
 		return NStorage.getSP(context, "position.latitude");
 	}
@@ -822,6 +873,10 @@ public class NAction {
 	public static void attentionAct(Context context) {
     	Toast.makeText(context, context.getString(R.string.not_implement), Toast.LENGTH_SHORT).show(); 
 	}
+=======
+	
+
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static String getCode(Context context) {
 		String packageName = context.getPackageName();
 		String[] xcode = packageName.split("\\.");
@@ -866,6 +921,7 @@ public class NAction {
     	return NStorage.getSP(context, "ftp.port");
 	}
 
+<<<<<<< HEAD
 	// licence check
 	public static String getSamLicence(Context context) {
 		return NStorage.getSP(context, "sam.lic");
@@ -873,14 +929,21 @@ public class NAction {
 	public static void setSamLicence(Context context, String lic) {
 		NStorage.setSP(context, "sam.lic", lic);
 	}
+=======
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 
 	public static boolean isQPy3(Context context) {
 		String code = NAction.getCode(context);
 		if (code.contains("qpy3")) {
 			return true;
 		}
+<<<<<<< HEAD
 				
 		if (NAction.getQPyInterpreter(context).equals("3.x")) {
+=======
+
+		if (NAction.getQPyInterpreter(context).startsWith("3.")) {
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 			return true;
 		} else {
 			return false;
@@ -888,7 +951,7 @@ public class NAction {
 	}
 	public static String getQPyInterpreter(Context context) {
 		String qpyInterVal = NStorage.getSP(context, "conf.default_qpy_interpreter");
-        if (!qpyInterVal.equals("3.x")) {
+        if (!qpyInterVal.startsWith("3.")) {
         	qpyInterVal = "2.x";
         }
         
@@ -897,8 +960,11 @@ public class NAction {
 
 	public static void setQPyInterpreter(Context context, String qpyInterVal) {
 		 NStorage.setSP(context, "conf.default_qpy_interpreter", qpyInterVal);
+		// It shouldn't be here and need to be refactor
+		ACache.get(context).clear();
 	}
 	
+<<<<<<< HEAD
 	public static void setPluginsEnable(Context context, String noad) {
 		NStorage.setSP(context, "plugin.noad", noad);
 	}
@@ -911,6 +977,8 @@ public class NAction {
 		}
 	}
 
+=======
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 	public static boolean httpPing(String url, int timeout) {
 		//Log.d(TAG, "httpPing:"+url+"-"+timeout);
 	    url = url.replaceFirst("https", "http"); // Otherwise an exception may be thrown on invalid SSL certificates.
@@ -949,7 +1017,7 @@ public class NAction {
     }
   	static public boolean isThreadsStop(Context context) {
   		boolean st = true;
-  		for (int i=1;i<=CONF.THREA_STAT.length;i++) {
+  		for (int i = 1; i<= BASE_CONF.THREA_STAT.length; i++) {
   			int j = NStorage.getIntSP(context, "thread_stat_"+i);
   			Log.d(TAG, "isThreadsStop i:"+i+"-j:"+j);
   			if (j == 1) {
@@ -960,7 +1028,7 @@ public class NAction {
   		return st;
   	}
   	static public void clearThreadsStat(Context context) {
-  		for (int i=1;i<=CONF.THREA_STAT.length;i++) {
+  		for (int i = 1; i<= BASE_CONF.THREA_STAT.length; i++) {
   			NStorage.setIntSP(context, "thread_stat_"+i,0);
   		}
   	}
@@ -999,5 +1067,26 @@ public class NAction {
 		systemRootState=kSystemRootStateDisable;
 		return false;
 	}
+<<<<<<< HEAD
 	
+=======
+
+	public static void startInstalledAppDetailsActivity(final Activity context) {
+		if (context == null) {
+			return;
+		}
+		final Intent i = new Intent();
+		i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+		i.addCategory(Intent.CATEGORY_DEFAULT);
+		i.setData(Uri.parse("package:" + context.getPackageName()));
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+		context.startActivity(i);
+	}
+
+	public static String getPyVer(Context context) {
+		return isQPy3(context)?"3":"2";
+	}
+>>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
 }

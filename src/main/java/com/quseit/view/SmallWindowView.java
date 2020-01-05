@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.quseit.android.R;
-import com.quseit.config.CONF;
+import com.quseit.config.BASE_CONF;
 import com.quseit.util.PreferenceUtil;
 
 
@@ -16,7 +16,7 @@ public class SmallWindowView extends WindowView  {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.float_window_small, this);
         View view = findViewById(R.id.linLayoutSmall);
-        int statusBarHeight = PreferenceUtil.getSingleton(context).getInt(CONF.SP_STATUSBAR_HEIGHT, 0);
+        int statusBarHeight = PreferenceUtil.getSingleton(context).getInt(BASE_CONF.SP_STATUSBAR_HEIGHT, 0);
         if (statusBarHeight != 0) {
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
             layoutParams.height = statusBarHeight;

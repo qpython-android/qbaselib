@@ -1,6 +1,7 @@
 package com.quseit.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -9,6 +10,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +60,10 @@ public class AdSlidShowView extends FrameLayout {
         startPlay();
     }
 
+    public void stop() {
+        stopPlay();
+    }
+
     public void setOnUrlBackCall(urlBackcall callBack) {
         adBackCall = callBack;
     }
@@ -71,9 +77,8 @@ public class AdSlidShowView extends FrameLayout {
         for (int i = 0; i < count; i++) {
             final View v = getChildAt(i);
             // this works because you set the dimensions of the ImageView to FILL_PARENT
-            v.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(),
-                    MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(
-                    getMeasuredHeight(), MeasureSpec.EXACTLY));
+            v.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
         }
     }
 
@@ -200,14 +205,19 @@ public class AdSlidShowView extends FrameLayout {
             for (int i = 0; i < adlistImage.size(); i++) {
                 View v = new View(context);
                 if (i == 0)
-                    v.setBackgroundResource(R.drawable.dian);
+                    v.setBackgroundResource(R.drawable.ic_spot_selected);
                 else
-                    v.setBackgroundResource(R.drawable.dian_down);
-                v.setLayoutParams(new LayoutParams(10, 10));
+                    v.setBackgroundResource(R.drawable.ic_spot);
+                v.setLayoutParams(new LayoutParams(dp2px(10), dp2px(10)));
                 dotList.addView(v);
             }
         }
         initViewPager();
+    }
+
+    private int dp2px(float dp) {
+        Resources r = Resources.getSystem();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 
     public void setImage(Bitmap bitmap, int i) {
@@ -308,10 +318,10 @@ public class AdSlidShowView extends FrameLayout {
             for (int i = 0; i < dotList.getChildCount(); i++) {
                 if (i == arg0) {
                     ((View) dotList.getChildAt(i))
-                            .setBackgroundResource(R.drawable.dian);
+                            .setBackgroundResource(R.drawable.ic_spot_selected);
                 } else {
                     ((View) dotList.getChildAt(i))
-                            .setBackgroundResource(R.drawable.dian_down);
+                            .setBackgroundResource(R.drawable.ic_spot);
                 }
             }
         }

@@ -54,7 +54,6 @@
                     android:layout_marginRight="50.0dip"
                     android:background="@drawable/background_button"
                     android:gravity="center"
-                    android:onClick="onFTPOp"
                     android:paddingBottom="10dip"
                     android:paddingTop="10dip"
                     android:scaleType="centerInside"
@@ -85,9 +84,7 @@
 
                 <!-- ftp managerd -->
                 <RelativeLayout
-                    android:id="@+id/plugin_ftp_port_box"
                     style="@style/gridBox"
-                    android:onClick="onFtpPortSetting"
                     >
 
                     <TextView
@@ -106,15 +103,12 @@
 
                     <ImageView
                         style="@style/gridBox_RTag"
-                        android:onClick="onFtpPortSetting"
                         android:src="@drawable/mini_right_tag"
                         />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/plugin_ftp_account_box"
                     style="@style/gridBox"
-                    android:onClick="onFtpAccountSetting"
                     >
 
                     <TextView
@@ -133,7 +127,6 @@
 
                     <ImageView
                         style="@style/gridBox_RTag"
-                        android:onClick="onFtpAccountSetting"
                         android:src="@drawable/mini_right_tag"
                         />
                 </RelativeLayout>
@@ -164,7 +157,6 @@
 
 
         <ImageButton
-            android:id="@+id/download_btn"
             style="@style/gridBox_Title"
             android:layout_width="0dp"
 
@@ -187,7 +179,6 @@
             android:layout_margin="10.0dip"
             android:layout_weight="1"
             android:background="@null"
-            android:onClick="onLeft"
             android:src="@drawable/ic_right_a"
             />
 
