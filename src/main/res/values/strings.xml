@@ -41,13 +41,6 @@
     <string name="download_ok">{0} was download successfully</string>
     <string name="m_title_aboutus">About</string>
 
-<<<<<<< HEAD
-
-    <string name="not_found">The music is not available</string>
-    <string name="download_queue">Downloader</string>
-    <string name="download_queue_1">Current tasks: {0}</string>
-=======
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
     <string name="download_cancel">{0} was cancled</string>
     <string name="download_pause">{0} was paused</string>
     <string name="download_exception">You could not download this video now, please retry later</string>
@@ -67,12 +60,7 @@
     <string name="need_network">No connection, please check it</string>
     <string name="about_about">About</string>
     <string name="about_other">More</string>
-<<<<<<< HEAD
-    <string name="check_update">Check for new version</string>
-    <string name="plugin_script">Script Plugin Support</string>
-=======
     <string name="check_update">Check for update</string>
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
     <string name="plugin_script_enable">Script Plugin</string>
     <string name="err_caught">An exception occured, error report {0} is genereated</string>
     <string name="plugin_player">Optimized Player Codec</string>
@@ -120,7 +108,6 @@
     <string name="exception">exception:</string>
 
     <string name="tip_expire">Resource is expired,please re-download</string>
-<<<<<<< HEAD
 
     <string name="permission_alert">Enable the float window need android verson >=6.0</string>
     <string name="permission_result">Please allow the permission</string>
@@ -133,6 +120,5 @@
     <string name="public_version">1347438500.05</string>
     <string name="public3_version">1347438550.05</string>
 
-=======
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
+
 </resources>

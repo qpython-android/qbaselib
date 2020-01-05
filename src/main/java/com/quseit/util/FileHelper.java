@@ -63,69 +63,7 @@ public class FileHelper {
             context.startActivity(intent);
         } catch (android.content.ActivityNotFoundException e) {
         }
-<<<<<<< HEAD
-}
-	
-	public static String getFileNameFromUrl(String urlFile) {
-		try {
-			URL url = new URL(urlFile);
-			File f = new File(url.getPath());
-			return f.getName();
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-			return "unname.dat";
-		}
-	}
-	public static String getTypeByMimeType(String mType) {
-		if (mType.equals("application/vnd.android.package-archive")) {
-			return "apk";
-		} else {
-			String[] xx = mType.split("/");
-			if (xx.length>1) {
-				return xx[0];
-			}
-		}
-		return "other";
-	}
-	
-	public static String LoadDataFromAssets(Context context,String inFile) {
-		String tContents = "";
 
-		try {
-			InputStream stream = context.getAssets().open(inFile);
-			int size = stream.available();
-			byte[] buffer = new byte[size];
-			stream.read(buffer);
-			stream.close();
-			tContents = new String(buffer);
-		} catch (IOException e) {
-		}
-		return tContents;
-	}
-
-	public static void putFileContents(Context context, String filename, String content) {
-		try {
-			File fileCache = new File(filename);
-			byte[] data = content.getBytes();
-			FileOutputStream outStream;
-			outStream = new FileOutputStream(fileCache);
-			outStream.write(data);
-			outStream.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-
-		}
-	}
-	
-	public static void writeToFile(String filePath, String data) {
-		try {
-			FileOutputStream fOut = new FileOutputStream(filePath);
-=======
     }
 
     public static String getFileNameFromUrl(String urlFile) {
@@ -195,7 +133,6 @@ public class FileHelper {
             }
 
             FileOutputStream fOut = new FileOutputStream(filePath);
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60
             fOut.write(data.getBytes());
             fOut.flush();
             fOut.close();
