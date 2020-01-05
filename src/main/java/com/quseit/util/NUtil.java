@@ -1000,14 +1000,4 @@ public class NUtil {
 		}
 
 	}
-
-	public static String getMetaDataValue(Context context,String key){
-		try {
-			ApplicationInfo info=context.getPackageManager().getApplicationInfo(context.getPackageName(),PackageManager.GET_META_DATA);
-			return info.metaData.getString(key);
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
 }

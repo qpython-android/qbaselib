@@ -15,19 +15,11 @@
  * limitations under the License.
  */
 
-<<<<<<< HEAD:src/main/java/com/quseit/codec/binary/StringUtils.java
-package com.quseit.codec.binary;
-
-import java.io.UnsupportedEncodingException;
-
-import com.quseit.codec.CharEncoding;
-=======
 package com.quseit.common.codec.binary;
 
 import java.io.UnsupportedEncodingException;
 
 import com.quseit.common.codec.CharEncoding;
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60:src/main/java/com/quseit/common/codec/binary/StringUtils.java
 
 /**
  * Converts String to and from bytes using the encodings required by the Java specification. These encodings are specified in <a

@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-<<<<<<< HEAD:src/main/java/com/quseit/codec/DecoderException.java
-package com.quseit.codec;
-=======
 package com.quseit.common.codec;
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60:src/main/java/com/quseit/common/codec/DecoderException.java
 
 /**
  * Thrown when a Decoder has encountered a failure condition during a decode.

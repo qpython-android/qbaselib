@@ -15,21 +15,12 @@
  * limitations under the License.
  */
 
-<<<<<<< HEAD:src/main/java/com/quseit/codec/binary/Base64Codec.java
-package com.quseit.codec.binary;
-
-import com.quseit.codec.BinaryDecoder;
-import com.quseit.codec.BinaryEncoder;
-import com.quseit.codec.DecoderException;
-import com.quseit.codec.EncoderException;
-=======
 package com.quseit.common.codec.binary;
 
 import com.quseit.common.codec.BinaryDecoder;
 import com.quseit.common.codec.BinaryEncoder;
 import com.quseit.common.codec.DecoderException;
 import com.quseit.common.codec.EncoderException;
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60:src/main/java/com/quseit/common/codec/binary/Base64Codec.java
 
 import java.math.BigInteger;
 

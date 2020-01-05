@@ -108,17 +108,4 @@
     <string name="exception">exception:</string>
 
     <string name="tip_expire">Resource is expired,please re-download</string>
-
-    <string name="permission_alert">Enable the float window need android verson >=6.0</string>
-    <string name="permission_result">Please allow the permission</string>
-    <string name="string_setting_fix">Please enable the float window</string>
-
-    <string name="private1_version">1347438560.05</string>
-    <string name="private2_version">1347438560.05</string>
-    <string name="private3_version">1347438550.05</string>
-    <string name="private_version">1347438520.05</string>
-    <string name="public_version">1347438500.05</string>
-    <string name="public3_version">1347438550.05</string>
-
-
 </resources>

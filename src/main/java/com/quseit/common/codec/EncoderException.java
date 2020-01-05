@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-<<<<<<< HEAD:src/main/java/com/quseit/codec/EncoderException.java
-package com.quseit.codec;
-=======
 package com.quseit.common.codec;
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60:src/main/java/com/quseit/common/codec/EncoderException.java
 
 /**
  * Thrown when there is a failure condition during the encoding process. This exception is thrown when an Encoder

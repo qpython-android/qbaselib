@@ -59,20 +59,6 @@ public class SpeedWindowManager  {
         if (windowParams == null) {
             windowParams = getWindowParams(context);
         }
-<<<<<<< HEAD:src/main/java/com/quseit/controller/SpeedWindowManager.java
-                if (mSmallWindowView == null) {
-                    mSmallWindowView = new SmallWindowView(context);
-                    Drawable background = getCurrentBgDrawable(context);
-                    setViewBg(background);
-                    if (PreferenceUtil.getSingleton(context).getBoolean(CONF.SP_LOC)) {
-                        setOnTouchListener(context, mSmallWindowView, CONF.BIG_WINDOW_TYPE);
-                    } else {
-                        setOnTouchListener(windowManager, context, mSmallWindowView, CONF.BIG_WINDOW_TYPE);
-                    }
-                    windowManager.addView(mSmallWindowView, windowParams);
-                }
-                tvSum = (TextView) mSmallWindowView.findViewById(R.id.tvSum);
-=======
 
         if (mSmallWindowView == null) {
             mSmallWindowView = new SmallWindowView(context);
@@ -88,8 +74,8 @@ public class SpeedWindowManager  {
         tvSum = (TextView) mSmallWindowView.findViewById(R.id.tvSum);
 
 
->>>>>>> bf115d965b3aefe59e07d6596b3fd0b34d680a60:src/main/java/com/quseit/service/SpeedWindowManager.java
         }
+
 
     private Drawable getCurrentBgDrawable(Context context) {
         Drawable background;
@@ -134,8 +120,8 @@ public class SpeedWindowManager  {
         int x = PreferenceUtil.getSingleton(context).getInt(BASE_CONF.SP_X, -1);
         int y = PreferenceUtil.getSingleton(context).getInt(BASE_CONF.SP_Y, -1);
         if (x == -1 || y == -1) {
-            x = screenWidth-380;
-            y = screenHeight/18;
+            x = screenWidth/2;
+            y = 0;
         }
         windowParams.x = x;
         windowParams.y = y;
@@ -228,10 +214,7 @@ public class SpeedWindowManager  {
     }
 
     public void updateViewData(Context context) {
-        if (CONF.open){
-            tvSum.setText("");
-            return;
-        }
+
         long tempSum = TrafficStats.getTotalRxBytes()
                 + TrafficStats.getTotalTxBytes();
         long rxtxLast = tempSum - rxtxTotal;
@@ -284,7 +267,7 @@ public class SpeedWindowManager  {
     }
 
     public boolean isWindowShowing() {
-        return  mSmallWindowView != null;
+        return mBigWindowView != null || mSmallWindowView != null;
     }
 
     private WindowManager getWindowManager(Context context) {
@@ -310,4 +293,5 @@ public class SpeedWindowManager  {
             setOnTouchListener(getWindowManager(context), context, mSmallWindowView == null ? mBigWindowView : mSmallWindowView, mSmallWindowView == null ? BASE_CONF.SMALL_WINDOW_TYPE : BASE_CONF.BIG_WINDOW_TYPE);
         }
     }
+
 }
