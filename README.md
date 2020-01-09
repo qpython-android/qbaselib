@@ -1,4 +1,4 @@
-# QBaselib4AS
-QBaselib for Android Studio
+# About
+QBaselib can provides basic base libraries / utils for Android project.
 
-This is Quseit Lab's android base library for android studio
+It is not a standalone project, it will be included by QPython / QPython3 as a submodule.
