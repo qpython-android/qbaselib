@@ -271,15 +271,15 @@
     <string name="permission_result">Please allow the permission</string>
     <string name="string_setting_fix">Please enable the float window</string>
 
-    <string name="private1_version">1347438700.05</string>
-    <string name="private2_version">1347438700.05</string>
+    <string name="private1_version">1347438710.05</string>
+    <string name="private2_version">1347438710.05</string>
     <string name="private3_version">1347438700.05</string>
     <string name="private_version">1347438530.05</string>
     <string name="public_version">1347438530.05</string>
     <string name="public3_version">1347438630.05</string>
 
-    <string name="private31_version" translatable="false">1347438541.05</string>
-    <string name="private32_version" translatable="false">1347438543.05</string>
+    <string name="private31_version" translatable="false">1347438553.05</string>
+    <string name="private32_version" translatable="false">1347438553.05</string>
     <string name="private33_version" translatable="false">1347438520.05</string>
 
 </resources>
