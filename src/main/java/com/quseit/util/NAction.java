@@ -397,6 +397,10 @@ public class NAction {
 		}
 	}
 
+	public static boolean isQPyInterpreterSet(Context context) {
+		String qpyInterVal = NStorage.getSP(context, "conf.default_qpy_interpreter");
+		return !qpyInterVal.equals("");
+	}
 	public static String getQPyInterpreter(Context context) {
 		String qpyInterVal = NStorage.getSP(context, "conf.default_qpy_interpreter");
         if (!qpyInterVal.startsWith("3.")) {
