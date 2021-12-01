@@ -243,9 +243,11 @@ public class FileHelper {
         }
     }
 
-    public static File getBasePath(String parDir, String subdir) throws IOException {
+    public static File getBasePath(Context context, String parDir, String subdir) throws IOException {
         try {
-            File basePath = new File(Environment.getExternalStorageDirectory(),
+//            File basePath = new File(Environment.getExternalStorageDirectory(),
+//            FileUtils.createTestDir(context,"test");
+            File basePath = new File(FileUtils.getQyPath(context),
                     parDir);
 
             if (!basePath.exists()) {
@@ -256,7 +258,9 @@ public class FileHelper {
             }
             File subPath = null;
             if (!subdir.equals("")) {
-                subPath = new File(Environment.getExternalStorageDirectory(),
+//                subPath = new File(Environment.getExternalStorageDirectory(),
+//                FileUtils.createTestDir(context,"test");
+                subPath = new File(FileUtils.getQyPath(context),
                         parDir + "/" + subdir);
                 if (!subPath.exists()) {
                     if (!subPath.mkdirs()) {
@@ -270,10 +274,11 @@ public class FileHelper {
                 throw new IOException(String.format("%s is not a directory!",
                         basePath.toString()));
             }
-            if (subdir.equals(""))
+            if (subdir.equals("")) {
                 return basePath;
-            else
+            } else {
                 return subPath;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -336,10 +341,11 @@ public class FileHelper {
             throw new IOException(String.format("%s is not a directory!",
                     basePath.toString()));
         }
-        if (subdir.equals(""))
+        if (subdir.equals("")) {
             return basePath;
-        else
+        } else {
             return subPath;
+        }
     }
 
     public static String getFileName(String filename) {
@@ -469,7 +475,7 @@ public class FileHelper {
      * @return
      */
     public static File[] getFilesByType(File dir) {
-        if (dir==null) {
+        if (dir == null) {
             return null;
         }
         typeFiles = new ArrayList<>();
@@ -479,7 +485,7 @@ public class FileHelper {
 
     private static void addFile(File dir) {
         File[] dirFiles = dir.listFiles();
-        if (dirFiles!=null) {
+        if (dirFiles != null) {
             for (File file : dirFiles) {
                 if (file.isDirectory() && !file.getAbsolutePath().contains("/.")) {
                     addFile(file);
@@ -537,7 +543,6 @@ public class FileHelper {
         }
         return files;
     }
-
 
 
     public static List<File> filterExt(File dir, String[] exts, int size) {

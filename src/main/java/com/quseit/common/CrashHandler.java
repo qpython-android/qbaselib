@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.quseit.android.R;
 import com.quseit.common.db.AppLog;
+import com.quseit.util.FileUtils;
 import com.quseit.util.NAction;
 import com.quseit.util.NUtil;
 
@@ -55,7 +56,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
 	    		Log.d(TAG, "WriteSettings exits");
 	    	}
 
-	    	File log = new File(Environment.getExternalStorageDirectory()+"/"+NAction.getCode(context)+"_last_err.log");
+//	    	File log = new File(Environment.getExternalStorageDirectory()+"/"+NAction.getCode(context)+"_last_err.log");
+	    	File log = new File(FileUtils.getQyPath(context) +"/"+NAction.getCode(context)+"_last_err.log");
 	    	if (log.exists()) {
 	    		log.delete();
 	    	}
@@ -113,7 +115,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 public void run() {
                 	try {
                         Looper.prepare();
-            			Toast.makeText(mContext, MessageFormat.format(mContext.getString(R.string.err_caught), Environment.getExternalStorageDirectory()+"/"+NAction.getCode(mContext)+"_last_err.log"), Toast.LENGTH_LONG).show();
+//            			Toast.makeText(mContext, MessageFormat.format(mContext.getString(R.string.err_caught), Environment.getExternalStorageDirectory()+"/"+NAction.getCode(mContext)+"_last_err.log"), Toast.LENGTH_LONG).show();
+            			Toast.makeText(mContext, MessageFormat.format(mContext.getString(R.string.err_caught), mContext.getApplicationContext().getExternalFilesDir(null).getAbsolutePath() +"/"+ NAction.getCode(mContext)+"_last_err.log"), Toast.LENGTH_LONG).show();
                         Looper.loop();
                 	} catch (InflateException e) {
 						Log.e(TAG, "error : ", e);

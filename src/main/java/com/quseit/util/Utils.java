@@ -188,15 +188,17 @@ public class Utils {
 		}
 	  }
 	  
-	public static void createDirectoryOnExternalStorage(String path) {
+	public static void createDirectoryOnExternalStorage(Context context,String path) {
         try {
     		if(Environment.getExternalStorageState().equalsIgnoreCase("mounted")) {
-    		    File file = new File(Environment.getExternalStorageDirectory(), path);
+//    		    File file = new File(Environment.getExternalStorageDirectory(), path);
+    		    File file = new File(FileUtils.getQyPath(context), path);
     		    if (!file.exists()) {
     		    	try {
     		    		file.mkdirs();
 
-    		    		Log.d(TAG, "createDirectoryOnExternalStorage created " + Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +path);
+//    		    		Log.d(TAG, "createDirectoryOnExternalStorage created " + Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +path);
+    		    		Log.d(TAG, "createDirectoryOnExternalStorage created " + FileUtils.getQyPath(context) + "/" +path);
     				} catch (Exception e) {
     		            Log.e(TAG,"createDirectoryOnExternalStorage error: ", e);
     				}
@@ -248,7 +250,8 @@ public class Utils {
 		// 如SD卡已存在，则存储；反之存在data目录下
 		if (hasSdcard()) {
 			// SD卡路径
-			filePath = Environment.getExternalStorageDirectory()
+//			filePath = Environment.getExternalStorageDirectory()
+			filePath = FileUtils.getQyPath(context)
 					+ File.separator + dirName;
 		} else {
 			filePath = context.getCacheDir().getPath() + File.separator

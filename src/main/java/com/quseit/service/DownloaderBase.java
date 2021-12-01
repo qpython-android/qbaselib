@@ -117,7 +117,7 @@ public abstract class DownloaderBase extends Service {
                                         + mArtist + "/"), mTitle + ext);
 
                             } else {
-                                dstFile = new File(QBaseApp.getInstance().getOrCreateRoot(mArtist) + "/" + mTitle + ext);
+                                dstFile = new File(QBaseApp.getInstance().getOrCreateRoot(getApplicationContext(),mArtist) + "/" + mTitle + ext);
                             }
                         }
                         downloadFile.renameTo(dstFile);
@@ -274,15 +274,15 @@ public abstract class DownloaderBase extends Service {
             service_json = intent.getStringExtra(BASE_CONF.EXTRA_CONTENT_URL11);
 
             if (BASE_CONF.DEBUG)
-                Log.d(TAG, "onStartCommand[title:" + mTitle + ",artist:"
+            {Log.d(TAG, "onStartCommand[title:" + mTitle + ",artist:"
                         + mArtist + ",album:" + mAlbum + ",completedSize:"
-                        + mCompletedSize + "]");
+                        + mCompletedSize + "]");}
 
             // 创建文件
             if (NUtil.isExternalStorageExists()) {
                 try {
 
-                    downloadFile = new File(QBaseApp.getInstance().getOrCreateRoot("tmp")+ "/"+ mArtist + "_" + mTitle + mExt);
+                    downloadFile = new File(QBaseApp.getInstance().getOrCreateRoot(getApplicationContext(),"tmp")+ "/"+ mArtist + "_" + mTitle + mExt);
 
                 } catch (NotFoundException e) {
                     e.printStackTrace();
@@ -490,7 +490,7 @@ public abstract class DownloaderBase extends Service {
             if (NUtil.isExternalStorageExists()) {
                 try {
                     downloadFile = new File(QBaseApp
-                            .getInstance().getOrCreateRoot("tmp")+ "/" + info.getPath());
+                            .getInstance().getOrCreateRoot(getApplicationContext(),"tmp")+ "/" + info.getPath());
                 } catch (NotFoundException e) {
                     Log.d(TAG, "NotFoundException:" + e.getMessage());
                     e.printStackTrace();
@@ -573,6 +573,7 @@ public abstract class DownloaderBase extends Service {
         }
     }
 
+    @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
         super.onDestroy();
@@ -679,7 +680,7 @@ public abstract class DownloaderBase extends Service {
                         long done = NStorage.getLongSP(getApplicationContext(), "download" + threadId);
                         end = end - (sonThreadSize * (threadId - 1));
                         if ((done - (sonThreadSize * (threadId - 1)) >= end))
-                            runingTread--;
+                        {runingTread--;}
                         if (runingTread == 0) {
 
                             for (int i = 1; i <= THREADCOUNT; i++) {

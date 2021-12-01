@@ -48,8 +48,38 @@ import java.util.Set;
 public class FileUtils {
     private static final String TAG = "FileUtils";
 
-    private FileUtils() {
-        // Utility class.
+    private FileUtils() {}
+
+    public static String getScriptsRootPath(Context context){
+        return getQyPath(context) + "/sl4a/scripts/";
+    }
+
+    public static String getCloudMapCachePath(Context context){
+        return getAbsolutePath(context) + "/lib/.cloud_cache";
+    }
+
+    public static String getPyCachePath(Context context){
+        return getAbsolutePath(context) + ".qpyc";
+    }
+
+    public static String getAbsoluteLogPath(Context context){
+        return getAbsolutePath(context) + "/log/last.log";
+    }
+
+    public static String getLibDownloadTempPath(Context context){
+        return getAbsolutePath(context) + "/cache";
+    }
+
+    public static String getAbsolutePath(Context context){
+        return context.getExternalFilesDir(null).getPath() + "/qpython";
+    }
+
+    public static File getPath(Context context){
+        return context.getExternalFilesDir(null);
+    }
+
+    public static String getQyPath(Context context){
+        return context.getExternalFilesDir(null).getAbsolutePath();
     }
 
     static public boolean externalStorageMounted() {
@@ -60,9 +90,14 @@ public class FileUtils {
 
     public static int chmod(File path, int mode) throws Exception {
         Class<?> fileUtils = Class.forName("android.os.FileUtils");
-        Method setPermissions =
-                fileUtils.getMethod("setPermissions", String.class, int.class, int.class, int.class);
-        return (Integer) setPermissions.invoke(null, path.getAbsolutePath(), mode, -1, -1);
+        Method setPermissions = fileUtils.getMethod("setPermissions", String.class, int.class, int.class, int.class);
+        Object invokePer = setPermissions.invoke(null, path.getAbsolutePath(), mode, -1, -1);
+        if (invokePer instanceof Integer){
+            return (Integer) invokePer;
+        }else {
+            return 0;
+        }
+//        return (Integer) setPermissions.invoke(null, path.getAbsolutePath(), mode, -1, -1);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -74,7 +109,7 @@ public class FileUtils {
 
         perms.add(PosixFilePermission.OTHERS_READ);
         perms.add(PosixFilePermission.OTHERS_WRITE);
-        perms.add(PosixFilePermission.OWNER_EXECUTE);
+        perms.add(PosixFilePermission.OTHERS_EXECUTE);
 
         perms.add(PosixFilePermission.GROUP_READ);
         perms.add(PosixFilePermission.GROUP_WRITE);
@@ -85,11 +120,14 @@ public class FileUtils {
 
     public static boolean recursiveChmod(File root, int mode) throws Exception {
         boolean success = chmod(root, mode) == 0;
-        for (File path : root.listFiles()) {
-            if (path.isDirectory()) {
-                success = recursiveChmod(path, mode);
+        File[] files = root.listFiles();
+        if (files != null){
+            for (File path : files) {
+                if (path.isDirectory()) {
+                    success = recursiveChmod(path, mode);
+                }
+                success &= (chmod(path, mode) == 0);
             }
-            success &= (chmod(path, mode) == 0);
         }
         return success;
     }
@@ -98,10 +136,14 @@ public class FileUtils {
         boolean result = true;
         if (path.exists()) {
             if (path.isDirectory()) {
-                for (File child : path.listFiles()) {
-                    result &= delete(child);
+                File[] files = path.listFiles();
+                if (files != null){
+                    for (File child : files) {
+                        result &= delete(child);
+                    }
                 }
-                result &= path.delete(); // Delete empty directory.
+                // Delete empty directory.
+                result &= path.delete();
             }
             if (path.isFile()) {
                 result &= path.delete();
@@ -156,16 +198,17 @@ public class FileUtils {
         return true;
     }
 
-    public static File getExternalDownload() {
-        try {
-            Class<?> c = Class.forName("android.os.Environment");
-            Method m = c.getDeclaredMethod("getExternalStoragePublicDirectory", String.class);
-            String download = c.getDeclaredField("DIRECTORY_DOWNLOADS").get(null).toString();
-            return (File) m.invoke(null, download);
-        } catch (Exception e) {
-            return new File(Environment.getExternalStorageDirectory(), "Download");
-        }
-    }
+//    public static File getExternalDownload() {
+//        try {
+//            Class<?> c = Class.forName("android.os.Environment");
+//            Method m = c.getDeclaredMethod("getExternalStoragePublicDirectory", String.class);
+//            String download = c.getDeclaredField("DIRECTORY_DOWNLOADS").get(null).toString();
+//            return (File) m.invoke(null, download);
+//        } catch (Exception e) {
+////            return new File(Environment.getExternalStorageDirectory(), "Download");
+//            return new File(Environment.getExternalStorageDirectory(), "Download");
+//        }
+//    }
 
     public static boolean rename(File file, String name) {
         return file.renameTo(new File(file.getParent(), name));
