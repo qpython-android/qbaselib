@@ -71,7 +71,8 @@ public class FileUtils {
     }
 
     public static String getAbsolutePath(Context context){
-        return context.getExternalFilesDir(null).getPath() + "/qpython";
+//        return context.getExternalFilesDir(null).getPath() + "/qpython";
+        return Environment.getExternalStorageDirectory().getPath() + "/qpython";
     }
 
     public static File getPath(Context context){
@@ -79,7 +80,8 @@ public class FileUtils {
     }
 
     public static String getQyPath(Context context){
-        return context.getExternalFilesDir(null).getAbsolutePath();
+//        return context.getExternalFilesDir(null).getAbsolutePath();
+        return Environment.getExternalStorageDirectory().getPath();
     }
 
     static public boolean externalStorageMounted() {
